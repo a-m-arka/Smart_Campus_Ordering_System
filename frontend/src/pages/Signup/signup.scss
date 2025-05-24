@@ -1,0 +1,86 @@
+@import '../../var.scss';
+
+.signup-container {
+  min-height: 100vh;
+  background-color: $background-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-form {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+  border-radius: 12px;
+  background-color: $secondary-color;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+
+  h2 {
+    text-align: center;
+    color: $text-color1;
+    font-size: 1.6rem;
+    margin-bottom: .5rem;
+  }
+
+  select {
+    padding: .8rem 1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: lighten($secondary-color, 10%);
+    color: $text-color1;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+
+  input {
+    padding: .8rem 1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: rgb(70, 70, 70);
+    color: $text-color1;
+    font-size: 1rem;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    &:focus {
+      outline: 2px solid $primary-color;
+    }
+  }
+
+  button {
+    padding: .8rem 1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: $primary-color;
+    color: $text-color1;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background-color: lighten($primary-color, 5%);
+    }
+  }
+
+  .login-link {
+    text-align: center;
+    font-size: 0.9rem;
+    color: $text-color1;
+
+    a {
+      color: $primary-color;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

@@ -1,0 +1,94 @@
+@import '../../var.scss';
+
+.cart-page {
+    background-color: $background-color;
+    color: $text-color1;
+    padding: 2rem;
+    min-height: 100vh;
+
+    .title {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .cart-items {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .cart-item {
+        display: flex;
+        gap: 1rem;
+        background-color: $secondary-color;
+        border-radius: 8px;
+        padding: 1rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+
+        img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .details {
+            h2 {
+                font-size: 1.2rem;
+                margin-bottom: .25rem;
+            }
+
+            .vendor {
+                font-style: italic;
+                font-size: 0.95rem;
+                margin-bottom: .5rem;
+            }
+
+            p {
+                margin: 0.2rem 0;
+            }
+
+            .subtotal {
+                font-weight: bold;
+                margin-bottom: 0.75rem;
+            }
+
+            .remove-btn {
+                background-color: $primary-color;
+                color: $text-color1;
+                border: none;
+                padding: .5rem 1rem;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+            .remove-btn:hover {
+                background-color: darken($primary-color, 10%);
+            }
+        }
+    }
+
+    .total {
+        margin-top: 2rem;
+        text-align: left;
+
+        h2 {
+            margin-bottom: 1rem;
+        }
+
+        .checkout-btn {
+            background-color: $primary-color;
+            color: $text-color1;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 22px;
+
+            &:hover {
+                background-color: darken($primary-color, 10%);
+            }
+        }
+    }
+}

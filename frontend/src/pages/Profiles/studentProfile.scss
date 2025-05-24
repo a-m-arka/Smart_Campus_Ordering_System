@@ -1,0 +1,67 @@
+@import '../../var.scss';
+
+.student-profile {
+  background-color: $background-color;
+  color: $text-color1;
+  min-height: 100vh;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  .profile-section,
+  .orders-section {
+    background-color: $secondary-color;
+    padding: 2rem;
+    border-radius: 8px;
+  }
+
+  h2 {
+    color: $primary-color;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .orders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .order-card {
+    background-color: lighten($secondary-color, 5%);
+    padding: 1rem;
+    border-radius: 6px;
+
+    h3 {
+      color: $text-color1;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      color: lighten($text-color1, 20%);
+      margin-bottom: 1rem;
+    }
+
+    .cancel-btn {
+      background-color: $primary-color;
+      border: none;
+      color: $text-color2;
+      padding: 0.4rem 1rem;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+  }
+}
