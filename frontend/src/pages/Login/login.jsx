@@ -7,10 +7,41 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [role, setRole] = useState('student')   // default role
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
-    // TODO: replace with real authentication logic
-    // email, password, role → send to backend
+    try {
+      const response = await fetch('http://localhost:8080/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
+
+      if (response.ok) {
+
+        const data = await response.json();
+        console.log('Login successful');
+        // setLoginErrorMessage('');
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('isLoggedin', true);
+        // handleSuccessfullLogin();
+
+        const token = localStorage.getItem('token');
+        console.log('Token:', token);
+
+      } else {
+        const error = await response.text();
+        // setLoginErrorMessage(error || 'Failed to log in');
+        console.log(error)
+      }
+    } catch (error) {
+      // setLoginErrorMessage('An error occurred. Please try again.');
+      console.log(error)
+    }
   }
 
   return (

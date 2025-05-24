@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './signup.scss'
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -16,10 +17,39 @@ const Signup = () => {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
-    // TODO: replace with real signup logic
-    // form object now includes role
+    if (form.password !== form.confirmPassword) {
+      console.log('Passwords do not match');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:8080/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: form.email,
+          password: form.password,
+          fullName: form.name,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.text(); // Adjust if the API response differs
+        console.log('Sign-Up Successful:', data);
+        navigate('/login'); // Redirect to login after successful signup
+      } else {
+        const error = await response.text();
+        // setSignupErrorMessage(error || 'Failed to sign up');
+        console.log(error)
+      }
+    } catch (error) {
+      // setSignupErrorMessage('An error occurred. Please try again.');
+      console.log(error)
+    }
   }
 
   return (
