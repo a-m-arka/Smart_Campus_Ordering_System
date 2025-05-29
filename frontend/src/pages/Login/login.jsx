@@ -1,21 +1,28 @@
 import React, { useState } from 'react'
 import './login.scss'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Login = () => {
+  const navigate = useNavigate();
+  const server = process.env.REACT_APP_SERVER;
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [role, setRole] = useState('student')   // default role
+  const [role, setRole] = useState('')
+
+  const handleSuccessfullLogin = () => {
+    navigate('/');
+  };
 
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-      const response = await fetch('http://localhost:8080/auth/login', {
+      const response = await fetch(`${server}/api/auth/login-user`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          role: role,
           email: email,
           password: password,
         }),
@@ -28,15 +35,15 @@ const Login = () => {
         // setLoginErrorMessage('');
         localStorage.setItem('token', data.token);
         localStorage.setItem('isLoggedin', true);
-        // handleSuccessfullLogin();
+        handleSuccessfullLogin();
 
-        const token = localStorage.getItem('token');
-        console.log('Token:', token);
+        // const token = localStorage.getItem('token');
+        // console.log('Token:', token);
 
       } else {
-        const error = await response.text();
+        const error = await response.json();
         // setLoginErrorMessage(error || 'Failed to log in');
-        console.log(error)
+        console.log(error.message || 'Failed to log in');
       }
     } catch (error) {
       // setLoginErrorMessage('An error occurred. Please try again.');
@@ -50,6 +57,9 @@ const Login = () => {
         <h2>Login to CUET-Foods</h2>
 
         <select value={role} onChange={e => setRole(e.target.value)}>
+          <option value="" disabled hidden>
+            Login As
+          </option>
           <option value="student">Student</option>
           <option value="vendor">Vendor</option>
         </select>

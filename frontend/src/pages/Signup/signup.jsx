@@ -3,14 +3,16 @@ import { Link, useNavigate } from 'react-router-dom'
 import './signup.scss'
 
 const Signup = () => {
+  const server = process.env.REACT_APP_SERVER;
   const navigate = useNavigate();
   const [form, setForm] = useState({
+    role: '',
     name: '',
     email: '',
     phone: '',
     password: '',
     confirmPassword: '',
-    role: 'student',       // default role
+    stallName: ''
   })
 
   const handleChange = e => {
@@ -18,33 +20,37 @@ const Signup = () => {
   }
 
   const handleSubmit = async e => {
-    e.preventDefault()
+    e.preventDefault();
     if (form.password !== form.confirmPassword) {
       console.log('Passwords do not match');
       return;
     }
 
     try {
-      const response = await fetch('http://localhost:8080/auth/signup', {
+      const response = await fetch(`${server}/api/auth/register-user`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          role: form.role,
+          name: form.name,
           email: form.email,
+          phone: form.phone,
           password: form.password,
-          fullName: form.name,
+          confirmPassword: form.confirmPassword,
+          stallName: form.role === 'vendor' ? form.stallName : undefined,
         }),
       });
 
       if (response.ok) {
-        const data = await response.text(); // Adjust if the API response differs
+        const data = await response.json(); 
         console.log('Sign-Up Successful:', data);
-        navigate('/login'); // Redirect to login after successful signup
+        navigate('/login'); 
       } else {
-        const error = await response.text();
+        const error = await response.json();
         // setSignupErrorMessage(error || 'Failed to sign up');
-        console.log(error)
+        console.log(error.message || 'Failed to sign up');
       }
     } catch (error) {
       // setSignupErrorMessage('An error occurred. Please try again.');
@@ -62,9 +68,13 @@ const Signup = () => {
           value={form.role}
           onChange={handleChange}
         >
+          <option value="" disabled hidden>
+            Sign Up As
+          </option>
           <option value="student">Student</option>
           <option value="vendor">Vendor</option>
         </select>
+
 
         <input
           type="text"
@@ -106,6 +116,16 @@ const Signup = () => {
           onChange={handleChange}
           required
         />
+        {form.role === 'vendor' && (
+          <input
+            type="text"
+            name="stallName"
+            placeholder="Stall Name"
+            value={form.stallName}
+            onChange={handleChange}
+            required
+          />
+        )}
 
         <button type="submit">Sign Up</button>
 

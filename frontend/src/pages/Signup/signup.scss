@@ -17,7 +17,6 @@
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 
   h2 {
     text-align: center;
@@ -34,6 +33,15 @@
     color: $text-color1;
     font-size: 1rem;
     margin-bottom: 1rem;
+
+    &:focus {
+      outline: 2px solid $primary-color;
+    }
+
+    option {
+      background-color: lighten($secondary-color, 30%);
+      color: $text-color1;
+    }
   }
 
 
@@ -41,12 +49,12 @@
     padding: .8rem 1rem;
     border: none;
     border-radius: 8px;
-    background-color: rgb(70, 70, 70);
+    background-color: lighten($secondary-color, 10%);
     color: $text-color1;
     font-size: 1rem;
 
     &::placeholder {
-      color: rgba(255, 255, 255, 0.6);
+      color: lighten($secondary-color, 50%);
     }
 
     &:focus {

@@ -1,0 +1,34 @@
+Register Student:
+{
+    "role": "student",
+    "name": "Jhon",
+    "email": "u1234567@student.cuet.ac.bd",
+    "phone": "01334567890",
+    "password": "jhon1234",
+    "confirmPassword": "jhon1234"
+}
+
+Register Vendor:
+{
+    "role": "vendor",
+    "name": "Jhon",
+    "email": "jhon@gmail.com",
+    "phone": "01334567890",
+    "password": "jhon1234",
+    "confirmPassword": "jhon1234",
+    "stallName": "Food Cart"
+}
+
+Login Student:
+{
+    "role": "student",
+    "email": "u1234567@student.cuet.ac.bd",
+    "password": "jhon1234"
+}
+
+Login Vendor:
+{
+    "role": "vendor",
+    "email": "jhon@gmail.com",
+    "password": "jhon1234"
+}
