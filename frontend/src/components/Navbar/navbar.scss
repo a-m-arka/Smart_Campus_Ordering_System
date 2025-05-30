@@ -7,50 +7,94 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24px;
-  color: white;
+  color: $text-color1;
+  position: fixed;
+  z-index: 10;
 
   .logo {
     width: 15%;
     height: 100%;
-    font-size: 28px;
-    font-weight: bold;
-    // background-color: black;
+    // background-color: red;
     display: flex;
     align-items: center;
-    justify-content: center;
-    color: $text-color2;
-    font-family:monospace;
+    justify-content:left;
+    margin-left: 30px;
+
+    img{
+      height: 120px;
+      width: auto;
+    }
   }
 
   .nav-links {
     width: 40%;
     height: 100%;
-    // background-color: black;
+    margin-right: 30px;
+    // background-color: red;
 
-    ul{
-        height: 100%;
-        width: 100%;
+    ul {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: right;
+      gap: 30px;
+
+      li {
+        list-style: none;
+        color: $text-color2;
+        font-size: 24px;
+        font-weight: 500;
+        // background-color: red;
+        height: max-content;
+        width: max-content;
         display: flex;
-        flex-direction: row;
         align-items: center;
-        justify-content: space-evenly;
+        justify-content: center;
+        padding: 10px 10px;
+        border-radius: 8px;
+      }
 
-        li{
-            list-style: none;
-            color: $text-color2;
-            font-size: 24px;
-            font-weight: 500;
+      li:hover {
+        color: $text-color1;
+        cursor: pointer;
+      }
+
+      .active{
+        background-color: $text-color2;
+        color: $primary-color;
+        font-weight: 600;
+      }
+
+      .icon {
+        font-size: 30px;
+        position: relative;
+
+        &::after {
+          content: attr(data-tooltip);
+          position: absolute;
+          bottom: -28px;
+          left: 50%;
+          transform: translateX(-50%);
+          // background-color: lighten($background-color, 10%);
+          background-color: $primary-color;
+          color: $text-color1;
+          padding: 4px 8px;
+          border-radius: 4px;
+          // border: 1px solid $primary-color;
+          font-size: 14px;
+          font-weight: 500;
+          white-space: nowrap;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.2s ease;
         }
 
-        li:hover {
-            color: $text-color1;
-            cursor: pointer;
+        &:hover::after {
+          opacity: 1;
         }
-
-        .icon{
-            font-size: 30px;
-        }
+      }
     }
   }
 }

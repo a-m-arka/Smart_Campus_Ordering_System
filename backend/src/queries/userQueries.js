@@ -10,7 +10,6 @@ export const studentQueries = {
       name = COALESCE(?, name),
       email = COALESCE(?, email),
       phone = COALESCE(?, phone),
-      password = COALESCE(?, password),
       address = COALESCE(?, address)
     WHERE id = ?;
   `,
@@ -22,18 +21,17 @@ export const studentQueries = {
   `,
 
   getStudentById: `
-    SELECT *
+    SELECT id, name, email, phone, address, profile_picture_url, created_at
     FROM Students
     WHERE id = ?;
   `,
 
   getStudentByEmail: `
-    SELECT *
+    SELECT id, password
     FROM Students
     WHERE email = ?;
   `
 };
-
 
 export const vendorQueries = {
   createVendor: `
@@ -47,7 +45,6 @@ export const vendorQueries = {
       name = COALESCE(?, name),
       email = COALESCE(?, email),
       phone = COALESCE(?, phone),
-      password = COALESCE(?, password),
       stall_name = COALESCE(?, stall_name),
       stall_location = COALESCE(?, stall_location)
     WHERE id = ?;
@@ -60,13 +57,14 @@ export const vendorQueries = {
   `,
 
   getVendorById: `
-    SELECT *
+    SELECT id, name, email, phone, stall_name, stall_location,
+           logo_url, average_rating, review_count, created_at
     FROM Vendors
     WHERE id = ?;
   `,
 
   getVendorByEmail: `
-    SELECT *
+    SELECT id, password
     FROM Vendors
     WHERE email = ?;
   `

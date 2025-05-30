@@ -1,60 +1,103 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import './navbar.scss'
-import { Link, useNavigate } from 'react-router-dom'
-import { IoMdCart } from "react-icons/io"
-import { CgProfile } from "react-icons/cg"
-import { FiLogIn, FiLogOut } from "react-icons/fi"
+import logo from '../../images/logo2-black.png'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { IoMdCart } from 'react-icons/io'
+import { MdAccountCircle } from 'react-icons/md'
+import { IoLogIn, IoLogOut, IoFastFood } from 'react-icons/io5'
+import { BiSolidStore } from 'react-icons/bi'
+import { GoHomeFill } from 'react-icons/go'
+import { useGlobalContext } from '../../context/GlobalContext.js'
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [userRole, setUserRole] = useState('')
+  const location = useLocation()
   const navigate = useNavigate()
+  const { isLoggedIn, setIsLoggedIn, userRole, setUserRole } = useGlobalContext()
 
-  useEffect(() => {
-    const storedLogin = localStorage.getItem('isLoggedin') === 'true'
-    const storedRole = localStorage.getItem('role') || ''
-    setIsLoggedIn(storedLogin)
-    setUserRole(storedRole)
-  }, [])
-
-  const handleAuthClick = () => {
-    if (isLoggedIn) {
-      localStorage.removeItem('isLoggedin')
-      localStorage.removeItem('token')
-      localStorage.removeItem('role')
-      setIsLoggedIn(false)
-      setUserRole('')
-      navigate('/')
-    }
+  const handleLogOut = () => {
+    setIsLoggedIn(false)
+    localStorage.removeItem('token')
+    localStorage.removeItem('role')
+    setUserRole('')
+    navigate('/')
   }
 
   return (
     <div className='navbar'>
-      <div className="logo">
-        CUET-Foods
+      <div className='logo'>
+        <Link to='/'>
+          <img src={logo} alt='' />
+        </Link>
       </div>
-      <div className="nav-links">
+      <div className='nav-links'>
         <ul>
-          <Link to='/home' style={{ textDecoration: "none" }}><li>Home</li></Link>
-          <Link to='/foods' style={{ textDecoration: "none" }}><li>Foods</li></Link>
-          <Link to='/vendors' style={{ textDecoration: "none" }}><li>Vendors</li></Link>
-          <Link to='/cart' style={{ textDecoration: "none" }}><li className='icon'><IoMdCart /></li></Link>
+          <Link to='/home' style={{ textDecoration: 'none' }}>
+            <li
+              className={`icon ${location.pathname === '/home' || location.pathname === '/' ? 'active' : ''}`}
+              data-tooltip='Home'
+            >
+              <GoHomeFill />
+            </li>
+          </Link>
+          <Link to='/foods' style={{ textDecoration: 'none' }}>
+            <li
+              className={`icon ${location.pathname === '/foods' ? 'active' : ''}`}
+              data-tooltip='Foods'
+            >
+              <IoFastFood />
+            </li>
+          </Link>
+          <Link to='/vendors' style={{ textDecoration: 'none' }}>
+            <li
+              className={`icon ${location.pathname === '/vendors' ? 'active' : ''}`}
+              data-tooltip='Vendors'
+            >
+              <BiSolidStore />
+            </li>
+          </Link>
 
           {isLoggedIn ? (
             <>
-              <li className='icon' onClick={handleAuthClick} style={{ cursor: 'pointer' }}>
-                <FiLogOut />
-              </li>
+              {userRole === 'student' && (
+                <Link to='/cart' style={{ textDecoration: 'none' }}>
+                  <li
+                    className={`icon ${location.pathname === '/cart' ? 'active' : ''}`}
+                    data-tooltip='Cart'
+                  >
+                    <IoMdCart />
+                  </li>
+                </Link>
+              )}
+
               <Link
                 to={userRole === 'student' ? '/user_profile' : '/vendor_profile'}
-                style={{ textDecoration: "none" }}
+                style={{ textDecoration: 'none' }}
               >
-                <li className='icon'><CgProfile /></li>
+                <li
+                  className={`icon ${location.pathname === '/user_profile' || location.pathname === '/vendor_profile' ? 'active' : ''}`}
+                  data-tooltip='Profile'
+                >
+                  <MdAccountCircle />
+                </li>
               </Link>
+
+              <li
+                className='icon'
+                data-tooltip='Log Out'
+                onClick={handleLogOut}
+                style={{ cursor: 'pointer' }}
+              >
+                <IoLogOut />
+              </li>
             </>
           ) : (
-            <Link to='/login' style={{ textDecoration: "none", color: "inherit" }}>
-              <li className='icon'><FiLogIn /></li>
+            <Link to='/login' style={{ textDecoration: 'none', color: 'inherit' }}>
+              <li
+                className={`icon ${location.pathname === '/login' || location.pathname === '/signup' ? 'active' : ''}`}
+                data-tooltip='Log In'
+              >
+                <IoLogIn />
+              </li>
             </Link>
           )}
         </ul>

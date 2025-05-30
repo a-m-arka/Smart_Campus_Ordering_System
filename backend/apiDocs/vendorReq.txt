@@ -1,0 +1,1 @@
+Get Vendor Data: /api/vendor/get-vendor-data

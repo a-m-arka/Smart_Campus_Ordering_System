@@ -17,6 +17,7 @@ export const registerUser = async (user, role) => {
 };
 
 export const loginUser = async (email, password, role) => {
+    // console.log(email, password, role);
     try {
         const user = await findUserByEmail(email, role);
         if (!user) {

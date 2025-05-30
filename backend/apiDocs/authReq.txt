@@ -1,4 +1,4 @@
-Register Student:
+Register Student: /api/auth/register-user
 {
     "role": "student",
     "name": "Jhon",
@@ -8,7 +8,7 @@ Register Student:
     "confirmPassword": "jhon1234"
 }
 
-Register Vendor:
+Register Vendor: /api/auth/register-user
 {
     "role": "vendor",
     "name": "Jhon",
@@ -19,14 +19,14 @@ Register Vendor:
     "stallName": "Food Cart"
 }
 
-Login Student:
+Login Student: /api/auth/login-user
 {
     "role": "student",
     "email": "u1234567@student.cuet.ac.bd",
     "password": "jhon1234"
 }
 
-Login Vendor:
+Login Vendor: /api/auth/login-user
 {
     "role": "vendor",
     "email": "jhon@gmail.com",

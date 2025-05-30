@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './login.scss'
 import { Link, useNavigate } from 'react-router-dom'
+import { useGlobalContext } from '../../context/GlobalContext.js'
 
 const Login = () => {
   const navigate = useNavigate();
@@ -8,13 +9,18 @@ const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [role, setRole] = useState('')
+  const [loginErrorMessage, setLoginErrorMessage] = useState('')
+  const { setIsLoggedIn, setUserRole } = useGlobalContext()
 
   const handleSuccessfullLogin = () => {
+    setIsLoggedIn(true);
+    setUserRole(role);
+    localStorage.setItem('role', role);
     navigate('/');
   };
 
   const handleSubmit = async e => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       const response = await fetch(`${server}/api/auth/login-user`, {
         method: 'POST',
@@ -31,22 +37,16 @@ const Login = () => {
       if (response.ok) {
 
         const data = await response.json();
-        console.log('Login successful');
-        // setLoginErrorMessage('');
+        setLoginErrorMessage('');
         localStorage.setItem('token', data.token);
-        localStorage.setItem('isLoggedin', true);
         handleSuccessfullLogin();
-
-        // const token = localStorage.getItem('token');
-        // console.log('Token:', token);
-
       } else {
         const error = await response.json();
-        // setLoginErrorMessage(error || 'Failed to log in');
+        setLoginErrorMessage(error.message || 'Failed to log in');
         console.log(error.message || 'Failed to log in');
       }
     } catch (error) {
-      // setLoginErrorMessage('An error occurred. Please try again.');
+      setLoginErrorMessage('An error occurred. Please try again.');
       console.log(error)
     }
   }
@@ -58,7 +58,7 @@ const Login = () => {
 
         <select value={role} onChange={e => setRole(e.target.value)}>
           <option value="" disabled hidden>
-            Login As
+            Log In As
           </option>
           <option value="student">Student</option>
           <option value="vendor">Vendor</option>
@@ -78,6 +78,10 @@ const Login = () => {
           onChange={e => setPassword(e.target.value)}
           required
         />
+
+        {loginErrorMessage && (
+          <p className="error-message">{loginErrorMessage}</p>
+        )}
 
         <button type="submit">Log In</button>
 

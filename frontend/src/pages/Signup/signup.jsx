@@ -5,6 +5,7 @@ import './signup.scss'
 const Signup = () => {
   const server = process.env.REACT_APP_SERVER;
   const navigate = useNavigate();
+  const [signupErrorMessage, setSignupErrorMessage] = useState('')
   const [form, setForm] = useState({
     role: '',
     name: '',
@@ -22,7 +23,7 @@ const Signup = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     if (form.password !== form.confirmPassword) {
-      console.log('Passwords do not match');
+      setSignupErrorMessage('Passwords do not match');
       return;
     }
 
@@ -49,11 +50,11 @@ const Signup = () => {
         navigate('/login'); 
       } else {
         const error = await response.json();
-        // setSignupErrorMessage(error || 'Failed to sign up');
+        setSignupErrorMessage(error.message || 'Failed to sign up');
         console.log(error.message || 'Failed to sign up');
       }
     } catch (error) {
-      // setSignupErrorMessage('An error occurred. Please try again.');
+      setSignupErrorMessage('An error occurred. Please try again.');
       console.log(error)
     }
   }
@@ -125,6 +126,10 @@ const Signup = () => {
             onChange={handleChange}
             required
           />
+        )}
+
+        {signupErrorMessage && (
+          <p className="error-message">{signupErrorMessage}</p>
         )}
 
         <button type="submit">Sign Up</button>

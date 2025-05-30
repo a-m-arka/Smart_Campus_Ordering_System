@@ -1,6 +1,6 @@
 import { pool } from '../config/db.js';
 import { studentQueries, vendorQueries } from '../queries/userQueries.js';
-import { verifyToken, hashPassword } from './authUtils.js';
+import { hashPassword } from './authUtils.js';
 
 
 export const createUser = async (user, role) => {
@@ -22,11 +22,10 @@ export const findUserByEmail = async (email, role) => {
     return result.length > 0 ? result[0] : null;
 };
 
-export const getUserFromToken = async (token) => {
+export const findUserById = async (id, role) => {
     try {
-        const decodedToken = verifyToken(token);
-        const query = decodedToken.role === 'student' ? studentQueries.getStudentById : vendorQueries.getVendorById;
-        const [result] = await pool.query(query, [decodedToken.id]);
+        const query = role === 'student' ? studentQueries.getStudentById : vendorQueries.getVendorById;
+        const [result] = await pool.query(query, [id]);
         return result.length > 0 ? result[0] : null;
     } catch (error) {
         console.error("Error details:", error.stack);
