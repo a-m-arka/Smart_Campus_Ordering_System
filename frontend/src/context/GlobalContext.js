@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, use } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const GlobalContext = createContext();
 const server = process.env.REACT_APP_SERVER;
@@ -39,8 +39,10 @@ export const GlobalProvider = ({ children }) => {
             });
 
             if (response.status === 401) {
-                console.log('Unauthorized: Token is invalid or expired.');
+                // console.log('Unauthorized: Token is invalid or expired.');
                 setIsLoggedIn(false);
+                setUserRole('');
+                setUserData(null);
                 localStorage.removeItem('token');
                 localStorage.removeItem('role');
                 localStorage.removeItem('userData');
@@ -65,6 +67,9 @@ export const GlobalProvider = ({ children }) => {
     };
 
     useEffect(() => {
+
+        // console.log(`isLoggedIn: ${isLoggedIn}, userRole: ${userRole}`);
+
         if(isLoggedIn){
             let url;
             if(userRole === 'student'){
@@ -83,7 +88,9 @@ export const GlobalProvider = ({ children }) => {
                 isLoggedIn,
                 setIsLoggedIn,
                 userRole,
-                setUserRole
+                setUserRole,
+                userData,
+                setUserData,
             }}
         >
             {children}

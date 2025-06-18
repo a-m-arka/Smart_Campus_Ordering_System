@@ -1,0 +1,134 @@
+@import '../../var.scss';
+
+.vendor-menu {
+    background-color: $background-color;
+    color: $text-color1;
+    padding: 32px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .vendor-data {
+        // background-color: red;
+        width: 100%;
+        height: max-content;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 20px;
+        padding-bottom: 20px;
+        // border-bottom: 1px solid lighten($secondary-color, 20%);
+
+        img {
+            width: 120px;
+            height: 120px;
+            border-radius: 10px;
+        }
+
+        .data {
+            display: flex;
+            flex-direction: column;
+
+            .name {
+                font-size: 32px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            .location {
+                font-size: 25px;
+                font-weight: 500;
+                color: lighten($secondary-color, 70%);
+            }
+
+            .rating {
+                font-size: 24px;
+                color: $primary-color;
+                margin-top: 10px;
+                font-weight: bold;
+            }
+        }
+    }
+
+    .vendor-navbar {
+        width: 100%;
+        position: sticky;
+        top: 60px;
+        backdrop-filter: blur(20px);
+        background-color: rgba($background-color, 0.8);
+        padding: 15px 0;
+        margin-top: 20px;
+        z-index: 100;
+        display: flex;
+        gap: 20px;
+        overflow-x: auto;
+        // border-bottom: 1px solid lighten($secondary-color, 20%);
+
+        .category-btn {
+            padding: 8px 12px;
+            font-size: 18px;
+            border: none;
+            background-color: rgba($primary-color, 0.2);
+            color: $primary-color;
+            border-radius: 10px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-family: 'Josefin Sans', sans-serif;
+
+            &:not(.active):hover {
+                background-color: rgba($primary-color, 0.4);
+            }
+
+            &.active {
+                background-color: $primary-color;
+                color: $text-color1;
+            }
+        }
+
+    }
+
+    .vendor-foods {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        width: 100%;
+        height: max-content;
+        // background-color: red;
+
+        .search-result,
+        .most-popular,
+        .top-rated,
+        .category {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+
+            .heading {
+                width: 100%;
+                font-size: 28px;
+                font-weight: 600;
+                margin-top: 15px;
+                // padding-bottom: 10px;
+                // border-bottom: 1px solid darken($primary-color, 20%);
+            }
+
+            .foods-grid {
+                // background-color: red;
+                width: 100%;
+                margin-top: 30px;
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 20px;
+
+                .no-result {
+                    text-align: center;
+                    margin-top: 32px;
+                    color: $primary-color;
+                    font-weight: bold;
+                    font-size: 30px;
+                }
+            }
+        }
+    }
+}

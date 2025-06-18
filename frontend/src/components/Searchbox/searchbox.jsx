@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { FaSearch } from 'react-icons/fa'
+import { FaSearch, FaTimes } from 'react-icons/fa'
 import './searchbox.scss'
 
-const SearchBox = ({ onSearch, searchFor }) => {
+const SearchBox = ({ onSearch, searchMessage }) => {
     const [query, setQuery] = useState('')
 
     const handleSubmit = e => {
@@ -10,15 +10,29 @@ const SearchBox = ({ onSearch, searchFor }) => {
         if (onSearch) onSearch(query.trim())
     }
 
+    const handleCancel = () => {
+        setQuery('')
+        if (onSearch) onSearch('')
+    }
+
     return (
         <form className="search-box" onSubmit={handleSubmit}>
             <input
                 type="text"
-                placeholder={`Search ${searchFor}...`}
+                placeholder={searchMessage}
                 value={query}
                 onChange={e => setQuery(e.target.value)}
             />
-            <button type="submit">
+            {query && (
+                <button
+                    type="button"
+                    className="cancel-btn"
+                    onClick={handleCancel}
+                >
+                    <FaTimes />
+                </button>
+            )}
+            <button className='search-btn' type="submit">
                 <FaSearch />
             </button>
         </form>

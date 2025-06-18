@@ -3,67 +3,103 @@
 .vendors-page {
   background-color: $background-color;
   color: $text-color1;
-  padding: 2rem;
+  padding: 32px;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-  .title {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-size: 2rem;
+  .top {
+    // background-color: red;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    height: 60px;
+    padding: 0;
   }
 
   .vendors-grid {
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
+    gap: 24px;
+    // background-color: red;
+    margin-top: 30px;
   }
 
   .vendor-card {
-    height: 350px;
-    background: $secondary-color;
-    border-radius: 8px;
+    height: max-content;
+    background: $background-color;
+    border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
-    padding: 1rem;
+    border: 1px solid lighten($secondary-color, 10%);
+    padding: 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba($primary-color, 0.5);
+      border: 1px solid $primary-color;
+    }
 
     img {
       width: 100%;
-      height: 200px;
+      aspect-ratio: 1/1;
       object-fit: cover;
-      border-radius: 6px;
-      margin-bottom: .75rem;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      margin-bottom: 12px;
     }
 
-    h2 {
-      font-size: 1.1rem;
-      margin: .5rem 0;
-    }
+    .details {
+      // background-color: red;
+      width: 100%;
+      padding: 16px;
+      display: flex;
+      flex-direction: row;
+      align-items: start;
+      justify-content: space-between;
 
-    .location {
-      font-size: 0.9rem;
-      color: $text-color1;
-      margin-bottom: 0.25rem;
-    }
+      .left {
+        h2 {
+          font-size: 18px;
+          margin: 8px 0;
+        }
 
-    .rating {
-      font-size: 0.9rem;
-      color: orange;
-      margin-bottom: 0.75rem;
-    }
+        .location {
+          font-size: 16px;
+          color: $text-color1;
+          margin-bottom: 4px;
+        }
+      }
 
-    .menu-btn {
-      background-color: $primary-color;
-      color: $text-color1;
-      border: none;
-      padding: .5rem 1rem;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+      .right {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        
+        .rating {
+          font-size: 20px;
+          color: $text-color1;
+          margin-bottom: 6px;
 
-    .menu-btn:hover {
-      background-color: darken($primary-color, 10%);
+          span {
+            color: $primary-color;
+          }
+        }
+
+        .status{
+          padding: 5px;
+          border-radius: 5px;
+          font-size: 16px;
+        }
+      }
     }
   }
 }

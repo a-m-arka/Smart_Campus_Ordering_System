@@ -1,0 +1,31 @@
+@import '../../var.scss';
+
+.sort-dropdown__select {
+  all: unset;
+  background: $primary-color;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  color: $text-color1;
+  height: 30px;
+  width: max-content;
+  text-align-last: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  option {
+    background: $secondary-color;
+    color: $text-color1;
+  }
+
+  &:focus {
+    outline: none;
+    // box-shadow: 0 0 0 2px lighten($primary-color, 20%);
+  }
+
+  &:hover {
+    background: darken($primary-color, 10%);
+  }
+}

@@ -1,4 +1,5 @@
 @import './var.scss';
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
 
 * {
   margin: 0;
@@ -6,12 +7,15 @@
   box-sizing: border-box;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   background-color: $background-color;
+  font-family: 'Josefin Sans', sans-serif;
 }
 
-.App{
+.App {
   width: 100%;
   min-height: 100%;
   background-color: $background-color;
@@ -19,9 +23,34 @@ html, body, #root {
   flex-direction: column;
   align-items: center;
 
-  .main{
+  .main {
     margin-top: 60px;
     width: 100%;
     color: $text-color1;
   }
+}
+
+.page-title {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: -15px;
+  font-size: 32px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid lighten($secondary-color, 20%);
+  color: darken($text-color1, 10%);
+  width: 100%;
+}
+
+.available {
+  background-color: rgba(green, 0.2);
+  color: rgb(18, 218, 18);
+}
+
+.not-available {
+  background-color: rgba(red, 0.2);
+  color: red;
+}
+
+button{
+  font-family: 'Josefin Sans', sans-serif;
 }

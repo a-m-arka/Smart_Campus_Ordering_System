@@ -1,169 +1,195 @@
 import React, { useState } from 'react'
 import './vendorProfile.scss'
+import defaultLogo from '../../images/default_logo.jpg'
+import { MdOutlineLocationOn } from "react-icons/md";
+import { useGlobalContext } from '../../context/GlobalContext.js'
+import Switch from '../../components/Switch/switch.jsx'
 
-const initialFoodItems = [
-  { id: 1, name: 'Margherita Pizza', price: 12, quantity: 10, description: 'Classic cheese and tomato pizza' },
-  { id: 2, name: 'BBQ Chicken Wings', price: 15, quantity: 20, description: 'Spicy and smoky wings' },
-  { id: 3, name: 'Veggie Burger', price: 10, quantity: 15, description: 'Loaded with fresh veggies' },
+import pizza from '../../images/pizza.jpg'
+import burger from '../../images/burger.jpg'
+import wings from '../../images/wings.jpg'
+
+const foodItems = [
+  {
+    id: 1,
+    name: 'Margherita Pizza',
+    price: 12,
+    status: 'Available',
+    description: 'Classic cheese and tomato pizza',
+    rating: 4.5,
+    image: pizza
+  },
+  {
+    id: 2,
+    name: 'BBQ Chicken Wings',
+    price: 15,
+    status: 'Available',
+    description: 'Spicy and smoky wings',
+    rating: 4.2,
+    image: wings
+  },
+  {
+    id: 3,
+    name: 'Veggie Burger',
+    price: 10,
+    status: 'Not Available',
+    description: 'Loaded with fresh veggies',
+    rating: 4.0,
+    image: burger
+  },
 ]
 
-const initialOrders = [
-  { id: 'ORD101', item: 'Margherita Pizza', customer: 'John Doe', quantity: 2, status: 'pending' },
-  { id: 'ORD102', item: 'BBQ Chicken Wings', customer: 'Alice', quantity: 1, status: 'preparing' },
+const orders = [
+  { id: 'ORD101', item: 'Margherita Pizza', customer: 'John Doe', quantity: 2, price: 600 },
+  { id: 'ORD102', item: 'BBQ Chicken Wings', customer: 'Alice', quantity: 1, price: 150 },
 ]
-
-const statusOptions = ['pending', 'preparing', 'ready', 'shipped']
 
 const VendorProfile = () => {
-  const [foodItems, setFoodItems] = useState(initialFoodItems)
-  const [orders, setOrders] = useState(initialOrders)
+  const { userData } = useGlobalContext();
 
-  const [newFood, setNewFood] = useState({ name: '', price: '', quantity: '', description: '' })
+  // console.log(userData.data);
 
-  const [editFoodId, setEditFoodId] = useState(null)
-  const [editFoodData, setEditFoodData] = useState({ name: '', price: '', quantity: '', description: '' })
+  const vendorData = {
+    id: userData?.data?.id || "N/A",
+    name: userData?.data?.name || "N/A",
+    email: userData?.data?.email || "N/A",
+    phone: userData?.data?.phone || "N/A",
+    stall_name: userData?.data?.stall_name || "N/A",
+    stall_location: userData?.data?.stall_location || "N/A",
+    logo_url: userData?.data?.logo_url || defaultLogo,
+    average_rating: userData?.data?.average_rating
+      ? parseFloat(userData.data.average_rating).toFixed(1)
+      : "0.0",
+    review_count: userData?.data?.review_count || 0,
+    is_open: Boolean(userData?.data?.is_open)
+  };
 
-  const handleAddFood = e => {
-    e.preventDefault()
-    if (!newFood.name || !newFood.price || !newFood.quantity) return
-    const newItem = {
-      id: foodItems.length ? foodItems[foodItems.length - 1].id + 1 : 1,
-      name: newFood.name,
-      price: Number(newFood.price),
-      quantity: Number(newFood.quantity),
-      description: newFood.description,
-    }
-    setFoodItems([...foodItems, newItem])
-    setNewFood({ name: '', price: '', quantity: '', description: '' })
-  }
+  // console.log(vendorData);
 
-  const handleEditClick = item => {
-    setEditFoodId(item.id)
-    setEditFoodData({ name: item.name, price: item.price, quantity: item.quantity, description: item.description })
-  }
+  const [isOpen, setIsOpen] = useState(vendorData.is_open);
 
-  const handleEditChange = e => {
-    const { name, value } = e.target
-    setEditFoodData(prev => ({ ...prev, [name]: value }))
-  }
-
-  const handleEditSave = id => {
-    setFoodItems(
-      foodItems.map(item =>
-        item.id === id
-          ? {
-              ...item,
-              name: editFoodData.name,
-              price: Number(editFoodData.price),
-              quantity: Number(editFoodData.quantity),
-              description: editFoodData.description,
-            }
-          : item
-      )
-    )
-    setEditFoodId(null)
-  }
-
-  const handleEditCancel = () => setEditFoodId(null)
-
-  const handleDeleteFood = id => {
-    setFoodItems(foodItems.filter(item => item.id !== id))
-  }
-
-  const handleStatusChange = (orderId, newStatus) => {
-    setOrders(orders.map(order => (order.id === orderId ? { ...order, status: newStatus } : order)))
-  }
+  const handleToggleOpen = (checked) => {
+    setIsOpen(checked);
+  };
 
   return (
     <div className="vendor-profile">
-      <h1>Vendor Profile</h1>
-
-      <section className="food-items">
-        <h2>Your Food Items</h2>
-
-        <form className="add-food-form" onSubmit={handleAddFood}>
-          <input
-            type="text"
-            name="name"
-            placeholder="Food name"
-            value={newFood.name}
-            onChange={e => setNewFood(prev => ({ ...prev, name: e.target.value }))}
-            required
-          />
-          <input
-            type="number"
-            name="price"
-            placeholder="Price"
-            value={newFood.price}
-            onChange={e => setNewFood(prev => ({ ...prev, price: e.target.value }))}
-            required
-          />
-          <input
-            type="number"
-            name="quantity"
-            placeholder="Quantity"
-            value={newFood.quantity}
-            onChange={e => setNewFood(prev => ({ ...prev, quantity: e.target.value }))}
-            required
-          />
-          <input
-            type="text"
-            name="description"
-            placeholder="Description"
-            value={newFood.description}
-            onChange={e => setNewFood(prev => ({ ...prev, description: e.target.value }))}
-          />
-          <button type="submit">Add Food</button>
-        </form>
-
-        <div className="food-list">
-          {foodItems.map(item =>
-            editFoodId === item.id ? (
-              <div key={item.id} className="food-card editing">
-                <input type="text" name="name" value={editFoodData.name} onChange={handleEditChange} />
-                <input type="number" name="price" value={editFoodData.price} onChange={handleEditChange} />
-                <input type="number" name="quantity" value={editFoodData.quantity} onChange={handleEditChange} />
-                <input type="text" name="description" value={editFoodData.description} onChange={handleEditChange} />
-                <button onClick={() => handleEditSave(item.id)}>Save</button>
-                <button onClick={handleEditCancel}>Cancel</button>
-              </div>
-            ) : (
-              <div key={item.id} className="food-card">
-                <h3>{item.name}</h3>
-                <p>{item.description}</p>
-                <p>Price: Tk {item.price}</p>
-                <p>Quantity: {item.quantity}</p>
-                <button onClick={() => handleEditClick(item)}>Edit</button>
-                <button onClick={() => handleDeleteFood(item.id)}>Delete</button>
-              </div>
-            )
-          )}
+      <div className="left">
+        <div className="top">
+          <img src={vendorData.logo_url} alt="" />
+          <div className="vendor-details">
+            <p className='vendor-name'>
+              {vendorData.stall_name}
+              <span className={`${isOpen ? 'available' : 'not-available'}`}>
+                ({isOpen ? 'Open Now' : 'Closed Now'})
+              </span>
+            </p>
+            <p className='vendor-location'>
+              <MdOutlineLocationOn className='icon' />
+              <span>{vendorData.stall_location}</span>
+            </p>
+            <p className='vendor-rating'>Rating : ⭐ <span>{parseFloat(vendorData.average_rating).toFixed(1)}/5</span></p>
+            <div className="open-close-switch">
+              <Switch
+                checked={isOpen}
+                onChange={handleToggleOpen}
+                onLabel={"Close Stall"}
+                offLabel={"Open Stall"}
+                labelSize={"20px"}
+              />
+            </div>
+          </div>
         </div>
-      </section>
 
-      <section className="orders">
-        <h2>Current Orders</h2>
-        <div className="order-list">
-          {orders.map(order => (
-            <div key={order.id} className="order-card">
-              <p><strong>Order ID:</strong> {order.id}</p>
-              <p><strong>Item:</strong> {order.item}</p>
-              <p><strong>Customer:</strong> {order.customer}</p>
-              <p><strong>Quantity:</strong> {order.quantity}</p>
-              <p>
-                <strong>Status:</strong>{' '}
-                <select value={order.status} onChange={e => handleStatusChange(order.id, e.target.value)}>
-                  {statusOptions.map(status => (
-                    <option key={status} value={status}>
-                      {status}
-                    </option>
-                  ))}
-                </select>
+        <div className="bottom">
+          <div className="proprietor-details">
+            <p className="heading">Proprietor</p>
+            <div className="data">
+              <p className='info'>
+                <span className='key'>Name</span>
+                <span className='colon'>:</span>
+                <span className='value'>{vendorData.name}</span>
+              </p>
+              <p className='info'>
+                <span className='key'>Email</span>
+                <span className='colon'>:</span>
+                <span className='value'>{vendorData.email}</span>
+              </p>
+              <p className='info'>
+                <span className='key'>Phone</span>
+                <span className='colon'>:</span>
+                <span className='value'>{vendorData.phone}</span>
               </p>
             </div>
-          ))}
+          </div>
+
+          <div className="stats">
+            <p className="heading">Stats</p>
+            <div className="data">
+              <p className='info'>
+                <span className='key'>Total Orders</span>
+                <span className='colon'>:</span>
+                <span className='value'>105</span>
+              </p>
+              <p className='info'>
+                <span className='key'>Total Food Items</span>
+                <span className='colon'>:</span>
+                <span className='value'>12</span>
+              </p>
+              <p className='info'>
+                <span className='key'>Total Reviews</span>
+                <span className='colon'>:</span>
+                <span className='value'>{vendorData.review_count}</span>
+              </p>
+            </div>
+          </div>
+
+          <div className="buttons">
+            <button>See Reviews</button>
+            <button>Edit Profile</button>
+            <button>Change Password</button>
+            <button>Change Logo</button>
+          </div>
         </div>
-      </section>
+      </div>
+
+      <div className="right">
+        <div className="dashboard">
+          <div className="food_items">
+            <p className="heading">Top Rated Food Items</p>
+            <div className="cards">
+              {foodItems.map(item => (
+                <div className="card" key={item.id}>
+                  <img src={item.image} alt={item.name} />
+                  <p className='name'>{item.name}</p>
+                  <p className='price'>Price: ৳ {item.price}</p>
+                  <p className="rating">Rating: ⭐ <span>{item.rating}/5</span></p>
+                  <p className='status'>Status: <span className={item.status === 'Available' ? 'available' : 'not-available'}>{item.status}</span></p>
+                  <p className='description'>{item.description}</p>
+                </div>
+              ))}
+            </div>
+            <div className="view-button">
+              <button>View All</button>
+            </div>
+          </div>
+
+          <div className="order-history">
+            <p className="heading">Recent Orders</p>
+            <div className="cards">
+              {orders.map(order => (
+                <div className="card" key={order.id}>
+                  <p className='order-id'>Order ID: {order.id}</p>
+                  <p className='item'>Item: {order.item}</p>
+                  <p className='customer'>Customer: {order.customer}</p>
+                  <p className='quantity'>Quantity: {order.quantity}</p>
+                  <p className='price'>Price: ৳ {order.price}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

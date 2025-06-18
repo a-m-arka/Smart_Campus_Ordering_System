@@ -1,0 +1,110 @@
+const vendorFoods = [
+    {
+        id: 1,
+        title: 'Burger',
+        price: 120,
+        rating: 4.5,
+        reviewCount: 120,
+        category: 'Snacks',
+        image: burgerImg,
+        isAvailable: true,
+        description: 'Juicy grilled beef patty with cheese, lettuce, and signature sauce.',
+        orderCount: 150
+    },
+    {
+        id: 2,
+        title: 'Pizza',
+        price: 250,
+        rating: 4.7,
+        reviewCount: 98,
+        category: 'Snacks',
+        image: pizzaImg,
+        isAvailable: true,
+        description: 'Thin-crust pizza topped with mozzarella, tomato, and pepperoni.',
+        orderCount: 120
+    },
+    {
+        id: 3,
+        title: 'Sandwich',
+        price: 90,
+        rating: 4.2,
+        reviewCount: 75,
+        category: 'Snacks',
+        image: sandwichImg,
+        isAvailable: false,
+        description: 'Toasted sandwich with fresh vegetables and chicken spread.',
+        orderCount: 90
+    },
+    {
+        id: 4,
+        title: 'Pasta',
+        price: 180,
+        rating: 4.6,
+        reviewCount: 110,
+        category: 'Snacks',
+        image: pastaImg,
+        isAvailable: true,
+        description: 'Creamy white sauce pasta with mushrooms and grilled chicken.',
+        orderCount: 140
+    },
+    {
+        id: 5,
+        title: 'Salad',
+        price: 80,
+        rating: 4.0,
+        reviewCount: 60,
+        category: 'Vegetarian',
+        image: saladImg,
+        isAvailable: false,
+        description: 'Fresh green salad with cucumbers, tomatoes, and lemon dressing.',
+        orderCount: 70
+    },
+    {
+        id: 6,
+        title: 'Chicken Wings',
+        price: 150,
+        rating: 4.4,
+        reviewCount: 85,
+        category: 'Snacks',
+        image: wingsImg,
+        isAvailable: true,
+        description: 'Crispy fried chicken wings tossed in spicy buffalo sauce.',
+        orderCount: 190
+    },
+    {
+        id: 7,
+        title: 'Mango Juice',
+        price: 60,
+        rating: 4.2,
+        reviewCount: 55,
+        category: 'Beverage',
+        image: mangoJuiceImg,
+        isAvailable: true,
+        description: 'Freshly squeezed mango juice served chilled.',
+        orderCount: 65
+    },
+    {
+        id: 8,
+        title: 'Orange Juice',
+        price: 65,
+        rating: 4.3,
+        reviewCount: 60,
+        category: 'Beverage',
+        image: orangeJuiceImg,
+        isAvailable: true,
+        description: 'Refreshing orange juice with natural pulp.',
+        orderCount: 175
+    },
+    {
+        id: 9,
+        title: 'Vegetable Curry',
+        price: 100,
+        rating: 4.1,
+        reviewCount: 48,
+        category: 'Vegetarian',
+        image: vegetableImg,
+        isAvailable: true,
+        description: 'A spicy mix of seasonal vegetables cooked in traditional Bengali style.',
+        orderCount: 60
+    }
+];

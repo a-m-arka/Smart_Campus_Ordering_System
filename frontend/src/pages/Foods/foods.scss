@@ -3,81 +3,31 @@
 .foods-page {
     background-color: $background-color;
     color: $text-color1;
-    padding: 2rem;
+    padding: 32px;
     min-height: 100vh;
 
-    .title {
-        text-align: center;
-        margin-bottom: 2rem;
-        font-size: 2rem;
+    .top {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 20px;
+        width: 100%;
+        height: 60px;
+        padding: 0;
     }
 
     .foods-grid {
+        margin-top: 30px;
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
 
         .no-result {
             text-align: center;
-            margin-top: 2rem;
-            color: $text-color1;
+            margin-top: 32px;
+            color: $primary-color;
             font-weight: bold;
-        }
-
-    }
-
-    .food-card {
-        height: max-content;
-        background: $secondary-color;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
-        padding: 20px 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            border-radius: 6px;
-            margin-bottom: .75rem;
-        }
-
-        h2 {
-            font-size: 1.1rem;
-            margin: .5rem 0;
-        }
-
-        .vendor {
-            font-size: 0.9rem;
-            color: $text-color1;
-            margin-bottom: 0.25rem;
-        }
-
-        .review {
-            font-size: 0.9rem;
-            color: orange;
-            margin-bottom: 0.5rem;
-        }
-
-
-        .price {
-            font-weight: bold;
-            margin-bottom: .75rem;
-        }
-
-        .add-btn {
-            background-color: $primary-color;
-            color: $text-color1;
-            border: none;
-            padding: .5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .add-btn:hover {
-            background-color: darken($primary-color, 10%);
+            font-size: 30px;
         }
     }
 }

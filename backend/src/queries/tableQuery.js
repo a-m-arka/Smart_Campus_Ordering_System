@@ -22,6 +22,7 @@ const createTableQueries = {
       stall_name VARCHAR(100) NOT NULL,
       stall_location VARCHAR(255),
       logo_url TEXT,
+      is_open BOOLEAN DEFAULT TRUE,
       average_rating DECIMAL(3,2) DEFAULT 0.0,
       review_count INT DEFAULT 0,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

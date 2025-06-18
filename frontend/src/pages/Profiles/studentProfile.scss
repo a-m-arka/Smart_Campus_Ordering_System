@@ -1,67 +1,147 @@
 @import '../../var.scss';
 
 .student-profile {
-  background-color: $background-color;
-  color: $text-color1;
-  min-height: 100vh;
-  padding: 2rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  align-items: center;
+  padding-bottom: 30px;
 
-  .profile-section,
-  .orders-section {
-    background-color: $secondary-color;
-    padding: 2rem;
-    border-radius: 8px;
+
+  .cover {
+    width: 100%;
+
+    img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
   }
 
-  h2 {
-    color: $primary-color;
-    margin-bottom: 1rem;
-  }
+  .profile-photo {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 
-  p {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .orders-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-
-  .order-card {
-    background-color: lighten($secondary-color, 5%);
-    padding: 1rem;
-    border-radius: 6px;
-
-    h3 {
-      color: $text-color1;
-      margin-bottom: 0.5rem;
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-top: -100px;
     }
 
-    p {
-      color: lighten($text-color1, 20%);
-      margin-bottom: 1rem;
-    }
-
-    .cancel-btn {
-      background-color: $primary-color;
-      border: none;
-      color: $text-color2;
-      padding: 0.4rem 1rem;
-      border-radius: 4px;
-      font-weight: bold;
+    button {
+      all: unset;
+      background-color: rgba($primary-color, 0.2);
+      color: $primary-color;
       cursor: pointer;
-      transition: background-color 0.3s;
+      padding: 8px 10px;
+      font-size: 18px;
+      border-radius: 5px;
 
       &:hover {
-        background-color: darken($primary-color, 10%);
+        background-color: rgba($primary-color, 0.4);
       }
     }
+  }
+
+  .profile-details,
+  .change-password {
+    background-color: $secondary-color;
+    height: max-content;
+    width: 800px;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+
+    h3 {
+      font-size: 32px;
+      color: $text-color1;
+      margin-bottom: 10px;
+    }
+
+    .field {
+      height: max-content;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 10px;
+
+      label {
+        // flex: 0.3;
+        font-size: 24px;
+        color: darken($color: $text-color1, $amount: 30%);
+      }
+
+      p {
+        flex: 0.1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        color: darken($color: $text-color1, $amount: 30%);
+      }
+
+      .input-wrap {
+        flex: auto;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 26px;
+        gap: 10px;
+
+        input {
+          all: unset;
+          width: 90%;
+          border-bottom: 1px solid $primary-color;
+          padding: 5px 10px;
+          border-radius: 5px;
+          // background-color: red;
+        }
+
+        .editable {
+          border: 1px solid $primary-color;
+        }
+
+        .edit-icon {
+          z-index: 10;
+          cursor: pointer;
+          color: $primary-color;
+        }
+      }
+    }
+
+    button {
+      all: unset;
+      background-color: rgba($primary-color, 0.2);
+      color: $primary-color;
+      cursor: pointer;
+      padding: 8px 10px;
+      font-size: 18px;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: rgba($primary-color, 0.4);
+      }
+    }
+  }
+
+  .profile-details .field label {
+    flex: 0.3;
+  }
+
+  .change-password .field label {
+    flex: 1;
   }
 }

@@ -58,7 +58,7 @@ export const vendorQueries = {
 
   getVendorById: `
     SELECT id, name, email, phone, stall_name, stall_location,
-           logo_url, average_rating, review_count, created_at
+           logo_url, average_rating, review_count, is_open
     FROM Vendors
     WHERE id = ?;
   `,

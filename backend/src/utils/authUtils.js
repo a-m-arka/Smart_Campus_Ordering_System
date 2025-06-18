@@ -31,5 +31,9 @@ export const generateToken = (user, role) => {
 
 
 export const verifyToken = (token) => {
-    return jwt.verify(token.trim(), JWT_SECRET);
+    try {
+        return jwt.verify(token.trim(), JWT_SECRET);
+    } catch (error) {
+        return { error: 'Invalid or expired token' };
+    }
 };

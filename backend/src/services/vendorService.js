@@ -6,6 +6,7 @@ export const getVendor = async (id) => {
         if (!vendor) {
             return { success: false, message: "Invalid token" };
         }
+        // console.log(vendor);
         return { success: true, data: vendor };
     } catch (error) {
         console.error("Error fetching vendor data:", error);

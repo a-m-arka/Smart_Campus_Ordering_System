@@ -1,115 +1,304 @@
 @import '../../var.scss';
 
 .vendor-profile {
-  background-color: $background-color;
-  color: $text-color1;
-  min-height: 100vh;
-  padding: 2rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: 100%;
+  height: max-content;
+  padding-top: 30px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 30px;
+  // background-color: green;
 
-  section {
-    margin-bottom: 3rem;
+  .left {
+    flex: 2.5;
+    height: max-content;
+    background-color: $secondary-color;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-      color: $primary-color;
-    }
-  }
-
-  .vendor-info p {
-    font-size: 1.2rem;
-    margin: 0.4rem 0;
-  }
-
-  .food-items {
-    .food-list {
+    .top {
       display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
+      flex-direction: row;
+      gap: 20px;
+      min-height: 130px;
+      // background-color: red;
 
-      .food-card {
-        background-color: $secondary-color;
-        padding: 1rem 1.5rem;
-        border-radius: 8px;
-        width: 200px;
+      img {
+        width: 150px;
+        height: 150px;
+        border-radius: 10px;
+      }
+
+      .vendor-details {
+        // background-color: red;
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        justify-content: space-evenly;
+        gap: 5px;
 
-        p {
-          margin: 0;
+        .vendor-name {
+          font-size: 30px;
+          font-weight: bold;
+
+          span {
+            font-size: 14px;
+            margin-left: 10px;
+            padding: 3px;
+            border-radius: 5px;
+          }
         }
 
-        .delete-btn {
-          background-color: transparent;
-          border: 1.5px solid $primary-color;
-          color: $primary-color;
-          padding: 0.4rem 0.6rem;
-          border-radius: 5px;
-          cursor: pointer;
-          align-self: flex-start;
-          transition: background-color 0.3s ease;
+        .vendor-location {
+          // background-color: blue;
+          display: flex;
+          flex-direction: row;
+          gap: 5px;
+          color: darken($text-color1, $amount: 20%);
 
-          &:hover {
-            background-color: $primary-color;
-            color: $text-color2;
+          .icon {
+            // background-color: red;
+            font-size: 16px;
+          }
+
+          span {
+            // background-color: red;
+            font-size: 18px;
+          }
+        }
+
+        .vendor-rating {
+          // background-color: red;
+          font-size: 24px;
+          font-weight: 500;
+
+          span {
+            color: $primary-color;
           }
         }
       }
     }
 
-    .add-food {
-      margin-top: 1.5rem;
+    .bottom {
+      // background-color: red;
+      height: max-content;
       display: flex;
-      gap: 1rem;
+      flex-direction: column;
+      gap: 20px;
 
-      input {
-        padding: 0.6rem 0.8rem;
-        border-radius: 6px;
-        border: none;
-        font-size: 1rem;
-        width: 180px;
+      .proprietor-details,
+      .stats {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .heading {
+          font-size: 24px;
+          width: 100%;
+          // background-color: blue;
+          padding-bottom: 10px;
+          // margin-bottom: 10px;
+          border-bottom: 1px solid lighten($secondary-color, 30%);
+        }
+
+        .data {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+
+          .info {
+            display: flex;
+            flex-direction: row;
+            font-size: 20px;
+
+            .key {
+              flex: 5;
+              color: darken($text-color1, $amount: 20%);
+            }
+
+            .colon {
+              flex: 1;
+              color: darken($text-color1, $amount: 20%);
+            }
+
+            .value {
+              font-weight: 500;
+              flex: 6;
+            }
+          }
+        }
       }
 
-      button {
-        background-color: $primary-color;
-        border: none;
-        padding: 0.7rem 1.3rem;
-        border-radius: 6px;
-        color: $text-color2;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
+      .buttons {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 2fr));
+        gap: 20px;
+        height: max-content;
+        width: 100%;
+        align-items: center;
+        text-align: center;
+        // background-color: blue;
 
-        &:hover {
-          background-color: darken($primary-color, 10%);
+        button {
+          all: unset;
+          cursor: pointer;
+          width: 100%;
+          height: 30px;
+          background-color: rgba($primary-color, 0.2);
+          color: $primary-color;
+          font-size: 18px;
+          border-radius: 10px;
+          padding: 5px;
+
+          &:hover {
+            background-color: rgba($primary-color, 0.4);
+          }
         }
       }
     }
   }
 
-  .orders {
-    .order-list {
+  .right {
+    flex: 5;
+    min-height: 600px;
+    // background-color: $secondary-color;
+    // border-radius: 10px;
+    // padding: 20px;
+
+    .dashboard {
       display: flex;
       flex-direction: column;
-      gap: 1.2rem;
+      height: 100%;
+      gap: 20px;
+      // background-color: red;
 
-      .order-card {
+      .food_items {
+        flex: 3;
+
+        .status {
+          span {
+            padding: 5px;
+            border-radius: 5px;
+          }
+        }
+      }
+
+      .order-history {
+        flex: 2;
+      }
+
+      .food_items,
+      .order-history {
         background-color: $secondary-color;
-        padding: 1rem 1.3rem;
-        border-radius: 8px;
+        border-radius: 10px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
 
-        p {
-          margin: 0.3rem 0;
-          font-size: 1.1rem;
+        .heading {
+          font-size: 30px;
+          padding-bottom: 10px;
+          border-bottom: 1px solid lighten($secondary-color, 30%);
+        }
 
-          select {
-            margin-left: 0.5rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            border: none;
-            font-size: 1rem;
+        .cards {
+          height: max-content;
+          width: 100%;
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          gap: 20px;
+
+          .card {
+            background-color: lighten($secondary-color, 5%);
+            border-radius: 10px;
+            padding: 15px;
+            // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            // transition: transform 0.2s ease;
+
+            // &:hover {
+            //   transform: translateY(-5px);
+            // }
+
+            img {
+              width: 100%;
+              height: 160px;
+              object-fit: cover;
+              border-radius: 8px;
+            }
+
+            .name {
+              font-size: 20px;
+              font-weight: 600;
+              color: $primary-color;
+            }
+
+            .price,
+            .quantity,
+            .description,
+            .order-id,
+            .item,
+            .customer {
+              font-size: 16px;
+              color: $text-color1;
+            }
+
+            .price {
+              font-weight: 500;
+            }
+
+            .quantity {
+              font-weight: 500;
+            }
+
+            .description {
+              font-size: 15px;
+              color: darken($text-color1, 20%);
+            }
+
+            .order-id {
+              font-weight: bold;
+              color: $primary-color;
+            }
+
+            .rating {
+              span {
+                color: $primary-color;
+                font-size: 18px;
+                font-weight: 500;
+              }
+            }
+          }
+
+        }
+
+        .view-button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          button {
+            all: unset;
+            cursor: pointer;
+            width: max-content;
+            height: 30px;
+            background-color: rgba($primary-color, 0.2);
+            color: $primary-color;
+            font-size: 18px;
+            border-radius: 10px;
+            padding: 5px 20px;
+
+            &:hover {
+              background-color: rgba($primary-color, 0.4);
+            }
           }
         }
       }
