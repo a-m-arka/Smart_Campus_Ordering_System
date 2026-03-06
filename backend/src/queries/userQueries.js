@@ -16,12 +16,14 @@ export const studentQueries = {
 
   updateProfilePicture: `
     UPDATE Students
-    SET profile_picture_url = ?
+    SET
+      profile_picture_url = ?,
+      profile_picture_public_id = ?
     WHERE id = ?;
   `,
 
   getStudentById: `
-    SELECT id, name, email, phone, address, profile_picture_url, created_at
+    SELECT id, name, email, phone, address, profile_picture_url, profile_picture_public_id, created_at
     FROM Students
     WHERE id = ?;
   `,
@@ -52,13 +54,15 @@ export const vendorQueries = {
 
   updateLogo: `
     UPDATE Vendors
-    SET logo_url = ?
+    SET
+      logo_url = ?,
+      logo_public_id = ?
     WHERE id = ?;
   `,
 
   getVendorById: `
     SELECT id, name, email, phone, stall_name, stall_location,
-           logo_url, average_rating, review_count, is_open
+           logo_url, logo_public_id, average_rating, review_count, is_open
     FROM Vendors
     WHERE id = ?;
   `,

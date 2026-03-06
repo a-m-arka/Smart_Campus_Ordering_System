@@ -37,3 +37,23 @@ export const verifyToken = (token) => {
         return { error: 'Invalid or expired token' };
     }
 };
+
+export const validateDecodedToken = (decodedToken, requiredRole) => {
+    if (!decodedToken) {
+        return { valid: false, statusCode: 401, message: 'Invalid token' };
+    }
+
+    if (decodedToken.error) {
+        return { valid: false, statusCode: 401, message: decodedToken.error };
+    }
+
+    if (!decodedToken.id) {
+        return { valid: false, statusCode: 401, message: 'Invalid token payload' };
+    }
+
+    if (requiredRole && (!decodedToken.role || decodedToken.role !== requiredRole)) {
+        return { valid: false, statusCode: 403, message: `Access denied. Not a ${requiredRole}.` };
+    }
+
+    return { valid: true };
+};

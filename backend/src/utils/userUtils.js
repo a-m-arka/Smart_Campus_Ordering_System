@@ -32,3 +32,18 @@ export const findUserById = async (id, role) => {
         return null;
     }
 };
+
+export const updateUserImage = async (id, role, imageUrl, publicId) => {
+  try {
+    const query =
+      role === 'student'
+        ? studentQueries.updateProfilePicture
+        : vendorQueries.updateLogo;
+
+    const [result] = await pool.query(query, [imageUrl, publicId, id]);
+    return { success: true, result };
+  } catch (error) {
+    console.error("Error updating user image:", error.stack);
+    return { success: false, message: "Failed to update image", error };
+  }
+};

@@ -7,6 +7,7 @@ import defaultProfileImage from '../../images/user_profile.jpg';
 
 const StudentProfile = () => {
   const { userData } = useGlobalContext();
+  const server = process.env.REACT_APP_SERVER;
 
   const [profile, setProfile] = useState({
     id: userData?.data?.id || "N/A",
@@ -17,7 +18,7 @@ const StudentProfile = () => {
     image: userData?.data?.profile_picture_url || defaultProfileImage
   });
 
-  const [profileImage, setProfileImage] = useState(profile.image);
+  const [loading, setLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const fileInputRef = useRef(null);
@@ -44,13 +45,50 @@ const StudentProfile = () => {
     confirmPassword: ''
   });
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
     if (!selectedFile) {
       fileInputRef.current.click();
-    } else {
-      setProfileImage(previewImage);
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.reload();
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+
+      const response = await fetch(`${server}/api/student/update-profile-picture`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        body: formData
+      });
+
+      const data = await response.json();
+
+      // console.log(data);
+
+      if (!response.ok) {
+        alert(data.message || 'Failed to update image');
+        return;
+      }
+
+      alert(data.message || 'Profile picture updated successfully');
+      setProfile(prev => ({ ...prev, image: previewImage }));
       setSelectedFile(null);
       setPreviewImage(null);
+
+    } catch (error) {
+      console.error('Error updating profile picture:', error);
+      alert('Failed to update profile picture. Try again');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -95,9 +133,9 @@ const StudentProfile = () => {
       </div>
 
       <div className="profile-photo">
-        <img src={previewImage || profileImage} alt="Profile" />
-        <button onClick={handleButtonClick}>
-          {selectedFile ? 'Update' : 'Upload New Picture'}
+        <img src={previewImage || profile.image} alt="Profile" />
+        <button onClick={handleButtonClick} disabled={loading}>
+          {loading ? 'Uploading image...' : (selectedFile ? 'Update' : 'Upload New Picture')}
         </button>
         <input
           type="file"

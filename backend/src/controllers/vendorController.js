@@ -1,5 +1,5 @@
 import * as vendorService from '../services/vendorService.js';
-import { verifyToken } from '../utils/authUtils.js';
+import { verifyToken, validateDecodedToken } from '../utils/authUtils.js';
 
 export const getVendor = async (req, res) => {
     const token = req.headers.authorization?.split(' ')[1];
@@ -9,16 +9,9 @@ export const getVendor = async (req, res) => {
     try {
         const decodedToken = verifyToken(token);
 
-        if (decodedToken.error) {
-            return res.status(401).json({ message: decodedToken.error });
-        }
-
-        if (!decodedToken.id) {
-            return res.status(401).json({ message: 'Invalid token payload' });
-        }
-
-        if( !decodedToken.role || decodedToken.role !== 'vendor') {
-            return res.status(403).json({ message: 'Access denied. Not a vendor.' });
+        const validation = validateDecodedToken(decodedToken, 'vendor');
+        if (!validation.valid) {
+            return res.status(validation.statusCode).json({ message: validation.message });
         }
 
         const response = await vendorService.getVendor(decodedToken.id);
