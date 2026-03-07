@@ -1,5 +1,5 @@
-class StudentModel{
-    constructor(student){
+class StudentModel {
+    constructor(student) {
         this.name = student.name;
         this.email = student.email;
         this.phone = student.phone;

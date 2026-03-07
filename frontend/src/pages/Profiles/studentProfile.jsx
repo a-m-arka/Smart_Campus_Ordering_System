@@ -53,6 +53,7 @@ const StudentProfile = () => {
 
     const token = localStorage.getItem('token');
     if (!token) {
+      alert("You must be logged in to update the profile picture");
       window.location.reload();
       return;
     }

@@ -19,7 +19,7 @@ export const vendorMenu = [
         category: 'Snacks',
         image: burgerImg,
         isAvailable: true,
-        description: 'Juicy grilled beef patty with cheese, lettuce, and signature sauce.',
+        description: 'Juicy grilled chicken patty with cheese, lettuce, and signature sauce.',
         orderCount: 150
     },
     {

@@ -11,18 +11,34 @@
     align-items: center;
     justify-content: center;
     z-index: 1000;
+    padding: 20px;
+    overflow-y: auto;
 }
 
 .popup-content {
-    // background: transparent;
     backdrop-filter: blur(30px);
     background-color: rgba($text-color2, 0.8);
-    // border: 1px solid $primary-color;
     padding: 20px;
     border-radius: 10px;
     text-align: center;
     box-shadow: 0 0 10px rgba($primary-color, 0.5);
     animation: fadeIn 0.3s ease-out;
+    width: 100%;
+    max-width: 700px;
+    max-height: 80vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+
+    .popup-form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        overflow-y: auto;
+        padding-right: 5px;
+    }
 
     .icon {
         font-size: 68px;
@@ -31,10 +47,131 @@
         color: $primary-color;
     }
 
-    p{
+    p {
         font-size: 24px;
         font-weight: 600;
         color: $primary-color;
+    }
+
+    .error-message {
+        color: red;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .popup-field {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        align-items: start;
+
+        label {
+            font-size: 24px;
+            font-weight: 600;
+            color: $primary-color;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid $primary-color;
+            font-size: 16px;
+            outline: none;
+            background-color: $background-color;
+            color: $text-color1;
+            transition: border 0.2s;
+
+            &:focus {
+                border: 1px solid $text-color1;
+            }
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        &.checkbox {
+            flex-direction: row;
+            align-items: center;
+
+            label {
+                margin-right: 10px;
+            }
+
+            input[type="checkbox"] {
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                width: 22px;
+                height: 22px;
+                border: 2px solid $primary-color;
+                border-radius: 6px;
+                position: relative;
+                cursor: pointer;
+                background-color: $background-color;
+                display: inline-block;
+
+                &:checked::before {
+                    content: "✔"; // simpler, avoids pseudo-position issues
+                    position: absolute;
+                    top: -3px;
+                    left: 2px;
+                    font-size: 18px;
+                    color: $text-color2;
+                }
+
+                &:checked {
+                    background-color: $primary-color;
+                    border-color: $primary-color;
+                }
+            }
+        }
+    }
+
+    .image-preview {
+        margin-top: 10px;
+        text-align: center;
+
+        img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba($primary-color, 0.3);
+        }
+    }
+}
+
+.pop-up-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    button {
+        margin-top: 15px;
+        background-color: $primary-color;
+        color: $text-color1;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 18px;
+
+        &:hover {
+            background-color: darken($primary-color, 20%);
+        }
     }
 }
 
@@ -47,30 +184,5 @@
     to {
         opacity: 1;
         transform: scale(1);
-    }
-}
-
-.pop-up-buttons{
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    align-items: center;
-    justify-content: center;
-
-    button {
-        margin-top: 15px;
-        background-color: $primary-color;
-        color: $text-color1;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        font-weight: 600;
-        font-size: 18px;
-    
-        &:hover {
-            background-color: darken($primary-color, 20%);
-            // color: black;
-        }
     }
 }

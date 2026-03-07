@@ -42,6 +42,25 @@
       }
     }
 
+    .add-btn {
+      padding: 8px 12px;
+      font-size: 18px;
+      border: none;
+      background-color: rgba($primary-color, 0.2);
+      color: $primary-color;
+      border-radius: 10px;
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      gap: 5px;
+
+      &:hover {
+        background-color: rgba($primary-color, 0.4);
+      }
+    }
+
   }
 
   .category-section {
@@ -62,25 +81,6 @@
       align-items: center;
       justify-content: start;
       gap: 10px;
-
-      .add-btn {
-        padding: 8px 12px;
-        font-size: 18px;
-        border: none;
-        background-color: rgba($primary-color, 0.2);
-        color: $primary-color;
-        border-radius: 10px;
-        cursor: pointer;
-        white-space: nowrap;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        gap: 5px;
-
-        &:hover {
-          background-color: rgba($primary-color, 0.4);
-        }
-      }
     }
 
     .food-grid {
@@ -220,17 +220,13 @@
           margin-top: 15px;
           // background-color: #fff;
 
-          .switch-status {
-            padding-top: 3px;
-            padding-bottom: 5px;
-            padding-left: 15px;
-            padding-right: 5px;
+          .available-status {
+            padding: 14px 16px;
+            border-radius: 10px;
+            font-size: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100%;
-            width: max-content;
-            border-radius: 10px;
           }
 
           .edit-btn {

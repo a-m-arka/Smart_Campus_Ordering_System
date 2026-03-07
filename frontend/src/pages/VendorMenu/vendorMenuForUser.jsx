@@ -205,7 +205,7 @@ const VendorMenuForUser = () => {
                         <div className="foods-grid">
                             {searchedFoods.length > 0 ? (
                                 searchedFoods.map(item => (
-                                    <FoodCard key={item.id} item={item} onAddToCart={() => handleAddToCart(item)} showVendor={true} />
+                                    <FoodCard key={item.id} item={item} onAddToCart={() => handleAddToCart(item)} showVendor={false} />
                                 ))
                             ) : (
                                 <p className="no-result">No items found.</p>
@@ -218,7 +218,7 @@ const VendorMenuForUser = () => {
                     <div className="foods-grid">
                         {mostOrdered.length > 0 ? (
                             mostOrdered.map(item => (
-                                <FoodCard key={item.id} item={item} onAddToCart={() => handleAddToCart(item)} showVendor={true} />
+                                <FoodCard key={item.id} item={item} onAddToCart={() => handleAddToCart(item)} showVendor={false} />
                             ))
                         ) : (
                             <p className="no-result">No items found.</p>
@@ -230,7 +230,7 @@ const VendorMenuForUser = () => {
                     <div className="foods-grid">
                         {topRated.length > 0 ? (
                             topRated.map(item => (
-                                <FoodCard key={item.id} item={item} onAddToCart={() => handleAddToCart(item)} showVendor={true} />
+                                <FoodCard key={item.id} item={item} onAddToCart={() => handleAddToCart(item)} showVendor={false} />
                             ))
                         ) : (
                             <p className="no-result">No items found.</p>
@@ -248,7 +248,7 @@ const VendorMenuForUser = () => {
                         <div className="foods-grid">
                             {group.items.length > 0 ? (
                                 group.items.map(item => (
-                                    <FoodCard key={item.id} item={item} onAddToCart={() => handleAddToCart(item)} showVendor={true} />
+                                    <FoodCard key={item.id} item={item} onAddToCart={() => handleAddToCart(item)} showVendor={false} />
                                 ))
                             ) : (
                                 <p className="no-result">No items found.</p>

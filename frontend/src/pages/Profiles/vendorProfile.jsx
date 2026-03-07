@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import './vendorProfile.scss'
 import defaultLogo from '../../images/default_logo.jpg'
 import { MdOutlineLocationOn } from "react-icons/md";
@@ -46,22 +46,86 @@ const orders = [
 
 const VendorProfile = () => {
   const { userData } = useGlobalContext();
-
+  const server = process.env.REACT_APP_SERVER;
   // console.log(userData.data);
 
-  const vendorData = {
+  const [vendorData, setVendorData] = useState({
     id: userData?.data?.id || "N/A",
     name: userData?.data?.name || "N/A",
     email: userData?.data?.email || "N/A",
     phone: userData?.data?.phone || "N/A",
     stall_name: userData?.data?.stall_name || "N/A",
     stall_location: userData?.data?.stall_location || "N/A",
-    logo_url: userData?.data?.logo_url || defaultLogo,
+    logo: userData?.data?.logo_url || defaultLogo,
     average_rating: userData?.data?.average_rating
       ? parseFloat(userData.data.average_rating).toFixed(1)
       : "0.0",
     review_count: userData?.data?.review_count || 0,
     is_open: Boolean(userData?.data?.is_open)
+  });
+
+  // const [logo, setLogo] = useState(vendorData.logo_url);
+  const [loading, setLoading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
+
+  const fileInputRef = useRef(null);
+
+  const handleLogoChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const imageURL = URL.createObjectURL(file);
+      setSelectedFile(file);
+      setPreviewImage(imageURL);
+    }
+  };
+
+  const handleLogoUpload = async () => {
+    if (!selectedFile) {
+      fileInputRef.current.click();
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert("You must be logged in to update the logo");
+      window.location.reload();
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+
+      const response = await fetch(`${server}/api/vendor/update-logo`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message || "Failed to update logo");
+        return;
+      }
+
+      alert(data.message || "Logo updated successfully");
+
+      setVendorData(prev => ({ ...prev, logo: previewImage }));
+      setSelectedFile(null);
+      setPreviewImage(null);
+
+    } catch (error) {
+      console.error(error);
+      alert("Failed to update logo");
+    } finally {
+      setLoading(false);
+    }
   };
 
   // console.log(vendorData);
@@ -76,7 +140,7 @@ const VendorProfile = () => {
     <div className="vendor-profile">
       <div className="left">
         <div className="top">
-          <img src={vendorData.logo_url} alt="" />
+          <img src={previewImage || vendorData.logo} alt="" />
           <div className="vendor-details">
             <p className='vendor-name'>
               {vendorData.stall_name}
@@ -148,7 +212,19 @@ const VendorProfile = () => {
             <button>See Reviews</button>
             <button>Edit Profile</button>
             <button>Change Password</button>
-            <button>Change Logo</button>
+
+            <button onClick={handleLogoUpload} disabled={loading}>
+              {loading ? "Uploading..." : (selectedFile ? "Update Logo" : "Upload New Logo")}
+            </button>
+
+            <input
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              ref={fileInputRef}
+              onChange={handleLogoChange}
+            />
+
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@ import createAllTables from './src/utils/dbUtils.js';
 import authRoutes from './src/routes/authRoutes.js';
 import studentRoutes from './src/routes/studentRoutes.js';
 import vendorRoutes from './src/routes/vendorRoutes.js';
+import foodRoutes from './src/routes/foodRoutes.js';
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ server.use(express.json());
 server.use('/api/auth', authRoutes);
 server.use('/api/student', studentRoutes);
 server.use('/api/vendor', vendorRoutes);
+server.use('/api/food', foodRoutes);
 
 
 server.listen(port, async () => {
