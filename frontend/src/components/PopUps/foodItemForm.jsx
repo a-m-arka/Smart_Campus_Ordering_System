@@ -11,6 +11,9 @@ const categoryOptions = [
 ]
 
 const FoodItemForm = ({ onClose, onSave, initialData }) => {
+
+    // console.log(initialData)
+
     const [formData, setFormData] = useState({
         name: initialData?.title || "",
         description: initialData?.description || "",
@@ -56,19 +59,17 @@ const FoodItemForm = ({ onClose, onSave, initialData }) => {
             if (!token) throw new Error("You are not authorized")
 
             const fd = new FormData()
-            fd.append("title", formData.name)
-            fd.append("description", formData.description)
-            fd.append("price", formData.price)
-            fd.append("category", formData.category)
-            fd.append("isAvailable", formData.available)
-            if (formData.image instanceof File) {
-                fd.append("file", formData.image)
-            }
+            if (!initialData || formData.name !== initialData.title) fd.append("title", formData.name)
+            if (!initialData || formData.description !== initialData.description) fd.append("description", formData.description)
+            if (!initialData || formData.price !== initialData.price) fd.append("price", formData.price)
+            if (!initialData || formData.category !== initialData.category) fd.append("category", formData.category)
+            if (!initialData || formData.available !== initialData.isAvailable) fd.append("isAvailable", formData.available)
+            if (formData.image instanceof File) fd.append("file", formData.image)
 
             // console.log(fd)
 
             const url = initialData
-                ? `${server}/api/food/edit-food` // PUT endpoint
+                ? `${server}/api/food/edit-food/${initialData.id}` // PUT endpoint
                 : `${server}/api/food/add-food`  // POST endpoint
             const method = initialData ? "PUT" : "POST"
 
@@ -86,7 +87,7 @@ const FoodItemForm = ({ onClose, onSave, initialData }) => {
             else {
                 alert(data.message || "Food item saved successfully")
                 setLoading(false)
-                onSave(formData)
+                onSave()
             }
         } catch (err) {
             console.error(err)

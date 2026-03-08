@@ -32,52 +32,10 @@ const VendorMenuForVendor = () => {
   }, [navigate]);
 
   // Add new or update existing food item
-  const handleAddOrUpdateItem = (formItem) => {
-    let imageUrl = null;
-    if (formItem.image instanceof File) {
-      imageUrl = URL.createObjectURL(formItem.image);
-    } else {
-      imageUrl = formItem.image;
-    }
-
-    if (editingItem) {
-      // Update existing item
-      setFoodItems(prev =>
-        prev.map(item =>
-          item.id === editingItem.id
-            ? {
-              ...item,
-              title: formItem.name,
-              description: formItem.description,
-              price: Number(formItem.price),
-              category: formItem.category,
-              isAvailable: formItem.available,
-              image: imageUrl
-            }
-            : item
-        )
-      );
-    } else {
-      // Add new item
-      const id = Date.now();
-      setFoodItems(prev => [
-        ...prev,
-        {
-          id,
-          title: formItem.name,
-          description: formItem.description,
-          price: Number(formItem.price),
-          category: formItem.category,
-          isAvailable: formItem.available,
-          image: imageUrl,
-          rating: 0,
-          reviewCount: 0
-        }
-      ]);
-    }
-
+  const handleAddOrUpdateItem = () => {
     setEditingItem(null);
     setShowFoodForm(false);
+    window.location.reload(); 
   };
 
   // Group items by category
