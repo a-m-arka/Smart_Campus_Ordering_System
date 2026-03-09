@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './foods.scss'
 import SearchBox from '../../components/Searchbox/searchbox.jsx'
 import SortDropdown from '../../components/SortDropdown/sortDropdown.jsx'
@@ -8,8 +8,9 @@ import AccessDenied from '../../components/PopUps/accessDenied.jsx'
 import { useGlobalContext } from '../../context/GlobalContext.js'
 import { useNavigate } from 'react-router-dom'
 
-import { publicFoods } from '../../temporaryData/data.js'
-const data = publicFoods;
+// import { publicFoods } from '../../temporaryData/data.js'
+// const data = publicFoods;
+const server = process.env.REACT_APP_SERVER;
 
 const sortOptions = [
   { label: 'Rating', field: 'rating', order: 'desc' },
@@ -24,10 +25,35 @@ const Foods = () => {
   const navigate = useNavigate()
   const { userRole } = useGlobalContext()
 
+  const [data, setData] = useState([])
   const [isAccessDenied, setIsAccessDenied] = useState(false)
   const [query, setQuery] = useState('')
   const [filters, setFilters] = useState({})
   const [sortValue, setSortValue] = useState({})
+
+  useEffect(() => {
+    const fetchFoods = async () => {
+      try {
+        const response = await fetch(`${server}/api/public/food-items`, {
+          method: 'GET',
+        })
+        const result = await response.json()
+        if (!response.ok) {
+          alert(result.message || 'Failed to load food items. Please try again later.')
+          navigate(-1)
+          return
+        }
+        setData(result.data)
+        // console.log(result);
+      } catch (err) {
+        console.error('Error fetching foods:', err)
+        alert('Failed to load food items. Please try again later.')
+        navigate(-1)
+        return
+      }
+    }
+    fetchFoods()
+  }, [navigate, server])
 
   const locationOptions = [...new Set(data.map(d => d.vendorLocation))]
   const categoryOptions = [...new Set(data.map(d => d.category))]

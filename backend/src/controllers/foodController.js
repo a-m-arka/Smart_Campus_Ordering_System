@@ -1,7 +1,7 @@
 import { verifyToken, validateDecodedToken } from "../utils/authUtils.js";
 import FoodModel from "../models/foodModel.js";
 import * as foodService from '../services/foodService.js';
-import { validateFoodInfo } from "../utils/fooddUtils.js";
+import { validateFoodInfo } from "../utils/foodUtils.js";
 
 export const addFood = async (req, res) => {
     const token = req.headers.authorization?.split(' ')[1];

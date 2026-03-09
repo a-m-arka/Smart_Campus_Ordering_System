@@ -71,5 +71,16 @@ export const vendorQueries = {
     SELECT id, password
     FROM Vendors
     WHERE email = ?;
-  `
+  `,
+
+  getAllVendors: `
+    SELECT 
+      id,
+      stall_name AS name,
+      stall_location AS location,
+      average_rating AS rating,
+      logo_url AS image,
+      is_open AS isOpen
+    FROM Vendors;
+  `,
 };

@@ -37,7 +37,10 @@ export const foodQueries = {
         f.review_count AS reviewCount,
         v.id AS vendorId,
         v.stall_name AS vendor,
-        v.stall_location AS vendorLocation
+        v.stall_location AS vendorLocation,
+        v.logo_url AS vendorLogo,
+        v.average_rating AS vendorRating,
+        v.review_count AS vendorReviewCount
     FROM FoodItems f
     JOIN Vendors v ON f.vendor_id = v.id;
   `,

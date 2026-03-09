@@ -1,11 +1,11 @@
 const server = process.env.REACT_APP_SERVER;
 
-export const fetchVendorMenu = async (isPublic = false) => {
+export const fetchVendorMenu = async (isPublic = false,vendorId = null) => {
     let url;
     let token = null;
 
     if (isPublic) {
-        url = `${server}/api/foods`;
+        url = `${server}/api/public/vendor-menu/${vendorId}`;
     } else {
         url = `${server}/api/vendor/menu`;
         token = localStorage.getItem("token");

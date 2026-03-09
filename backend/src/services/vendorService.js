@@ -1,6 +1,6 @@
 import * as userUtils from '../utils/userUtils.js';
 import * as imageUtils from '../utils/imageUtils.js';
-import * as foodUtils from '../utils/fooddUtils.js';
+import * as foodUtils from '../utils/foodUtils.js';
 
 export const getVendor = async (id) => {
     try {

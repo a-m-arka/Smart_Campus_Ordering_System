@@ -47,3 +47,20 @@ export const updateUserImage = async (id, role, imageUrl, publicId) => {
     return { success: false, message: "Failed to update image", error };
   }
 };
+
+export const getAllUsers = async (role = 'vendor') => {
+    try {
+        let query;
+        if (role === 'vendor'){
+            query = vendorQueries.getAllVendors;
+        }
+        else{
+            return {error: true};
+        }
+        const [result] = await pool.query(query);
+        return result;
+    } catch (error) {
+        console.error(`Error fetching all ${role}s:`, error.stack);
+        return {error: true};
+    }
+};

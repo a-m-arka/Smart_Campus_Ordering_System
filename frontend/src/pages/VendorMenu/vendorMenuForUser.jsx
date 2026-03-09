@@ -1,31 +1,46 @@
 import React, { useState, useRef, useEffect } from 'react'
 import './vendorMenuForUser.scss'
+import { fetchVendorMenu } from './vendorMenuApi'
 import FoodCard from '../../components/Cards/foodCard'
 import AccessDenied from '../../components/PopUps/accessDenied'
 import SearchBox from '../../components/Searchbox/searchbox'
 import { useGlobalContext } from '../../context/GlobalContext'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
-import { publicFoods } from '../../temporaryData/data'
+// import { publicFoods } from '../../temporaryData/data'
 import vendroLogo from '../../images/default_logo.jpg'
-const vendorFoods = publicFoods;
+// const vendorFoods = publicFoods;
 
 const VendorMenuForUser = () => {
-    const vendorData = {
-        id: 1,
-        name: 'Foodies Hub',
-        location: 'Chittagong',
-        rating: 4.6,
-        reviewCount: 120,
-        image: vendroLogo
-    };
 
     const navigate = useNavigate()
+    const location = useLocation()
 
     const { userRole } = useGlobalContext()
     const [isAccessDenied, setIsAccessDenied] = useState(false)
     const [query, setQuery] = useState('')
     const [activeCategory, setActiveCategory] = useState('')
+    const [vendorFoods, setVendorFoods] = useState([])
+
+    const vendorData = location.state
+
+    // console.log(vendorData)
+
+    useEffect(() => {
+        const loadVendorMenu = async () => {
+            const response = await fetchVendorMenu(true, vendorData.id);
+
+            if (!response || response.error) {
+                alert(response?.error || "Failed to load venddor menu");
+                navigate(-1);
+                return;
+            }
+            // console.log(response);
+            setVendorFoods(response.data);
+        };
+
+        loadVendorMenu();
+    }, [navigate]);
 
     const handlePopUpClose = () => {
         setIsAccessDenied(false)

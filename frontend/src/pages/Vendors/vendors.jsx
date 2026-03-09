@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './vendors.scss'
 import SearchBox from '../../components/Searchbox/searchbox.jsx'
@@ -7,34 +7,60 @@ import SortDropdown from '../../components/SortDropdown/sortDropdown.jsx'
 
 import vendroLogo from '../../images/default_logo.jpg'
 
-const vendors = [
-  { id: 1, name: 'Foodies Hub', location: 'Chittagong', rating: 4.6, reviewCount: 120, image: vendroLogo, isOpen: true },
-  { id: 2, name: 'Pizza World', location: 'Dhaka', rating: 4.8, reviewCount: 200, image: vendroLogo, isOpen: true },
-  { id: 3, name: 'Snack Corner', location: 'Sylhet', rating: 4.3, reviewCount: 75, image: vendroLogo, isOpen: false },
-  { id: 4, name: 'Italiano Express', location: 'Khulna', rating: 4.7, reviewCount: 150, image: vendroLogo, isOpen: false },
-  { id: 5, name: 'Green Bites', location: 'Rajshahi', rating: 4.1, reviewCount: 60, image: vendroLogo, isOpen: true }
-]
+// const vendors = [
+//   { id: 1, name: 'Foodies Hub', location: 'Chittagong', rating: 4.6, reviewCount: 120, image: vendroLogo, isOpen: true },
+//   { id: 2, name: 'Pizza World', location: 'Dhaka', rating: 4.8, reviewCount: 200, image: vendroLogo, isOpen: true },
+//   { id: 3, name: 'Snack Corner', location: 'Sylhet', rating: 4.3, reviewCount: 75, image: vendroLogo, isOpen: false },
+//   { id: 4, name: 'Italiano Express', location: 'Khulna', rating: 4.7, reviewCount: 150, image: vendroLogo, isOpen: false },
+//   { id: 5, name: 'Green Bites', location: 'Rajshahi', rating: 4.1, reviewCount: 60, image: vendroLogo, isOpen: true }
+// ]
 
 
 const Vendors = () => {
   const sortOptions = [
     { label: 'Rating', field: 'rating', order: 'desc' },
     { label: 'Rating', field: 'rating', order: 'asc' },
-    { label: 'Reviews', field: 'reviewCount', order: 'desc' },
-    { label: 'Reviews', field: 'reviewCount', order: 'asc' }
+    // { label: 'Reviews', field: 'reviewCount', order: 'desc' },
+    // { label: 'Reviews', field: 'reviewCount', order: 'asc' }
   ]
 
+  const server = process.env.REACT_APP_SERVER;
+  const navigate = useNavigate()
+
+  const [vendors, setVendors] = useState([])
   const [search, setSearch] = useState('')
   const [filters, setFilters] = useState({})
   const [sortValue, setSortValue] = useState({})
+
+  useEffect(() => {
+      const fetchVendors = async () => {
+        try {
+          const response = await fetch(`${server}/api/public/vendors`, {
+            method: 'GET',
+          })
+          const result = await response.json()
+          if (!response.ok) {
+            alert(result.message || 'Failed to load vendors. Please try again later.')
+            navigate(-1)
+            return
+          }
+          setVendors(result.data)
+          // console.log(result.data)
+        } catch (err) {
+          console.error('Error fetching vendors:', err)
+          alert('Failed to load vendors. Please try again later.')
+          navigate(-1)
+          return
+        }
+      }
+      fetchVendors()
+    }, [navigate, server])
 
   const locationOptions = [...new Set(vendors.map(v => v.location))]
 
   const filterOptions = [
     { name: 'Location', options: locationOptions },
   ]
-
-  const navigate = useNavigate()
 
   const handleSearch = (query) => {
     setSearch(query)
@@ -67,8 +93,20 @@ const Vendors = () => {
   })
 
 
-  const handleMenuClick = (vendorId) => {
-    navigate(`/vendors/${vendorId}`)
+  const handleMenuClick = (vendorData) => {
+    // console.log(vendorData)
+    navigate(
+      `/vendors/${vendorData.id}`, 
+      { 
+        state: { 
+          id: vendorData.id, 
+          name: vendorData.name, 
+          location: vendorData.location, 
+          rating: vendorData.rating, 
+          image: vendorData.image 
+        } 
+      } 
+    )
   }
 
   return (
@@ -82,12 +120,12 @@ const Vendors = () => {
 
       <div className="vendors-grid">
         {filteredVendors.map(vendor => (
-          <div key={vendor.id} className="vendor-card" onClick={() => handleMenuClick(vendor.id)}>
+          <div key={vendor.id} className="vendor-card" onClick={() => handleMenuClick(vendor)}>
             <img src={vendor.image} alt={vendor.name} />
             <div className="details">
               <div className="left">
                 <h2>{vendor.name}</h2>
-                <p className="location">{vendor.location}</p>
+                <p className="location">{vendor.location || 'N/A'}</p>
               </div>
               <div className="right">
                 <p className="rating">⭐ <span>{vendor.rating}/5</span></p>

@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import { checkConnection } from './src/config/db.js';
 import createAllTables from './src/utils/dbUtils.js';
+import publicRoutes from './src/routes/publicRoutes.js';
 import authRoutes from './src/routes/authRoutes.js';
 import studentRoutes from './src/routes/studentRoutes.js';
 import vendorRoutes from './src/routes/vendorRoutes.js';
@@ -17,6 +18,7 @@ server.use(cors());
 server.use(express.json());
 
 // Routes
+server.use('/api/public', publicRoutes);
 server.use('/api/auth', authRoutes);
 server.use('/api/student', studentRoutes);
 server.use('/api/vendor', vendorRoutes);

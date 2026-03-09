@@ -1,4 +1,4 @@
-import * as foodUtils from '../utils/fooddUtils.js';
+import * as foodUtils from '../utils/foodUtils.js';
 import * as imageUtils from '../utils/imageUtils.js';
 import * as userUtils from '../utils/userUtils.js';
 
