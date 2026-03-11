@@ -8,10 +8,10 @@ import { useGlobalContext } from '../../context/GlobalContext'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 // import { publicFoods } from '../../temporaryData/data'
-import vendroLogo from '../../images/default_logo.jpg'
+// import vendroLogo from '../../images/default_logo.jpg'
 // const vendorFoods = publicFoods;
 
-const VendorMenuForUser = () => {
+const VendorMenuForUser = ({ mainRef }) => {
 
     const navigate = useNavigate()
     const location = useLocation()
@@ -138,7 +138,7 @@ const VendorMenuForUser = () => {
         if (query !== '' && searchResultRef.current) {
             const offset = 120
             const top = searchResultRef.current.offsetTop - offset
-            window.scrollTo({ top, behavior: 'smooth' })
+            mainRef.current.scrollTo({ top, behavior: 'smooth' })
         }
     }, [query])
 
@@ -164,7 +164,7 @@ const VendorMenuForUser = () => {
                             const offset = 120
                             if (searchResultRef.current) {
                                 const top = searchResultRef.current.offsetTop - offset
-                                window.scrollTo({ top, behavior: 'smooth' })
+                                mainRef.current.scrollTo({ top, behavior: 'smooth' })
                             }
                         }}
                     >
@@ -178,7 +178,7 @@ const VendorMenuForUser = () => {
                         const offset = 120
                         if (popularRef.current) {
                             const top = popularRef.current.offsetTop - offset
-                            window.scrollTo({ top, behavior: 'smooth' })
+                            mainRef.current.scrollTo({ top, behavior: 'smooth' })
                         }
                     }}
                 >
@@ -190,7 +190,7 @@ const VendorMenuForUser = () => {
                         const offset = 120
                         if (topRatedRef.current) {
                             const top = topRatedRef.current.offsetTop - offset
-                            window.scrollTo({ top, behavior: 'smooth' })
+                            mainRef.current.scrollTo({ top, behavior: 'smooth' })
                         }
                     }}
                 >
@@ -205,7 +205,7 @@ const VendorMenuForUser = () => {
                             const element = categoryRefs.current[group.category]?.current
                             if (element) {
                                 const top = element.offsetTop - offset
-                                window.scrollTo({ top, behavior: 'smooth' })
+                                mainRef.current.scrollTo({ top, behavior: 'smooth' })
                             }
                         }}
                     >

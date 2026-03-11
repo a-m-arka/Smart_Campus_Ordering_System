@@ -21,21 +21,23 @@ import VendorOrder from './pages/Order/vendorOrder';
 import PrivateRoute from './components/PrivateRoute/privateRoute';
 import ScrollToTop from './components/SrollToTop/scrollToTop';
 import { useGlobalContext } from './context/GlobalContext';
+import { useRef } from 'react';
 
 function App() {
   const { userRole } = useGlobalContext();
+  const mainRef = useRef(null);
   return (
     <div className="App">
       <Router>
         <ScrollToTop />
         <Navbar />
-        <div className="main">
+        <div className="main" ref={mainRef}>
           <Routes>
             <Route path='/'>
 
               <Route
                 index
-                element={<Navigate to={userRole === 'vendor' ? '/vendor_profile' : '/home'} />}
+                element={<Navigate to={userRole === 'vendor' ? '/vendor_menu' : '/home'} />}
               />
 
               <Route path='login' element={<Login />} />
@@ -46,7 +48,7 @@ function App() {
                 <Route path='foods' element={<Foods />} />
                 <Route path='vendors'>
                   <Route index element={<Vendors />} />
-                  <Route path=':vendorId' element={<VendorMenuForUser />} />
+                  <Route path=':vendorId' element={<VendorMenuForUser mainRef={mainRef} />} />
                 </Route>
               </Route>
 
@@ -59,7 +61,7 @@ function App() {
               <Route element={<PrivateRoute allowed={['vendor']} />}>
                 <Route path='vendor_profile' element={<VendorProfile />} />
                 <Route path='vendor_order' element={<VendorOrder />} />
-                <Route path='vendor_menu' element={<VendorMenuForVendor />} />
+                <Route path='vendor_menu' element={<VendorMenuForVendor mainRef={mainRef} />} />
               </Route>
 
             </Route>

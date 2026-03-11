@@ -1,6 +1,7 @@
 import StudentModel from "../models/studentModel.js";
 import VendorModel from "../models/vendorModel.js";
-import { registerUser, loginUser } from "../services/authService.js";
+import * as authService from "../services/authService.js";
+import { verifyToken, validateDecodedToken } from "../utils/authUtils.js";
 
 export const register = async (req, res) => {
     const { role, name, email, phone, password, confirmPassword, stallName } = req.body;
@@ -55,9 +56,9 @@ export const register = async (req, res) => {
     }
 
     try {
-        const response = await registerUser(user, role);
+        const response = await authService.registerUser(user, role);
         if (response.success) {
-            console.log(`New ${role} registered successfully`);
+            // console.log(`New ${role} registered successfully`);
             return res.status(201).json({ message: response.message });
         }
         return res.status(400).json({ message: response.message });
@@ -84,14 +85,55 @@ export const login = async (req, res) => {
     }
 
     try {
-        const response = await loginUser(email, password, role);
+        const response = await authService.loginUser(email, password, role);
         if (response.success) {
-            console.log(`A ${role} logged in successfully`);
+            // console.log(`A ${role} logged in successfully`);
             return res.status(200).json({ message: response.message, token: response.token });
         }
         return res.status(400).json({ message: response.message });
     } catch (error) {
         console.error('Error during login:', error);
         return res.status(500).json({ message: 'Login failed. Internal Server Error' });
+    }
+};
+
+export const changePassword = async (req, res) => {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+        return res.status(401).json({ message: 'Token not found' });
+    }
+    const {role, currentPassword, newPassword} = req.body;
+    if(!role){
+        return res.status(400).json({message: 'Role is required'});
+    }
+    if(!currentPassword){
+        return res.status(400).json({message: 'Current password is required'});
+    }
+    if(!newPassword){
+        return res.status(400).json({message: 'New password is required'});
+    }
+    if (role !== 'student' && role !== 'vendor') {
+        return res.status(400).json({ message: 'Invalid role' });
+    }
+    if (!/^.{8,}$/.test(currentPassword)) {
+        return res.status(400).json({ message: 'Current Password must be at least 8 characters long' });
+    }
+    if (!/^.{8,}$/.test(newPassword)) {
+        return res.status(400).json({ message: 'New Password must be at least 8 characters long' });
+    }
+    try {
+        const decodedToken = verifyToken(token);
+        const validation = validateDecodedToken(decodedToken, role);
+        if (!validation.valid) {
+            return res.status(validation.statusCode).json({ message: validation.message });
+        }
+        const response = await authService.changePassword(decodedToken.id, currentPassword, newPassword, role);
+        if(response.success){
+            return res.status(200).json({message: response.message});
+        }
+        return res.status(400).json({message: response.message});
+    } catch (error) {
+        console.error('Error during password change:', error);
+        return res.status(500).json({ message: 'Password change failed. Internal Server Error' });
     }
 };

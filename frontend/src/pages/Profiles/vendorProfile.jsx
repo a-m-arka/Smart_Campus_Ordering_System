@@ -4,50 +4,14 @@ import defaultLogo from '../../images/default_logo.jpg'
 import { MdOutlineLocationOn } from "react-icons/md";
 import { useGlobalContext } from '../../context/GlobalContext.js'
 import Switch from '../../components/Switch/switch.jsx'
+import ChangePassword from '../../components/Profile/changePassword.jsx';
+import UpdateInfo from '../../components/Profile/updateInfo.jsx';
 
-import pizza from '../../images/pizza.jpg'
-import burger from '../../images/burger.jpg'
-import wings from '../../images/wings.jpg'
-
-const foodItems = [
-  {
-    id: 1,
-    name: 'Margherita Pizza',
-    price: 12,
-    status: 'Available',
-    description: 'Classic cheese and tomato pizza',
-    rating: 4.5,
-    image: pizza
-  },
-  {
-    id: 2,
-    name: 'BBQ Chicken Wings',
-    price: 15,
-    status: 'Available',
-    description: 'Spicy and smoky wings',
-    rating: 4.2,
-    image: wings
-  },
-  {
-    id: 3,
-    name: 'Veggie Burger',
-    price: 10,
-    status: 'Not Available',
-    description: 'Loaded with fresh veggies',
-    rating: 4.0,
-    image: burger
-  },
-]
-
-const orders = [
-  { id: 'ORD101', item: 'Margherita Pizza', customer: 'John Doe', quantity: 2, price: 600 },
-  { id: 'ORD102', item: 'BBQ Chicken Wings', customer: 'Alice', quantity: 1, price: 150 },
-]
 
 const VendorProfile = () => {
   const { userData } = useGlobalContext();
   const server = process.env.REACT_APP_SERVER;
-  // console.log(userData.data);
+  const fileInputRef = useRef(null);
 
   const [vendorData, setVendorData] = useState({
     id: userData?.data?.id || "N/A",
@@ -64,12 +28,23 @@ const VendorProfile = () => {
     is_open: Boolean(userData?.data?.is_open)
   });
 
-  // const [logo, setLogo] = useState(vendorData.logo_url);
+  const profileFields = [
+    { key: 'name', label: 'Name', type: 'text', editable: false },
+    { key: 'email', label: 'Email', type: 'email', editable: false },
+    { key: 'phone', label: 'Phone', type: 'tel', editable: false },
+    { key: 'stall_name', label: 'Stall Name', type: 'text', editable: false },
+    { key: 'stall_location', label: 'Stall Location', type: 'text', editable: false }
+  ];
+
+  const [isOpen, setIsOpen] = useState(vendorData.is_open);
   const [loading, setLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
+  const [activeButton, setActiveButton] = useState(null);
 
-  const fileInputRef = useRef(null);
+  const handleToggleOpen = (checked) => {
+    setIsOpen(checked);
+  };
 
   const handleLogoChange = (e) => {
     const file = e.target.files[0];
@@ -118,7 +93,8 @@ const VendorProfile = () => {
 
       setVendorData(prev => ({ ...prev, logo: previewImage }));
       setSelectedFile(null);
-      setPreviewImage(null);
+      // setPreviewImage(null);
+      // window.location.reload();
 
     } catch (error) {
       console.error(error);
@@ -126,14 +102,6 @@ const VendorProfile = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  // console.log(vendorData);
-
-  const [isOpen, setIsOpen] = useState(vendorData.is_open);
-
-  const handleToggleOpen = (checked) => {
-    setIsOpen(checked);
   };
 
   return (
@@ -209,12 +177,22 @@ const VendorProfile = () => {
           </div>
 
           <div className="buttons">
-            <button>See Reviews</button>
-            <button>Edit Profile</button>
-            <button>Change Password</button>
+            {/* <button>See Reviews</button> */}
+
+            {activeButton !== "updateInfo" && (
+              <button onClick={() => setActiveButton("updateInfo")} disabled={activeButton}>
+                Update Details
+              </button>
+            )}
+
+            {activeButton !== "password" && (
+              <button onClick={() => setActiveButton("password")} disabled={activeButton}>
+                Change Password
+              </button>
+            )}
 
             <button onClick={handleLogoUpload} disabled={loading}>
-              {loading ? "Uploading..." : (selectedFile ? "Update Logo" : "Upload New Logo")}
+              {loading ? "Updating Logo..." : (selectedFile ? "Submit New Logo" : "Upload New Logo")}
             </button>
 
             <input
@@ -229,7 +207,26 @@ const VendorProfile = () => {
         </div>
       </div>
 
-      <div className="right">
+      {activeButton === "updateInfo" && (
+        <UpdateInfo
+          userRole={'vendor'}
+          profileFields={profileFields}
+          initialProfile={vendorData}
+          onSave={() => setActiveButton(null)}
+          onCancel={() => setActiveButton(null)}
+        />
+      )}
+
+      {activeButton === "password" && (
+        <ChangePassword
+          server={server}
+          userRole={'vendor'}
+          onSave={() => setActiveButton(null)}
+          onCancel={() => setActiveButton(null)}
+        />
+      )}
+
+      {/* <div className="right">
         <div className="dashboard">
           <div className="food_items">
             <p className="heading">Top Rated Food Items</p>
@@ -265,7 +262,7 @@ const VendorProfile = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

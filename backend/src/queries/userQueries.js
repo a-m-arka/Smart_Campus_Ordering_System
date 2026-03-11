@@ -22,8 +22,14 @@ export const studentQueries = {
     WHERE id = ?;
   `,
 
+  changePassword: `
+    UPDATE Students
+    SET password = ?
+    WHERE id = ?;
+  `,
+
   getStudentById: `
-    SELECT id, name, email, phone, address, profile_picture_url, profile_picture_public_id, created_at
+    SELECT id, password, name, email, phone, address, profile_picture_url, profile_picture_public_id, created_at
     FROM Students
     WHERE id = ?;
   `,
@@ -60,8 +66,14 @@ export const vendorQueries = {
     WHERE id = ?;
   `,
 
+  changePassword: `
+    UPDATE Vendors
+    SET password = ?
+    WHERE id = ?;
+  `,
+
   getVendorById: `
-    SELECT id, name, email, phone, stall_name, stall_location,
+    SELECT id, password, name, email, phone, stall_name, stall_location,
            logo_url, logo_public_id, average_rating, review_count, is_open
     FROM Vendors
     WHERE id = ?;

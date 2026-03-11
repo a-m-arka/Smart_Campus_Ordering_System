@@ -80,7 +80,7 @@ export const GlobalProvider = ({ children }) => {
             }
             fetchUserData(url);
         }
-    }, [isLoggedIn]);
+    }, [isLoggedIn, userRole]);
 
     return (
         <GlobalContext.Provider

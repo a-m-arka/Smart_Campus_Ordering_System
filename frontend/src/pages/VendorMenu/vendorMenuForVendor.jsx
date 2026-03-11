@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 // import { vendorMenu } from '../../temporaryData/data.js';
 
-const VendorMenuForVendor = () => {
+const VendorMenuForVendor = ({ mainRef }) => {
 
   const navigate = useNavigate();
 
@@ -110,7 +110,7 @@ const VendorMenuForVendor = () => {
             onClick={() => {
               const offset = 120;
               const el = categoryRefs.current[group.category]?.current;
-              if (el) window.scrollTo({ top: el.offsetTop - offset, behavior: 'smooth' });
+              if (el) mainRef.current.scrollTo({ top: el.offsetTop - offset, behavior: 'smooth' });
             }}
           >
             {group.category} ({group.items.length})

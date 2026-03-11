@@ -5,16 +5,6 @@ import SearchBox from '../../components/Searchbox/searchbox.jsx'
 import Filter from '../../components/Filter/filter.jsx'
 import SortDropdown from '../../components/SortDropdown/sortDropdown.jsx'
 
-import vendroLogo from '../../images/default_logo.jpg'
-
-// const vendors = [
-//   { id: 1, name: 'Foodies Hub', location: 'Chittagong', rating: 4.6, reviewCount: 120, image: vendroLogo, isOpen: true },
-//   { id: 2, name: 'Pizza World', location: 'Dhaka', rating: 4.8, reviewCount: 200, image: vendroLogo, isOpen: true },
-//   { id: 3, name: 'Snack Corner', location: 'Sylhet', rating: 4.3, reviewCount: 75, image: vendroLogo, isOpen: false },
-//   { id: 4, name: 'Italiano Express', location: 'Khulna', rating: 4.7, reviewCount: 150, image: vendroLogo, isOpen: false },
-//   { id: 5, name: 'Green Bites', location: 'Rajshahi', rating: 4.1, reviewCount: 60, image: vendroLogo, isOpen: true }
-// ]
-
 
 const Vendors = () => {
   const sortOptions = [

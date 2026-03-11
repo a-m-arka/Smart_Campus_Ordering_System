@@ -1,6 +1,8 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { studentQueries, vendorQueries } from "../queries/userQueries.js";
+import { pool } from "../config/db.js";
 
 dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -14,11 +16,16 @@ export const verifyPassword = async (password, hashedPassword) => {
     // console.log("Plain:", password);
     // console.log("Hashed:", hashedPassword); // Debugging: Check if this is undefined
 
-    if (!hashedPassword) {
+    try {
+        if (!hashedPassword) {
         throw new Error("Password not found for user");
     }
 
     return await bcrypt.compare(password, hashedPassword);
+    } catch (error) {
+        console.error("Error verifying password:", error);
+        return false; // Return false if there's an error during verification
+    }
 };
 
 export const generateToken = (user, role) => {
@@ -56,4 +63,16 @@ export const validateDecodedToken = (decodedToken, requiredRole) => {
     }
 
     return { valid: true };
+};
+
+export const changeUserPassword = async (userId, newPassword, role) => {
+    try {
+        const hashedPassword = await hashPassword(newPassword);
+        const query = role === 'student' ? studentQueries.changePassword : vendorQueries.changePassword;
+        await pool.query(query, [hashedPassword, userId]);
+        return { success: true, message: 'Password changed successfully' };
+    } catch (error) {
+        console.error('Error changing password:', error);
+        return { success: false, message: 'Failed to change password. Please try again' };
+    }
 };

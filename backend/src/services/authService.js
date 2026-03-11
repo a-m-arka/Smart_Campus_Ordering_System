@@ -1,5 +1,5 @@
-import { verifyPassword, generateToken } from "../utils/authUtils.js";
-import { findUserByEmail, createUser } from "../utils/userUtils.js";
+import { verifyPassword, generateToken, changeUserPassword } from "../utils/authUtils.js";
+import { findUserByEmail, findUserById, createUser } from "../utils/userUtils.js";
 
 export const registerUser = async (user, role) => {
     try {
@@ -34,5 +34,26 @@ export const loginUser = async (email, password, role) => {
     } catch (error) {
         console.error(error);
         return { success: false, message: "Login failed. Please try again" };
+    }
+};
+
+export const changePassword = async (userId, currentPassword, newPassword, role) => {
+    try {
+        const user = await findUserById(userId, role);
+        if (!user) {
+            return { success: false, message: "User not found" };
+        }
+        const isPasswordValid = await verifyPassword(currentPassword, user.password);
+        if (!isPasswordValid) {
+            return { success: false, message: "Invalid current password" };
+        }
+        const response = await changeUserPassword(userId, newPassword, role);
+        if(response.success) {
+            return { success: true, message: response.message };
+        }
+        return { success: false, message: response.message };
+    } catch (error) {
+        console.error(error);
+        return { success: false, message: "Failed to change password" };
     }
 };

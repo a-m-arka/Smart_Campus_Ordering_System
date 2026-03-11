@@ -117,7 +117,7 @@
             font-size: 20px;
 
             .key {
-              flex: 5;
+              flex: 3;
               color: darken($text-color1, $amount: 20%);
             }
 
@@ -133,175 +133,175 @@
           }
         }
       }
+    }
+  }
 
-      .buttons {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 2fr));
-        gap: 20px;
-        height: max-content;
-        width: 100%;
-        align-items: center;
-        text-align: center;
-        // background-color: blue;
+  .buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 2fr));
+    gap: 20px;
+    height: max-content;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    // background-color: blue;
 
-        button {
-          all: unset;
-          cursor: pointer;
-          width: 100%;
-          height: 30px;
-          background-color: rgba($primary-color, 0.2);
-          color: $primary-color;
-          font-size: 18px;
-          border-radius: 10px;
-          padding: 5px;
+    button {
+      all: unset;
+      cursor: pointer;
+      width: 100%;
+      height: 30px;
+      background-color: rgba($primary-color, 0.2);
+      color: $primary-color;
+      font-size: 18px;
+      border-radius: 10px;
+      padding: 5px;
 
-          &:hover {
-            background-color: rgba($primary-color, 0.4);
-          }
-        }
+      &:hover {
+        background-color: rgba($primary-color, 0.4);
       }
     }
   }
 
-  .right {
-    flex: 5;
-    min-height: 600px;
-    // background-color: $secondary-color;
-    // border-radius: 10px;
-    // padding: 20px;
+  // .right {
+  //   flex: 5;
+  //   min-height: 600px;
+  //   // background-color: $secondary-color;
+  //   // border-radius: 10px;
+  //   // padding: 20px;
 
-    .dashboard {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      gap: 20px;
-      // background-color: red;
+  //   .dashboard {
+  //     display: flex;
+  //     flex-direction: column;
+  //     height: 100%;
+  //     gap: 20px;
+  //     // background-color: red;
 
-      .food_items {
-        flex: 3;
+  //     .food_items {
+  //       flex: 3;
 
-        .status {
-          span {
-            padding: 5px;
-            border-radius: 5px;
-          }
-        }
-      }
+  //       .status {
+  //         span {
+  //           padding: 5px;
+  //           border-radius: 5px;
+  //         }
+  //       }
+  //     }
 
-      .order-history {
-        flex: 2;
-      }
+  //     .order-history {
+  //       flex: 2;
+  //     }
 
-      .food_items,
-      .order-history {
-        background-color: $secondary-color;
-        border-radius: 10px;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
+  //     .food_items,
+  //     .order-history {
+  //       background-color: $secondary-color;
+  //       border-radius: 10px;
+  //       padding: 20px;
+  //       display: flex;
+  //       flex-direction: column;
+  //       gap: 20px;
 
-        .heading {
-          font-size: 30px;
-          padding-bottom: 10px;
-          border-bottom: 1px solid lighten($secondary-color, 30%);
-        }
+  //       .heading {
+  //         font-size: 30px;
+  //         padding-bottom: 10px;
+  //         border-bottom: 1px solid lighten($secondary-color, 30%);
+  //       }
 
-        .cards {
-          height: max-content;
-          width: 100%;
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-          gap: 20px;
+  //       .cards {
+  //         height: max-content;
+  //         width: 100%;
+  //         display: grid;
+  //         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  //         gap: 20px;
 
-          .card {
-            background-color: lighten($secondary-color, 5%);
-            border-radius: 10px;
-            padding: 15px;
-            // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            // transition: transform 0.2s ease;
+  //         .card {
+  //           background-color: lighten($secondary-color, 5%);
+  //           border-radius: 10px;
+  //           padding: 15px;
+  //           // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  //           display: flex;
+  //           flex-direction: column;
+  //           gap: 10px;
+  //           // transition: transform 0.2s ease;
 
-            // &:hover {
-            //   transform: translateY(-5px);
-            // }
+  //           // &:hover {
+  //           //   transform: translateY(-5px);
+  //           // }
 
-            img {
-              width: 100%;
-              height: 160px;
-              object-fit: cover;
-              border-radius: 8px;
-            }
+  //           img {
+  //             width: 100%;
+  //             height: 160px;
+  //             object-fit: cover;
+  //             border-radius: 8px;
+  //           }
 
-            .name {
-              font-size: 20px;
-              font-weight: 600;
-              color: $primary-color;
-            }
+  //           .name {
+  //             font-size: 20px;
+  //             font-weight: 600;
+  //             color: $primary-color;
+  //           }
 
-            .price,
-            .quantity,
-            .description,
-            .order-id,
-            .item,
-            .customer {
-              font-size: 16px;
-              color: $text-color1;
-            }
+  //           .price,
+  //           .quantity,
+  //           .description,
+  //           .order-id,
+  //           .item,
+  //           .customer {
+  //             font-size: 16px;
+  //             color: $text-color1;
+  //           }
 
-            .price {
-              font-weight: 500;
-            }
+  //           .price {
+  //             font-weight: 500;
+  //           }
 
-            .quantity {
-              font-weight: 500;
-            }
+  //           .quantity {
+  //             font-weight: 500;
+  //           }
 
-            .description {
-              font-size: 15px;
-              color: darken($text-color1, 20%);
-            }
+  //           .description {
+  //             font-size: 15px;
+  //             color: darken($text-color1, 20%);
+  //           }
 
-            .order-id {
-              font-weight: bold;
-              color: $primary-color;
-            }
+  //           .order-id {
+  //             font-weight: bold;
+  //             color: $primary-color;
+  //           }
 
-            .rating {
-              span {
-                color: $primary-color;
-                font-size: 18px;
-                font-weight: 500;
-              }
-            }
-          }
+  //           .rating {
+  //             span {
+  //               color: $primary-color;
+  //               font-size: 18px;
+  //               font-weight: 500;
+  //             }
+  //           }
+  //         }
 
-        }
+  //       }
 
-        .view-button {
-          display: flex;
-          align-items: center;
-          justify-content: center;
+  //       .view-button {
+  //         display: flex;
+  //         align-items: center;
+  //         justify-content: center;
 
-          button {
-            all: unset;
-            cursor: pointer;
-            width: max-content;
-            height: 30px;
-            background-color: rgba($primary-color, 0.2);
-            color: $primary-color;
-            font-size: 18px;
-            border-radius: 10px;
-            padding: 5px 20px;
+  //         button {
+  //           all: unset;
+  //           cursor: pointer;
+  //           width: max-content;
+  //           height: 30px;
+  //           background-color: rgba($primary-color, 0.2);
+  //           color: $primary-color;
+  //           font-size: 18px;
+  //           border-radius: 10px;
+  //           padding: 5px 20px;
 
-            &:hover {
-              background-color: rgba($primary-color, 0.4);
-            }
-          }
-        }
-      }
-    }
-  }
+  //           &:hover {
+  //             background-color: rgba($primary-color, 0.4);
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 }

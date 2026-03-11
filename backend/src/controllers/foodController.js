@@ -31,7 +31,7 @@ export const addFood = async (req, res) => {
 
         const response = await foodService.addFood(decodedToken.id, foodItem, fileBuffer, fileName);
         if (response.success) {
-            console.log(`New food item added successfully`);
+            // console.log(`New food item added successfully`);
             return res.status(201).json({ message: response.message });
         }
         return res.status(400).json({ message: response.message });
