@@ -14,6 +14,23 @@ export const getStudent = async (id) => {
     }
 };
 
+export const updateStudentInfo = async (id, role, newInfo) => {
+    try {
+        const student = await userUtils.findUserById(id, role);
+        if (!student) {
+            return { success: false, message: "Student not found" };
+        }
+        const result = await userUtils.updateUserInfo(id, role, newInfo);
+        if(result.success){
+            return { success: true };
+        }
+        return { success: false, message: "Failed to update student info" };
+    } catch (error) {
+        console.error("Error updating student info:", error);
+        return { success: false, message: "Failed to update student info" };
+    }
+};
+
 export const updateStudentImage = async (id, fileBuffer, fileName) => {
     try {
         const student = await userUtils.findUserById(id, 'student');

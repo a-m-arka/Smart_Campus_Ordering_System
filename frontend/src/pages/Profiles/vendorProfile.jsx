@@ -104,6 +104,11 @@ const VendorProfile = () => {
     }
   };
 
+  const handleUpdateInfo = (updatedProfile) => {
+    setVendorData(updatedProfile);
+    setActiveButton(null);
+  };
+
   return (
     <div className="vendor-profile">
       <div className="left">
@@ -212,7 +217,7 @@ const VendorProfile = () => {
           userRole={'vendor'}
           profileFields={profileFields}
           initialProfile={vendorData}
-          onSave={() => setActiveButton(null)}
+          onSave={handleUpdateInfo}
           onCancel={() => setActiveButton(null)}
         />
       )}

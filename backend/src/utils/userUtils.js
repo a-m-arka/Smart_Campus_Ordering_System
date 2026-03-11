@@ -48,6 +48,39 @@ export const updateUserImage = async (id, role, imageUrl, publicId) => {
   }
 };
 
+export const updateUserInfo = async (id, role, userInfo) => {
+    try {
+        let query;
+        let values;
+        if(role === 'student'){
+            query = studentQueries.updateStudent;
+            values = [
+                userInfo.name,
+                userInfo.email,
+                userInfo.phone,
+                userInfo.address,
+                id
+            ];
+        }
+        else{
+            query = vendorQueries.updateVendor;
+            values = [
+                userInfo.name,
+                userInfo.email,
+                userInfo.phone,
+                userInfo.stallName,
+                userInfo.stallLocation,
+                id
+            ];
+        }
+        await pool.query(query, values);
+        return { success: true };
+    } catch (error) {
+        console.error(`Error updating ${role} info:`, error.stack);
+        return { success: false, message: `Failed to update ${role} info` };
+    }
+};
+ 
 export const getAllUsers = async (role = 'vendor') => {
     try {
         let query;

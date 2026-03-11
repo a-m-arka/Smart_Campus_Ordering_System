@@ -16,6 +16,23 @@ export const getVendor = async (id) => {
     }
 };
 
+export const updateVendorInfo = async (id, role, newInfo) => {
+    try {
+        const vendor = await userUtils.findUserById(id, role);
+        if (!vendor) {
+            return { success: false, message: "Vendor not found" };
+        }
+        const result = await userUtils.updateUserInfo(id, role, newInfo);
+        if(result.success){
+            return { success: true };
+        }
+        return { success: false, message: "Failed to update vendor info" };
+    } catch (error) {
+        console.error("Error updating vendor info:", error);
+        return { success: false, message: "Failed to update vendor info" };
+    }
+};
+
 export const updateVendorLogo = async (id, fileBuffer, fileName) => {
     try {
         const vendor = await userUtils.findUserById(id, 'vendor');
