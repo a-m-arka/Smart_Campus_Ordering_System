@@ -62,11 +62,12 @@ const createTableQueries = {
 
   createOrderTable: `
     CREATE TABLE IF NOT EXISTS Orders (
-      id INT PRIMARY KEY AUTO_INCREMENT,
+      id CHAR(8) PRIMARY KEY,
       student_id INT NOT NULL,
       vendor_id INT NOT NULL,
       total_amount DECIMAL(10, 2) NOT NULL,
       status ENUM('pending', 'confirmed', 'preparing', 'out_for_delivery', 'delivered', 'cancelled') DEFAULT 'pending',
+      payment_method ENUM('cod', 'mobile') DEFAULT 'cod',
       payment_status ENUM('pending', 'paid', 'failed') DEFAULT 'pending',
       delivery_address VARCHAR(255) DEFAULT 'Main Gate, CUET',
       order_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -78,7 +79,7 @@ const createTableQueries = {
   createOrderItemTable: `
     CREATE TABLE IF NOT EXISTS OrderItems (
       id INT PRIMARY KEY AUTO_INCREMENT,
-      order_id INT NOT NULL,
+      order_id CHAR(8) NOT NULL,
       food_item_id INT NOT NULL,
       quantity INT NOT NULL,
       price DECIMAL(10, 2) NOT NULL,
@@ -90,7 +91,7 @@ const createTableQueries = {
   createPaymentTable: `
     CREATE TABLE IF NOT EXISTS Payments (
       id INT PRIMARY KEY AUTO_INCREMENT,
-      order_id INT NOT NULL,
+      order_id CHAR(8) NOT NULL,
       payment_method VARCHAR(50),
       transaction_id VARCHAR(100),
       amount DECIMAL(10, 2) NOT NULL,
