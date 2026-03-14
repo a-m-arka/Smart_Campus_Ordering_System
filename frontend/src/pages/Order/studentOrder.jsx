@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './order.scss'
+import { fetchUserOrders } from './orderApi'
 import OrderCard from '../../components/Cards/orderCard'
 
-import { orders } from '../../temporaryData/data'
+// import { orders } from '../../temporaryData/data'
 
 const StudentOrder = () => {
+
+  const [orders, setOrders] = useState([]);
+
   const currentOrders = orders.filter(
     order => order.status !== 'delivered' && order.status !== 'cancelled'
   )
@@ -12,6 +16,27 @@ const StudentOrder = () => {
   const pastOrders = orders.filter(order => order.status === 'delivered')
 
   const cancelledOrders = orders.filter(order => order.status === 'cancelled')
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const orderData = await fetchUserOrders('student')
+      setOrders(orderData)
+    }
+
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    if (currentOrders.length === 0) return
+
+    const interval = setInterval(async () => {
+      // console.log("Fetching orders")
+      const orderData = await fetchUserOrders('student')
+      setOrders(orderData)
+    }, 3000)
+
+    return () => clearInterval(interval)
+  }, [currentOrders.length])
 
   return (
     <div className='order-page'>
@@ -24,7 +49,7 @@ const StudentOrder = () => {
         ) : (
           <div className="orders">
             {currentOrders.map(order => (
-              <OrderCard order={order} orderType={'current'} userType={'student'}/>
+              <OrderCard order={order} orderType={'current'} userType={'student'} />
             ))}
           </div>
         )}
@@ -37,20 +62,20 @@ const StudentOrder = () => {
         ) : (
           <div className="orders">
             {pastOrders.map(order => (
-              <OrderCard order={order} orderType={'past'} userType={'student'}/>
+              <OrderCard order={order} orderType={'past'} userType={'student'} />
             ))}
           </div>
         )}
       </div>
 
       <div className="cancelled-orders">
-        <h3 className="heading">Cancelled Orders</h3>
+        <h3 className="heading cancelled">Cancelled Orders</h3>
         {cancelledOrders.length === 0 ? (
           <p className='no-item'>No cancelled orders.</p>
         ) : (
           <div className="orders">
             {cancelledOrders.map(order => (
-              <OrderCard order={order} orderType={'cancelled'} userType={'student'}/>
+              <OrderCard order={order} orderType={'cancelled'} userType={'student'} />
             ))}
           </div>
         )}

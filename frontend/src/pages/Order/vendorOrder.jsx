@@ -1,15 +1,33 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './order.scss'
+import { fetchUserOrders } from './orderApi';
 import OrderCard from '../../components/Cards/orderCard'
 
-import { orders } from '../../temporaryData/data'
-
 const VendorOrder = () => {
+
+  const [orders, setOrders] = useState([]);
+
   const currentOrders = orders.filter(
     order => order.status !== 'delivered' && order.status !== 'cancelled'
   )
 
   const pastOrders = orders.filter(order => order.status === 'delivered')
+
+  const cancelledOrders = orders.filter(order => order.status === 'cancelled')
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // console.log("Fetching orders")
+      const orderData = await fetchUserOrders("vendor")
+      setOrders(orderData)
+    }
+
+    fetchData()
+
+    const interval = setInterval(fetchData, 10000)
+
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <div className='order-page'>
@@ -36,6 +54,19 @@ const VendorOrder = () => {
           <div className="orders">
             {pastOrders.map(order => (
               <OrderCard order={order} orderType={'past'} userType={'vendor'} />
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className="cancelled-orders">
+        <h3 className="heading cancelled">Cancelled Orders</h3>
+        {cancelledOrders.length === 0 ? (
+          <p className='no-item'>No cancelled orders.</p>
+        ) : (
+          <div className="orders">
+            {cancelledOrders.map(order => (
+              <OrderCard order={order} orderType={'cancelled'} userType={'vendor'} />
             ))}
           </div>
         )}

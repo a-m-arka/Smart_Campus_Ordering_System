@@ -1,9 +1,5 @@
 export const formatTime = (timeString) => {
-    const [datePart, timePart] = timeString.split(' ');
-    const [year, month, day] = datePart.split('-');
-    const [hour, minute] = timePart.split(':');
-
-    const date = new Date(year, month - 1, day, hour, minute);
+    const date = new Date(timeString);
     return date.toLocaleString('en-US', {
         month: 'long',
         day: 'numeric',

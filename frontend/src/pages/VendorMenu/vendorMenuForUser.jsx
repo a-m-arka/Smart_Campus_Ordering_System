@@ -51,6 +51,15 @@ const VendorMenuForUser = ({ mainRef }) => {
             setIsAccessDenied(true)
             return
         }
+
+        item.vendorId = vendorData.id;
+        item.vendor = vendorData.name;
+        item.vendorLocation = vendorData.location;
+        item.vendorLogo = vendorData.image;
+        item.vendorRating = vendorData.rating;
+
+        // console.log(item);
+
         const cart = JSON.parse(sessionStorage.getItem('cart')) || [];
         const existingItem = cart.find(i => i.id === item.id);
 

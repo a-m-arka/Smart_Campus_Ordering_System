@@ -92,23 +92,63 @@ export const getOrderById = async (orderId) => {
   }
 };
 
-export const getOrdersByStudent = async (studentId) => {
+export const getOrdersByUser = async (userId, role) => {
   try {
-    const [rows] = await pool.query(orderQueries.getOrdersByStudent, [studentId]);
-    return rows;
-  } catch (error) {
-    console.error("Error fetching orders for student:", error.stack);
-    return [];
-  }
-};
+    let query;
+    if (role === "student") {
+      query = orderQueries.getOrdersByStudent;
+    } else if (role === "vendor") {
+      query = orderQueries.getOrdersByVendor;
+    } else {
+      throw new Error("Invalid role");
+    }
 
-export const getOrdersByVendor = async (vendorId) => {
-  try {
-    const [rows] = await pool.query(orderQueries.getOrdersByVendor, [vendorId]);
-    return rows;
+    const [rows] = await pool.query(query, [userId]);
+
+    const ordersMap = {};
+    rows.forEach(row => {
+      if (!ordersMap[row.orderId]) {
+        ordersMap[row.orderId] = {
+          orderId: row.orderId,
+          deliveryAddress: row.deliveryAddress,
+          totalAmount: row.totalAmount,
+          status: row.status,
+          paymentMethod: row.paymentMethod === "cod" ? "Cash On Delivery" : "Mobile Banking",
+          paymentStatus: row.paymentStatus,
+          orderTime: row.orderTime,
+          student: {
+            id: row.studentId,
+            name: row.studentName,
+            phone: row.studentPhone
+          },
+          vendor: {
+            id: row.vendorId,
+            name: row.vendorName,
+            phone: row.vendorPhone,
+            stallName: row.stallName,
+            stallLocation: row.stallLocation
+          },
+          items: []
+        };
+      }
+      ordersMap[row.orderId].items.push({
+        foodItemId: row.foodItemId,
+        name: row.itemName,
+        price: row.price,
+        quantity: row.quantity,
+        imageUrl: row.imageUrl
+      });
+    });
+
+    const orders = Object.values(ordersMap);
+    orders.sort((a, b) => new Date(b.orderTime) - new Date(a.orderTime));
+
+    // console.log(orders);
+
+    return { success: true, orders };
   } catch (error) {
-    console.error("Error fetching orders for vendor:", error.stack);
-    return [];
+    console.error("Error fetching orders:", error.stack);
+    return { success: false, message: `Failed fetching ${role} orders` };
   }
 };
 

@@ -5,12 +5,15 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { formatTime } from '../HelperFunctions/formatTime';
 
 const OrderCard = ({ order, orderType, userType }) => {
+    const server = process.env.REACT_APP_SERVER;
     const navigate = useNavigate();
     const [status, setStatus] = useState(order.status);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-    const handleVendorClick = () => {
-        navigate(`/vendors/${order.vendor.id}`);
-    };
+    // const handleVendorClick = () => {
+    //     navigate(`/vendors/${order.vendor.id}`);
+    // };
 
     const getNextStatus = (current) => {
         const statusFlow = ['pending', 'confirmed', 'preparing', 'out_for_delivery', 'delivered'];
@@ -28,9 +31,45 @@ const OrderCard = ({ order, orderType, userType }) => {
         }
     };
 
-    const handleStatusChange = () => {
-        const next = getNextStatus(status);
-        if (next) setStatus(next);
+    const handleStatusChange = async (toBeCancelled = false) => {
+        setLoading(true);
+        const nextStatus = toBeCancelled === true ? "cancelled" : getNextStatus(status);
+
+        const token = localStorage.getItem("token");
+        if (!token) {
+            alert("You must be logged in to place an order");
+            window.location.reload();
+            return;
+        }
+
+        try {
+            const response = await fetch(`${server}/api/order/update-status/${order.orderId}`, {
+                method: "PATCH",
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    newStatus: nextStatus,
+                    userRole: userType
+                })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                setStatus(nextStatus);
+            }
+            else {
+                setError(data.message);
+            }
+        } catch (error) {
+            console.error("Error updating order status", error);
+            setError("Failed to update order status. Please try again");
+        } finally {
+            setLoading(false);
+        }
+
+        // if (nextStatus) setStatus(nextStatus);
+        // console.log(status);
     };
 
     return (
@@ -41,14 +80,14 @@ const OrderCard = ({ order, orderType, userType }) => {
                     {orderType === 'current' && (
                         <p className="order-status">
                             Status :
-                            <span> {status.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}</span>
+                            <span className={`${status === "cancelled" ? "cancelled" : ""}`}> {status.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}</span>
                         </p>
                     )}
                     {userType === 'student' && (
                         <div className="order-vendor">
                             <span>Vendor : </span>
                             <span className='name-phone'>
-                                <span className='vendor-name' onClick={handleVendorClick}>{order.vendor.stallName}</span>
+                                <span className='vendor-name'>{order.vendor.stallName}</span>
                                 <span className='phone'>
                                     <FaPhoneAlt />
                                     <span>{order.vendor.phone}</span>
@@ -71,11 +110,12 @@ const OrderCard = ({ order, orderType, userType }) => {
                 </span>
                 <span className='right'>
                     <p className="amount">Total : ৳ {order.totalAmount}</p>
-                    {orderType === 'current' && (
+                    <p className="payment-method">Payment Method : <span>{order.paymentMethod}</span></p>
+                    {orderType === 'current' && status !== "cancelled" && (
                         <p className="payment-status">Payment Status : <span> {order.paymentStatus.charAt(0).toUpperCase() + order.paymentStatus.slice(1)}</span></p>
                     )}
-                    <p className="delivery-address">Delivery Address : {order.deliveryAddress}</p>
-                    <p className="order-time">Order Time : {formatTime(order.orderTime)}</p>
+                    <p className="delivery-address">Delivery Address : <span>{order.deliveryAddress}</span></p>
+                    <p className="order-time">Order Time : <span>{formatTime(order.orderTime)}</span></p>
                 </span>
             </div>
 
@@ -98,15 +138,21 @@ const OrderCard = ({ order, orderType, userType }) => {
                 ))}
             </div>
 
-            {(orderType === 'current' && userType === 'student') && (
-                <button className='order-card-btn'>Cancel Order</button>
-            )}
+            {error && (<p className="error-message">{error}</p>)}
 
-            {(orderType === 'current' && userType === 'vendor' && getButtonLabel(status)) && (
-                <button className='order-card-btn' onClick={handleStatusChange}>
-                    {getButtonLabel(status)}
-                </button>
-            )}
+            <div className='order-card-btn'>
+                {(orderType === 'current' && status === 'pending') && (
+                    <button onClick={() => handleStatusChange(true)} disabled={loading}>
+                        Cancel Order
+                    </button>
+                )}
+
+                {(orderType === 'current' && userType === 'vendor' && getButtonLabel(status)) && (
+                    <button onClick={handleStatusChange} disabled={loading}>
+                        {getButtonLabel(status)}
+                    </button>
+                )}
+            </div>
         </div>
     )
 }

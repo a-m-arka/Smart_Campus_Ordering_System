@@ -24,6 +24,10 @@
             font-weight: 600;
             margin-top: 15px;
             margin-bottom: 10px;
+
+            &.cancelled {
+                color: red;
+            }
         }
 
         .no-item {

@@ -37,3 +37,37 @@ export const createOrder = async (studentId, orderData) => {
         return { success: false, message: "Failed to place order", error };
     }
 };
+
+export const getOrderByUser = async (userId, userRole) => {
+    try {
+        const orders = await orderUtils.getOrdersByUser(userId, userRole);
+        if (orders.success) {
+            // console.log(orders);
+            return { success: true, orders };
+        }
+        return { success: false, message: orders.message }
+    } catch (error) {
+        console.error("Error in getOrderByUser service:", error.stack);
+        return { success: false, message: `Failed fetching ${userRole} orders`, error };
+    }
+};
+
+export const updateOrderStatus = async (orderId, newStatus, currentPaymentStatus, newPaymentStatus) => {
+    try {
+        if(newPaymentStatus){
+            const updatePaymentStatus = await orderUtils.updatePaymentStatus(orderId, newPaymentStatus);
+            if(!updatePaymentStatus.success){
+                return {success: false, message: updatePaymentStatus.message}
+            }
+        }
+        const updateResult = await orderUtils.updateOrderStatus(orderId, newStatus);
+        if(updateResult.success){
+            return {success: true};
+        }
+        await orderUtils.updatePaymentStatus(orderId, currentPaymentStatus);
+        return {success: false, message: updateResult.message};
+    } catch (error) {
+        console.error("Error in updateOrderStatus service:", error.stack);
+        return {success: false, message: "Failed to update order status."};
+    }
+};

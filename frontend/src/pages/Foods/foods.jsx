@@ -101,6 +101,8 @@ const Foods = () => {
       return;
     }
 
+    // console.log(item);
+
     const cart = JSON.parse(sessionStorage.getItem('cart')) || [];
     const existingItem = cart.find(i => i.id === item.id);
 

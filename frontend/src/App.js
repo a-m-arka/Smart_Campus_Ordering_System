@@ -29,9 +29,9 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <ScrollToTop />
         <Navbar />
         <div className="main" ref={mainRef}>
+          <ScrollToTop mainRef={mainRef}/>
           <Routes>
             <Route path='/'>
 
