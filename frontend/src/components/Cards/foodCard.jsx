@@ -5,17 +5,9 @@ import { useNavigate } from 'react-router-dom'
 const FoodCard = ({ item, onAddToCart, showVendor }) => {
     const navigate = useNavigate();
 
-    const vendorData = {
-        id: item.vendorId,
-        name: item.vendor,
-        location: item.vendorLocation,
-        rating: item.vendorRating,
-        image: item.vendorLogo
-    }
-
     const handleVendorClick = () => {
         // console.log(vendorData)
-        navigate(`/vendors/${item.vendorId}`, { state: vendorData })
+        navigate(`/vendors/${item.vendorId}`)
     }
 
     const handleSeeReview = () => {

@@ -9,6 +9,7 @@ import studentRoutes from './src/routes/studentRoutes.js';
 import vendorRoutes from './src/routes/vendorRoutes.js';
 import foodRoutes from './src/routes/foodRoutes.js';
 import orderRoutes from './src/routes/orderRoutes.js';
+import reviewRoutes from './src/routes/reviewRoutes.js';
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ server.use('/api/student', studentRoutes);
 server.use('/api/vendor', vendorRoutes);
 server.use('/api/food', foodRoutes);
 server.use('/api/order', orderRoutes);
+server.use('/api/review', reviewRoutes);
 
 
 server.listen(port, async () => {

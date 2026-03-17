@@ -3,17 +3,21 @@ import './orderCard.scss'
 import { useNavigate } from 'react-router-dom'
 import { FaPhoneAlt } from "react-icons/fa";
 import { formatTime } from '../HelperFunctions/formatTime';
+import ReviewForm from '../PopUps/reviewForm';
 
 const OrderCard = ({ order, orderType, userType }) => {
+    const token = localStorage.getItem("token");
     const server = process.env.REACT_APP_SERVER;
     const navigate = useNavigate();
     const [status, setStatus] = useState(order.status);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [ratingItem, setRatingItem] = useState(null);
 
-    // const handleVendorClick = () => {
-    //     navigate(`/vendors/${order.vendor.id}`);
-    // };
+    const handleVendorClick = () => {
+        // console.log(order);
+        navigate(`/vendors/${order.vendor.id}`);
+    };
 
     const getNextStatus = (current) => {
         const statusFlow = ['pending', 'confirmed', 'preparing', 'out_for_delivery', 'delivered'];
@@ -35,7 +39,6 @@ const OrderCard = ({ order, orderType, userType }) => {
         setLoading(true);
         const nextStatus = toBeCancelled === true ? "cancelled" : getNextStatus(status);
 
-        const token = localStorage.getItem("token");
         if (!token) {
             alert("You must be logged in to place an order");
             window.location.reload();
@@ -87,7 +90,7 @@ const OrderCard = ({ order, orderType, userType }) => {
                         <div className="order-vendor">
                             <span>Vendor : </span>
                             <span className='name-phone'>
-                                <span className='vendor-name'>{order.vendor.stallName}</span>
+                                <span className='vendor-name' onClick={handleVendorClick}>{order.vendor.stallName}</span>
                                 <span className='phone'>
                                     <FaPhoneAlt />
                                     <span>{order.vendor.phone}</span>
@@ -131,7 +134,12 @@ const OrderCard = ({ order, orderType, userType }) => {
                         </div>
                         <div className="item-buttons">
                             {(orderType === 'past' && userType === 'student') && (
-                                <button className='rate-btn'>Rate Item</button>
+                                <button
+                                    className='rate-btn'
+                                    onClick={() => setRatingItem(item)}
+                                >
+                                    Rate Item
+                                </button>
                             )}
                         </div>
                     </div>
@@ -153,6 +161,14 @@ const OrderCard = ({ order, orderType, userType }) => {
                     </button>
                 )}
             </div>
+
+            {ratingItem !== null && (
+                <ReviewForm
+                    item={ratingItem}
+                    vendor={order.vendor}
+                    onClose={() => setRatingItem(null)}
+                />
+            )}
         </div>
     )
 }

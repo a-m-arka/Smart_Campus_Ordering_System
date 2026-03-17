@@ -24,8 +24,10 @@ const VendorProfile = () => {
     average_rating: userData?.data?.average_rating
       ? parseFloat(userData.data.average_rating).toFixed(1)
       : "0.0",
-    review_count: userData?.data?.review_count || 0,
-    is_open: Boolean(userData?.data?.is_open)
+    review_count: userData?.data?.review_count,
+    is_open: Boolean(userData?.data?.is_open),
+    totalFoodItems: userData?.data?.totalFoodItems,
+    totalOrders: userData?.data?.totalOrders
   });
 
   const profileFields = [
@@ -166,12 +168,12 @@ const VendorProfile = () => {
               <p className='info'>
                 <span className='key'>Total Orders</span>
                 <span className='colon'>:</span>
-                <span className='value'>105</span>
+                <span className='value'>{vendorData.totalOrders}</span>
               </p>
               <p className='info'>
                 <span className='key'>Total Food Items</span>
                 <span className='colon'>:</span>
-                <span className='value'>12</span>
+                <span className='value'>{vendorData.totalFoodItems}</span>
               </p>
               <p className='info'>
                 <span className='key'>Total Reviews</span>

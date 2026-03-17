@@ -9,6 +9,33 @@
     flex-direction: column;
     align-items: center;
 
+    .order-types {
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+
+        button {
+            padding: 8px 12px;
+            font-size: 18px;
+            border: none;
+            background-color: rgba($primary-color, 0.2);
+            color: $primary-color;
+            border-radius: 10px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-family: 'Josefin Sans', sans-serif;
+
+            &:not(.active):hover {
+                background-color: rgba($primary-color, 0.4);
+            }
+
+            &.active {
+                background-color: $primary-color;
+                color: $text-color1;
+            }
+        }
+    }
+
     .current-orders,
     .past-orders,
     .cancelled-orders {

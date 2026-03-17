@@ -42,7 +42,7 @@ export const createOrder = async (order) => {
     return { success: true, orderId };
   } catch (error) {
     console.error("Error creating order:", error.stack);
-    return { success: false, message: "Failed to create order", error };
+    return { success: false, message: "Failed to create order" };
   }
 };
 
@@ -58,7 +58,7 @@ export const addOrderItem = async (item) => {
     return { success: true, itemId: result.insertId };
   } catch (error) {
     console.error("Error adding order item:", error.stack);
-    return { success: false, message: "Failed to add order item", error };
+    return { success: false, message: "Failed to add order item" };
   }
 };
 
@@ -68,7 +68,7 @@ export const updateOrderStatus = async (orderId, status) => {
     return { success: true };
   } catch (error) {
     console.error("Error updating order status:", error.stack);
-    return { success: false, message: "Failed to update order status", error };
+    return { success: false, message: "Failed to update order status" };
   }
 };
 
@@ -78,7 +78,7 @@ export const updatePaymentStatus = async (orderId, paymentStatus) => {
     return { success: true };
   } catch (error) {
     console.error("Error updating payment status:", error.stack);
-    return { success: false, message: "Failed to update payment status", error };
+    return { success: false, message: "Failed to update payment status" };
   }
 };
 
@@ -171,7 +171,7 @@ export const deleteOrder = async (orderId) => {
     return { success: true, message: "Order deleted successfully" };
   } catch (error) {
     console.error("Error deleting order:", error.stack);
-    return { success: false, message: "Failed to delete order", error };
+    return { success: false, message: "Failed to delete order" };
   }
 };
 
@@ -181,6 +181,6 @@ export const deleteOrderItemsByOrder = async (orderId) => {
     return { success: true };
   } catch (error) {
     console.error("Error deleting order items:", error.stack);
-    return { success: false, message: "Failed to delete order items", error };
+    return { success: false, message: "Failed to delete order items" };
   }
 };

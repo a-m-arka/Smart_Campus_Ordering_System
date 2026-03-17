@@ -17,7 +17,7 @@ const AccessDenied = ({ canLogin, onClose }) => {
                 <p>
                     {
                         canLogin
-                            ? "Access Denied. Please log in to continue."
+                            ? "Please log in to continue."
                             : "You do not have permission to access this page."
                     }
                 </p>

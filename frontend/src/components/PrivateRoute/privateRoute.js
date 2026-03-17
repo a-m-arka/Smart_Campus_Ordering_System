@@ -8,7 +8,7 @@ const PrivateRoute = ({ allowed }) => {
     const { isLoggedIn, userRole } = useGlobalContext();
 
     const onClose = () => {
-        navigate(-1);
+        navigate("/home");
     };
 
     if (allowed.includes(userRole)) {

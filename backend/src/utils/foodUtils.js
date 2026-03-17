@@ -80,6 +80,16 @@ export const updateFoodItem = async (foodId, updateData, newImageUrl = null, new
     await pool.query(query, values);
 };
 
+export const updateFoodRating = async (conn, itemId) => {
+    try {
+        await conn.query(foodQueries.updateFoodItemRating, [itemId]);
+        return { success: true };
+    } catch (error) {
+        console.error("Error updating food item rating:", error.stack);
+        return { success: false, message: "Failed to update food item's rating", error };
+    }
+};
+
 export const getAllFoodItems = async () => {
     const query = foodQueries.getAllFoodItems;
     const [rows] = await pool.query(query);

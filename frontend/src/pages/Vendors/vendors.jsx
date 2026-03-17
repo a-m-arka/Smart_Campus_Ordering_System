@@ -31,7 +31,7 @@ const Vendors = () => {
           const result = await response.json()
           if (!response.ok) {
             alert(result.message || 'Failed to load vendors. Please try again later.')
-            navigate(-1)
+            // navigate(-1)
             return
           }
           setVendors(result.data)
@@ -39,12 +39,12 @@ const Vendors = () => {
         } catch (err) {
           console.error('Error fetching vendors:', err)
           alert('Failed to load vendors. Please try again later.')
-          navigate(-1)
+          // navigate(-1)
           return
         }
       }
       fetchVendors()
-    }, [navigate, server])
+    }, [server])
 
   const locationOptions = [...new Set(vendors.map(v => v.location))]
 
@@ -86,16 +86,7 @@ const Vendors = () => {
   const handleMenuClick = (vendorData) => {
     // console.log(vendorData)
     navigate(
-      `/vendors/${vendorData.id}`, 
-      { 
-        state: { 
-          id: vendorData.id, 
-          name: vendorData.name, 
-          location: vendorData.location, 
-          rating: vendorData.rating, 
-          image: vendorData.image 
-        } 
-      } 
+      `/vendors/${vendorData.id}`
     )
   }
 

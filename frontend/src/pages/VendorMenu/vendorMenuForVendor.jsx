@@ -21,7 +21,7 @@ const VendorMenuForVendor = ({ mainRef }) => {
 
       if (!response || response.error) {
         alert(response?.error || "Failed to load menu");
-        navigate(-1);
+        // navigate(-1);
         return;
       }
       // console.log(response);
@@ -29,7 +29,7 @@ const VendorMenuForVendor = ({ mainRef }) => {
     };
 
     loadVendorMenu();
-  }, [navigate]);
+  }, []);
 
   // Add new or update existing food item
   const handleAddOrUpdateItem = () => {

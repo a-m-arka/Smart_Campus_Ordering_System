@@ -80,6 +80,16 @@ export const updateUserInfo = async (id, role, userInfo) => {
         return { success: false, message: `Failed to update ${role} info` };
     }
 };
+
+export const updateVendorRating = async (conn, vendorId) => {
+    try {
+        await conn.query(vendorQueries.updateVendorRating, [vendorId]);
+        return { success: true };
+    } catch (error) {
+        console.error("Error updating vendor rating:", error.stack);
+        return { success: false, message: "Failed to update vendor rating", error };
+    }
+};
  
 export const getAllUsers = async (role = 'vendor') => {
     try {

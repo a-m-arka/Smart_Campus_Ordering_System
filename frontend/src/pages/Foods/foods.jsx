@@ -40,7 +40,7 @@ const Foods = () => {
         const result = await response.json()
         if (!response.ok) {
           alert(result.message || 'Failed to load food items. Please try again later.')
-          navigate(-1)
+          // navigate(-1)
           return
         }
         setData(result.data)
@@ -48,12 +48,12 @@ const Foods = () => {
       } catch (err) {
         console.error('Error fetching foods:', err)
         alert('Failed to load food items. Please try again later.')
-        navigate(-1)
+        // navigate(-1)
         return
       }
     }
     fetchFoods()
-  }, [navigate, server])
+  }, [server])
 
   const locationOptions = [...new Set(data.map(d => d.vendorLocation))]
   const categoryOptions = [...new Set(data.map(d => d.category))]

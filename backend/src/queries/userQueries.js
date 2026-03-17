@@ -58,6 +58,22 @@ export const vendorQueries = {
     WHERE id = ?;
   `,
 
+  updateVendorRating: `
+    UPDATE Vendors v
+    SET 
+        v.review_count = (
+            SELECT COUNT(*) 
+            FROM Reviews r 
+            WHERE r.vendor_id = v.id
+        ),
+        v.average_rating = (
+            SELECT IFNULL(AVG(rating), 0) 
+            FROM Reviews r 
+            WHERE r.vendor_id = v.id
+        )
+    WHERE v.id = ?;
+  `,
+
   updateLogo: `
     UPDATE Vendors
     SET
@@ -73,10 +89,27 @@ export const vendorQueries = {
   `,
 
   getVendorById: `
-    SELECT id, password, name, email, phone, stall_name, stall_location,
-           logo_url, logo_public_id, average_rating, review_count, is_open
-    FROM Vendors
-    WHERE id = ?;
+    SELECT 
+        v.id,
+        v.password,
+        v.name,
+        v.email,
+        v.phone,
+        v.stall_name,
+        v.stall_location,
+        v.logo_url,
+        v.logo_public_id,
+        v.average_rating,
+        v.review_count,
+        v.is_open,
+        (SELECT COUNT(*) 
+         FROM FoodItems f 
+         WHERE f.vendor_id = v.id) AS totalFoodItems,
+        (SELECT COUNT(*) 
+         FROM Orders o 
+         WHERE o.vendor_id = v.id) AS totalOrders
+    FROM Vendors v
+    WHERE v.id = ?;
   `,
 
   getVendorByEmail: `

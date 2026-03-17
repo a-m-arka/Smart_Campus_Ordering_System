@@ -5,7 +5,7 @@ import FoodCard from '../../components/Cards/foodCard'
 import AccessDenied from '../../components/PopUps/accessDenied'
 import SearchBox from '../../components/Searchbox/searchbox'
 import { useGlobalContext } from '../../context/GlobalContext'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 // import { publicFoods } from '../../temporaryData/data'
 // import vendroLogo from '../../images/default_logo.jpg'
@@ -14,33 +14,36 @@ import { useNavigate, useLocation } from 'react-router-dom'
 const VendorMenuForUser = ({ mainRef }) => {
 
     const navigate = useNavigate()
-    const location = useLocation()
+    const { vendorId } = useParams()
 
     const { userRole } = useGlobalContext()
     const [isAccessDenied, setIsAccessDenied] = useState(false)
     const [query, setQuery] = useState('')
     const [activeCategory, setActiveCategory] = useState('')
+    const [vendorData, setVendorData] = useState({})
     const [vendorFoods, setVendorFoods] = useState([])
-
-    const vendorData = location.state
-
-    // console.log(vendorData)
 
     useEffect(() => {
         const loadVendorMenu = async () => {
-            const response = await fetchVendorMenu(true, vendorData.id);
+            const response = await fetchVendorMenu(true, vendorId);
 
             if (!response || response.error) {
                 alert(response?.error || "Failed to load venddor menu");
-                navigate(-1);
+                // navigate(-1);
                 return;
             }
-            // console.log(response);
+            // console.log(response.data);
             setVendorFoods(response.data);
+            setVendorData({
+                name: response.data[0].vendorName,
+                location: response.data[0].vendorLocation,
+                image: response.data[0].vendorLogo,
+                rating: response.data[0].vendorRating
+            })
         };
 
         loadVendorMenu();
-    }, [navigate]);
+    }, []);
 
     const handlePopUpClose = () => {
         setIsAccessDenied(false)
@@ -52,7 +55,7 @@ const VendorMenuForUser = ({ mainRef }) => {
             return
         }
 
-        item.vendorId = vendorData.id;
+        item.vendorId = vendorId;
         item.vendor = vendorData.name;
         item.vendorLocation = vendorData.location;
         item.vendorLogo = vendorData.image;
