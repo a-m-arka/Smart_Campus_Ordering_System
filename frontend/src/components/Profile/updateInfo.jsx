@@ -56,7 +56,7 @@ const UpdateInfo = ({ userRole, profileFields, initialProfile, onSave, onCancel 
                     name: profile.name,
                     email: profile.email,
                     phone: profile.phone,
-                    stallName: profile.stal_name,
+                    stallName: profile.stall_name,
                     stallLocation: profile.stall_location
                 }
             }

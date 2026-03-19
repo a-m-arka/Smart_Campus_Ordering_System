@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './orderCard.scss'
 import { useNavigate } from 'react-router-dom'
 import { FaPhoneAlt } from "react-icons/fa";
@@ -6,9 +6,9 @@ import { formatTime } from '../HelperFunctions/formatTime';
 import ReviewForm from '../PopUps/reviewForm';
 
 const OrderCard = ({ order, orderType, userType }) => {
-    const token = localStorage.getItem("token");
     const server = process.env.REACT_APP_SERVER;
     const navigate = useNavigate();
+
     const [status, setStatus] = useState(order.status);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -39,8 +39,9 @@ const OrderCard = ({ order, orderType, userType }) => {
         setLoading(true);
         const nextStatus = toBeCancelled === true ? "cancelled" : getNextStatus(status);
 
+        const token = localStorage.getItem("token");
         if (!token) {
-            alert("You must be logged in to place an order");
+            // alert("You must be logged in to place an order");
             window.location.reload();
             return;
         }
@@ -126,19 +127,22 @@ const OrderCard = ({ order, orderType, userType }) => {
             <div className="order-items">
                 {order.items.map((item, idx) => (
                     <div className="order-item" key={idx}>
-                        <img src={item.imageUrl} alt="" />
-                        <div className="item-details">
-                            <p className="item-name">{item.name}</p>
-                            <p className="item-price">Price : ৳ {item.price}</p>
-                            <p className="item-quantity">Quantity : {item.quantity}</p>
+                        <div>
+                            <img src={item.imageUrl} alt="" />
+                            <div className="item-details">
+                                <p className="item-name">{item.name}</p>
+                                <p className="item-price">Price : ৳ {item.price}</p>
+                                <p className="item-quantity">Quantity : {item.quantity}</p>
+                            </div>
                         </div>
                         <div className="item-buttons">
                             {(orderType === 'past' && userType === 'student') && (
                                 <button
                                     className='rate-btn'
                                     onClick={() => setRatingItem(item)}
+                                    // disabled={item.hasGivenReview}
                                 >
-                                    Rate Item
+                                    {item.hasGivenReview ? "Change Feedback" : "Give Feedback"}
                                 </button>
                             )}
                         </div>

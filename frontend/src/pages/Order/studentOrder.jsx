@@ -1,27 +1,55 @@
 import React, { useState, useEffect } from 'react'
 import './order.scss'
-import { fetchUserOrders } from './orderApi'
+import { fetchUserOrders, fetchStudentReviews } from './orderApi'
 import OrderCard from '../../components/Cards/orderCard'
 
 // import { orders } from '../../temporaryData/data'
 
 const StudentOrder = () => {
 
-  const [orders, setOrders] = useState([]);
-  const [ordersType, setOrdersType] = useState('current');
+  const [orders, setOrders] = useState([])
+  const [ordersType, setOrdersType] = useState('current')
 
   const currentOrders = orders.filter(
     order => order.status !== 'delivered' && order.status !== 'cancelled'
   )
-
   const pastOrders = orders.filter(order => order.status === 'delivered')
-
   const cancelledOrders = orders.filter(order => order.status === 'cancelled')
 
   useEffect(() => {
     const fetchData = async () => {
       const orderData = await fetchUserOrders('student')
-      setOrders(orderData)
+      const reviewData = await fetchStudentReviews()
+
+      const reviewMap = new Map()
+      reviewData.forEach(r => {
+        reviewMap.set(r.itemId, r)
+      })
+
+      const updatedOrders = orderData.map(order => ({
+        ...order,
+        items: order.items.map(item => {
+          const review = reviewMap.get(item.foodItemId)
+
+          if (review) {
+            return {
+              ...item,
+              hasGivenReview: true,
+              givenReviewId: review.reviewId,
+              givenRating: review.rating,
+              givenFeedback: review.feedback
+            }
+          }
+
+          return {
+            ...item,
+            hasGivenFeedback: false
+          }
+        })
+      }))
+
+      // console.log(updatedOrders)
+      setOrders(updatedOrders)
     }
 
     fetchData()

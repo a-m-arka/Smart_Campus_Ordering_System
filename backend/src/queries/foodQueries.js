@@ -86,8 +86,12 @@ export const foodQueries = {
   `,
 
   getFoodItemById: `
-    SELECT *
-    FROM FoodItems
-    WHERE id = ?;
-  `,
+    SELECT 
+      f.*,
+      v.stall_name AS vendorName,
+      v.stall_location AS vendorLocation
+    FROM FoodItems f
+    JOIN Vendors v ON f.vendor_id = v.id
+    WHERE f.id = ?;
+  `
 };

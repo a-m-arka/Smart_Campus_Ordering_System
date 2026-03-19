@@ -1,0 +1,134 @@
+@import '../../var.scss';
+
+.item-review-page {
+    background-color: $background-color;
+    color: $text-color1;
+    padding: 32px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .item-data {
+        // background-color: red;
+        width: 100%;
+        height: max-content;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 20px;
+        padding-bottom: 20px;
+        margin-bottom: 10px;
+        // border-bottom: 1px solid lighten($secondary-color, 20%);
+
+        img {
+            width: 130px;
+            height: 130px;
+            border-radius: 10px;
+            border: 1px solid lighten($secondary-color, 20%);
+            object-fit: cover;
+        }
+
+        .data {
+            display: flex;
+            flex-direction: column;
+
+            .name {
+                font-size: 28px;
+                font-weight: bold;
+                margin-bottom: 10px;
+                color: $primary-color;
+            }
+
+            .vendor {
+                font-size: 25px;
+                font-weight: 600;
+                color: lighten($secondary-color, 70%);
+            }
+
+            .location {
+                font-size: 25px;
+                font-weight: 500;
+                color: lighten($secondary-color, 40%);
+            }
+
+            .rating {
+                font-size: 24px;
+                color: $primary-color;
+                margin-top: 5px;
+                font-weight: bold;
+
+                span {
+                    font-size: 22px;
+                    color: lighten($secondary-color, 40%);
+                }
+            }
+        }
+    }
+
+    .review-grid {
+        // background-color: red;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+        gap: 30px;
+        border: 1px solid lighten($secondary-color, 20%);
+        border-radius: 20px;
+        padding: 30px;
+
+        .review-card {
+            // background-color: green;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+
+            .customer-section {
+                display: flex;
+                flex-direction: row;
+                gap: 10px;
+                border-bottom: 1px solid $primary-color;
+                padding-bottom: 10px;
+
+                img {
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    border: 1px solid $primary-color;
+                    object-fit: cover;
+                }
+
+                .customar-name-time {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+
+                    .name {
+                        font-size: 25px;
+                        font-weight: bold;
+                        color: lighten($secondary-color, 60%);
+                        margin-bottom: 3px;
+                    }
+
+                    .time {
+                        color: lighten($secondary-color, 40%);
+                    }
+                }
+            }
+
+            .feedback-section{
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                padding-top: 20px;
+                // padding-bottom: 20px;
+
+                .feedback-text{
+                    font-size: 26px;
+                    color: lighten($secondary-color, 80%);
+                    text-align: justify;
+                }
+            }
+        }
+    }
+}

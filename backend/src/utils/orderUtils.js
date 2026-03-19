@@ -136,7 +136,7 @@ export const getOrdersByUser = async (userId, role) => {
         name: row.itemName,
         price: row.price,
         quantity: row.quantity,
-        imageUrl: row.imageUrl
+        imageUrl: row.imageUrl,
       });
     });
 

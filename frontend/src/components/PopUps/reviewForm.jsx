@@ -4,10 +4,12 @@ import RatingStars from '../RatingStars/ratingStars.jsx';
 const server = process.env.REACT_APP_SERVER;
 
 const ReviewForm = ({ item, vendor, onClose }) => {
-    const [rating, setRating] = useState(1);
-    const [feedback, setFeedback] = useState("");
+    const [rating, setRating] = useState(item.givenRating || 1);
+    const [feedback, setFeedback] = useState(item.givenFeedback || "");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+
+    // console.log(item);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -16,21 +18,39 @@ const ReviewForm = ({ item, vendor, onClose }) => {
 
         const token = localStorage.getItem("token");
         if (!token) {
-            alert("You must be logged in to post a review");
+            // alert("You must be logged in to post a review");
             window.location.reload();
             return;
         }
 
-        const payload = {
-            vendorId: vendor.id,
-            itemId: item.foodItemId,
-            rating,
-            feedback
-        };
+        let url;
+        let method;
+        let payload;
+
+        if (item.hasGivenReview) {
+            url = `${server}/api/review/update-review/${item.givenReviewId}`;
+            method = "PATCH";
+            payload = {
+                newRating: rating,
+                newFeedback: feedback
+            };
+        }
+        else {
+            url = `${server}/api/review/post-review`;
+            method = "POST";
+            payload = {
+                vendorId: vendor.id,
+                itemId: item.foodItemId,
+                rating,
+                feedback
+            };
+        }
+
+        // console.log(payload)
 
         try {
-            const response = await fetch(`${server}/api/review/post-review`, {
-                method: "POST",
+            const response = await fetch(url, {
+                method,
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`
@@ -41,9 +61,14 @@ const ReviewForm = ({ item, vendor, onClose }) => {
             const data = await response.json();
 
             if (response.ok) {
+                if (item.hasGivenReview) {
+                    alert("Review updated successfully!");
+                }
+                else {
+                    alert("Review posted successfully!");
+                }
                 setLoading(false);
                 onClose();
-                alert("Review posted successfully!");
             } else {
                 setLoading(false);
                 setError(data.message || "Failed to post review");

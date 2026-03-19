@@ -2,13 +2,15 @@ import React, { useState } from 'react'
 import './navbar.scss'
 import logo from '../../images/logo2-black.png'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { useGlobalContext } from '../../context/GlobalContext.js'
+import Ensure from '../PopUps/ensure.jsx'
+
 import { IoMdCart } from 'react-icons/io'
 import { MdAccountCircle, MdMenuBook } from 'react-icons/md'
 import { IoLogIn, IoLogOut, IoFastFood, IoReceipt } from 'react-icons/io5'
 import { BiSolidStore } from 'react-icons/bi'
 import { GoHomeFill } from 'react-icons/go'
-import { useGlobalContext } from '../../context/GlobalContext.js'
-import Ensure from '../PopUps/ensure.jsx'
+import { MdFeedback } from "react-icons/md";
 
 const Navbar = () => {
   const location = useLocation()
@@ -98,14 +100,25 @@ const Navbar = () => {
               )}
 
               {userRole === 'vendor' && (
-                <Link to='/vendor_menu' style={{ textDecoration: 'none' }}>
-                  <li
-                    className={`icon ${location.pathname === '/vendor_menu' ? 'active' : ''}`}
-                    data-tooltip='Menu'
-                  >
-                    <MdMenuBook />
-                  </li>
-                </Link>
+                <>
+                  <Link to='/vendor_menu' style={{ textDecoration: 'none' }}>
+                    <li
+                      className={`icon ${location.pathname === '/vendor_menu' ? 'active' : ''}`}
+                      data-tooltip='Menu'
+                    >
+                      <MdMenuBook />
+                    </li>
+                  </Link>
+                  
+                  <Link to='/vendor_reviews' style={{ textDecoration: 'none' }}>
+                    <li
+                      className={`icon ${location.pathname === '/vendor_reviews' ? 'active' : ''}`}
+                      data-tooltip='Reviews'
+                    >
+                      <MdFeedback />
+                    </li>
+                  </Link>
+                </>
               )}
 
               <Link

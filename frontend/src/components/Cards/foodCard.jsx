@@ -12,6 +12,7 @@ const FoodCard = ({ item, onAddToCart, showVendor }) => {
 
     const handleSeeReview = () => {
         // console.log(item);
+        navigate(`/foods/${item.id}/reviews`)
     }
 
     return (

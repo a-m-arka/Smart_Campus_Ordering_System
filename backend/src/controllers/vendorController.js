@@ -32,6 +32,8 @@ export const updateVendorInfo = async (req, res) => {
     if (!token) {
         return res.status(401).json({ message: 'Token not found' });
     }
+
+    // console.log(req.body);
     const { role, name, email, phone, stallName, stallLocation } = req.body;
 
     if (!role || role !== 'vendor') {

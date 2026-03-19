@@ -5,6 +5,11 @@ import {
   Route,
   Navigate
 } from 'react-router-dom';
+import { useRef } from 'react';
+
+import { useGlobalContext } from './context/GlobalContext';
+import PrivateRoute from './components/PrivateRoute/privateRoute';
+import ScrollToTop from './components/SrollToTop/scrollToTop';
 import Navbar from './components/Navbar/navbar';
 import Home from './pages/Home/home';
 import Login from './pages/Login/login';
@@ -18,10 +23,9 @@ import StudentProfile from './pages/Profiles/studentProfile';
 import VendorProfile from './pages/Profiles/vendorProfile';
 import StudentOrder from './pages/Order/studentOrder';
 import VendorOrder from './pages/Order/vendorOrder';
-import PrivateRoute from './components/PrivateRoute/privateRoute';
-import ScrollToTop from './components/SrollToTop/scrollToTop';
-import { useGlobalContext } from './context/GlobalContext';
-import { useRef } from 'react';
+import VendorReviews from './pages/Reviews/vendorReviews';
+import ItemReviews from './pages/Reviews/itemReviews';
+
 
 function App() {
   const { userRole } = useGlobalContext();
@@ -31,7 +35,7 @@ function App() {
       <Router>
         <Navbar />
         <div className="main" ref={mainRef}>
-          <ScrollToTop mainRef={mainRef}/>
+          <ScrollToTop mainRef={mainRef} />
           <Routes>
             <Route path='/'>
 
@@ -45,7 +49,10 @@ function App() {
 
               <Route element={<PrivateRoute allowed={['', 'student']} />}>
                 <Route path='home' element={<Home />} />
-                <Route path='foods' element={<Foods />} />
+                <Route path='foods'>
+                  <Route index element={<Foods />} />
+                  <Route path=':itemId/reviews' element={<ItemReviews />} />
+                </Route>
                 <Route path='vendors'>
                   <Route index element={<Vendors />} />
                   <Route path=':vendorId' element={<VendorMenuForUser mainRef={mainRef} />} />
@@ -62,6 +69,10 @@ function App() {
                 <Route path='vendor_profile' element={<VendorProfile />} />
                 <Route path='vendor_order' element={<VendorOrder />} />
                 <Route path='vendor_menu' element={<VendorMenuForVendor mainRef={mainRef} />} />
+                <Route path='vendor_reviews'>
+                  <Route index element={<VendorReviews />} />
+                  <Route path=':itemId' element={<ItemReviews userRole={"vendor"} />} />
+                </Route>
               </Route>
 
             </Route>

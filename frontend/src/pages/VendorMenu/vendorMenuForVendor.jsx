@@ -84,7 +84,9 @@ const VendorMenuForVendor = ({ mainRef }) => {
     };
   }, [groupedByCategory]);
 
-  const handleSeeReview = () => { };
+  const handleSeeReview = (itemId) => {
+    navigate(`/vendor_reviews/${itemId}`);
+  };
 
   return (
     <div className="vendor-own-menu">
@@ -150,7 +152,7 @@ const VendorMenuForVendor = ({ mainRef }) => {
                       <p className="rating">
                         ⭐ {item.rating}/5 <span className="reviews">({item.reviewCount})</span>
                       </p>
-                      <p className="see-review" onClick={handleSeeReview}>See Reviews</p>
+                      <p className="see-review" onClick={() => handleSeeReview(item.id)}>See Reviews</p>
                       <p className="price">৳ {item.price}</p>
                     </div>
                   </div>

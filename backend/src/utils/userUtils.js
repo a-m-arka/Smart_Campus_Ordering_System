@@ -34,25 +34,25 @@ export const findUserById = async (id, role) => {
 };
 
 export const updateUserImage = async (id, role, imageUrl, publicId) => {
-  try {
-    const query =
-      role === 'student'
-        ? studentQueries.updateProfilePicture
-        : vendorQueries.updateLogo;
+    try {
+        const query =
+            role === 'student'
+                ? studentQueries.updateProfilePicture
+                : vendorQueries.updateLogo;
 
-    const [result] = await pool.query(query, [imageUrl, publicId, id]);
-    return { success: true, result };
-  } catch (error) {
-    console.error("Error updating user image:", error.stack);
-    return { success: false, message: "Failed to update image", error };
-  }
+        const [result] = await pool.query(query, [imageUrl, publicId, id]);
+        return { success: true, result };
+    } catch (error) {
+        console.error("Error updating user image:", error.stack);
+        return { success: false, message: "Failed to update image", error };
+    }
 };
 
 export const updateUserInfo = async (id, role, userInfo) => {
     try {
         let query;
         let values;
-        if(role === 'student'){
+        if (role === 'student') {
             query = studentQueries.updateStudent;
             values = [
                 userInfo.name,
@@ -62,7 +62,7 @@ export const updateUserInfo = async (id, role, userInfo) => {
                 id
             ];
         }
-        else{
+        else {
             query = vendorQueries.updateVendor;
             values = [
                 userInfo.name,
@@ -73,6 +73,7 @@ export const updateUserInfo = async (id, role, userInfo) => {
                 id
             ];
         }
+
         await pool.query(query, values);
         return { success: true };
     } catch (error) {
@@ -90,20 +91,20 @@ export const updateVendorRating = async (conn, vendorId) => {
         return { success: false, message: "Failed to update vendor rating", error };
     }
 };
- 
+
 export const getAllUsers = async (role = 'vendor') => {
     try {
         let query;
-        if (role === 'vendor'){
+        if (role === 'vendor') {
             query = vendorQueries.getAllVendors;
         }
-        else{
-            return {error: true};
+        else {
+            return { error: true };
         }
         const [result] = await pool.query(query);
         return result;
     } catch (error) {
         console.error(`Error fetching all ${role}s:`, error.stack);
-        return {error: true};
+        return { error: true };
     }
 };

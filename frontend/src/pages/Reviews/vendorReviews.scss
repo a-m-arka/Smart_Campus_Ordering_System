@@ -1,0 +1,108 @@
+@import '../../var.scss';
+
+.vendor-review-page {
+    background-color: $background-color;
+    color: $text-color1;
+    padding: 32px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .review-grid {
+        // background-color: red;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+        gap: 30px;
+
+        .review-card {
+            // background-color: green;
+            border: 1px solid lighten($secondary-color, 20%);
+            border-radius: 20px;
+            width: 100%;
+            padding: 30px;
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+
+            .item-section {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+
+                img {
+                    width: 120px;
+                    height: 120px;
+                    border-radius: 10px;
+                    border: 1px solid $primary-color;
+                    object-fit: cover;
+                }
+
+                .item-name {
+                    font-size: 22px;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                    color: $primary-color;
+                }
+            }
+
+            .review-section {
+                flex: 10;
+                display: flex;
+                flex-direction: column;
+                border-left: 5px solid $primary-color;
+
+                .customer-section {
+                    display: flex;
+                    flex-direction: row;
+                    gap: 10px;
+                    border-bottom: 1px solid $primary-color;
+                    padding-bottom: 10px;
+                    padding-left: 20px;
+
+                    img {
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        border: 1px solid $primary-color;
+                        object-fit: cover;
+                    }
+
+                    .customar-name-time {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+
+                        .name {
+                            font-size: 25px;
+                            font-weight: bold;
+                            color: lighten($secondary-color, 60%);
+                            margin-bottom: 3px;
+                        }
+
+                        .time {
+                            color: lighten($secondary-color, 40%);
+                        }
+                    }
+                }
+
+                .feedback-section {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    padding-top: 20px;
+                    padding-left: 20px;
+
+                    .feedback-text {
+                        font-size: 26px;
+                        color: lighten($secondary-color, 80%);
+                        text-align: justify
+                    }
+                }
+            }
+        }
+    }
+}

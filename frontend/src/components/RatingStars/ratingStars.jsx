@@ -18,8 +18,8 @@ function RatingStars({
             onChange={(value) => setRatingValue && setRatingValue(value)}
             readonly={readOnly}
             fractions={fractionValue}
-            emptySymbol={<FaRegStar color="rgba(255, 115, 0, 0.8)" size={starSize} style={starStyle} />}
-            fullSymbol={<FaStar color="rgb(255, 115, 0)" size={starSize} style={starStyle} />}
+            emptySymbol={<FaRegStar color="rgba(251, 255, 0, 0.6)" size={starSize} style={starStyle} />}
+            fullSymbol={<FaStar color="rgb(251, 255, 0)" size={starSize} style={starStyle} />}
         />
     );
 }
