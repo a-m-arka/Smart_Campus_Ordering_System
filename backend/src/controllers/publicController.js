@@ -44,3 +44,16 @@ export const getVendorMenu = async (req, res) => {
         return res.status(500).json({ message: 'Internal server error' });
     }
 };
+
+export const getTopFoodsAndVendors = async (req, res) => {
+    try{
+        const response = await publicService.getTopFoodsAndVendors();
+        if(response.success){
+            return res.status(200).json({ data : response.data });
+        }
+        return res.status(400).json({ message: response.message });
+    } catch (error) {
+        console.error('Error getting top foods and vendors in public controller:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};

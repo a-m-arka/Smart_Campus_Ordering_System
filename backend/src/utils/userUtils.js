@@ -108,3 +108,14 @@ export const getAllUsers = async (role = 'vendor') => {
         return { error: true };
     }
 };
+
+export const getTopVendors = async () => {
+    try {
+        const query = vendorQueries.getTopVendors;
+        const [result] = await pool.query(query);
+        return result;
+    } catch (error) {
+        console.error("Error fetching top vendors:", error.stack);
+        return { error: true };
+    }
+};

@@ -1,5 +1,5 @@
 import * as foodUtils from "../utils/foodUtils.js";
-import { getAllUsers } from "../utils/userUtils.js";
+import { getAllUsers, getTopVendors } from "../utils/userUtils.js";
 
 export const getAllFoods = async () => {
     try {
@@ -37,5 +37,19 @@ export const getVendorMenu = async (vendorId) => {
     } catch (error) {
         console.error('Error getting vendor menu:', error);
         return { success: false, message: 'Failed to get vendor menu' };
+    }
+};
+
+export const getTopFoodsAndVendors = async () => {
+    try{
+        const topFoods = await foodUtils.getTopFoodItems();
+        const topVendors = await getTopVendors();
+        if(topFoods.error || topVendors.error){
+            return { success: false, message: 'Failed to get top foods and vendors' };
+        }
+        return { success: true, data: { topFoods, topVendors } };
+    }catch(error){
+        console.error('Error getting top foods and vendors in public service:', error);
+        return { success: false, message: 'Failed to get top foods and vendors' };
     }
 };

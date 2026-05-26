@@ -128,4 +128,17 @@ export const vendorQueries = {
       is_open AS isOpen
     FROM Vendors;
   `,
+
+  getTopVendors: `
+    SELECT 
+      id,
+      stall_name AS name,
+      stall_location AS location,
+      average_rating AS rating,
+      logo_url AS image,
+      is_open AS isOpen
+    FROM Vendors
+    ORDER BY average_rating DESC
+    LIMIT 4;
+  `,
 };

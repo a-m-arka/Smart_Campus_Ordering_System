@@ -1,21 +1,29 @@
 @import '../../var.scss';
 
 .home {
-    padding: 2rem;
+    // padding: 2rem;
     color: $text-color1;
     background-color: $background-color;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     .hero {
         position: relative;
-        height: 250px;
+        width: 100%;
+        height: calc(100vh - 60px);
         text-align: center;
         margin-bottom: 3rem;
         padding: 2rem;
-        background-image: url('../../images/foods.jpg');
+        background-image: url('../../images/hero_image_3.png');
         background-size: cover;
         background-position: center;
         color: $text-color1;
         overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: start;
 
         &::before {
             content: '';
@@ -24,7 +32,7 @@
             left: 0;
             height: 100%;
             width: 100%;
-            background-color: rgba(0, 0, 0, 0.5); // semi-transparent black
+            background-color: rgba(0, 0, 0, 0.2); // semi-transparent black
             z-index: 1;
         }
 
@@ -33,23 +41,30 @@
         button {
             position: relative;
             z-index: 2;
+            margin-left: 1.8rem
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 4.5rem;
+            margin-bottom: 0.8rem;
         }
 
         p {
-            margin: 1rem 0;
+            // margin: 1rem 0;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
         }
 
         button {
             background: $primary-color;
             color: $text-color1;
-            padding: 0.75rem 1.5rem;
+            padding: 0.75rem 1rem;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 1.25rem;
+            margin-top: 1rem;
 
             &:hover {
                 background: darken($primary-color, 10%);
@@ -57,61 +72,144 @@
         }
     }
 
-
-    h2 {
-        margin: 2rem 0 1rem;
-        font-size: 1.5rem;
-    }
-
-    .grid {
+    .perks {
+        width: 100%;
+        margin: 0 auto;
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 2rem;
+        padding: 4rem 2rem;
+        align-items: stretch;
 
-        .card {
+        .perk {
             background: $secondary-color;
-            padding: 1rem;
-            border-radius: 8px;
+            border-radius: 16px;
+            padding: 2rem;
             text-align: center;
 
-            img {
-                width: 100%;
-                height: 150px;
-                object-fit: cover;
-                border-radius: 6px;
-                margin-bottom: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            min-height: 320px;
+
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+
+            h3 {
+                margin-top: 1.5rem;
+                margin-bottom: 1.3rem;
+                font-size: 1.8rem;
+                color: $primary-color;
             }
 
-            button {
-                margin-top: 0.5rem;
-                padding: 0.5rem 1rem;
-                background: $primary-color;
+            p {
+                font-size: 1.2rem;
                 color: $text-color1;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-            }
-
-            button:hover {
-                background: darken($primary-color, 10%);
+                line-height: 1.4;
             }
         }
     }
 
-    .why-us {
-        margin-top: 3rem;
+    .top-foods,
+    .top-vendors {
+        width: 100%;
+        margin: 0 2rem;
+        padding: 2rem;
 
-        .reasons {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 1rem;
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: $primary-color;
+        }
 
-            .reason {
-                background: $secondary-color;
-                padding: 1rem 2rem;
-                border-radius: 8px;
-                font-weight: bold;
+        .food-list{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .vendor-list {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            // background-color: red;
+            margin-top: 30px;
+
+            .vendor-card {
+                height: max-content;
+                background: $background-color;
+                border-radius: 10px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+                border: 1px solid lighten($secondary-color, 10%);
+                padding: 0px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                cursor: pointer;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+                &:hover {
+                    transform: scale(1.05);
+                    box-shadow: 0 5px 15px rgba($primary-color, 0.5);
+                    border: 1px solid $primary-color;
+                }
+
+                img {
+                    width: 100%;
+                    aspect-ratio: 1/1;
+                    object-fit: cover;
+                    border-top-left-radius: 10px;
+                    border-top-right-radius: 10px;
+                    margin-bottom: 12px;
+                }
+
+                .details {
+                    // background-color: red;
+                    width: 100%;
+                    padding: 16px;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: start;
+                    justify-content: space-between;
+
+                    .left {
+                        h2 {
+                            font-size: 18px;
+                            margin: 8px 0;
+                        }
+
+                        .location {
+                            font-size: 16px;
+                            color: $text-color1;
+                            margin-bottom: 4px;
+                        }
+                    }
+
+                    .right {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: end;
+
+                        .rating {
+                            font-size: 20px;
+                            color: $text-color1;
+                            margin-bottom: 6px;
+
+                            span {
+                                color: $primary-color;
+                            }
+                        }
+
+                        .status {
+                            padding: 5px;
+                            border-radius: 5px;
+                            font-size: 16px;
+                        }
+                    }
+                }
             }
         }
     }

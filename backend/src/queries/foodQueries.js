@@ -61,6 +61,29 @@ export const foodQueries = {
     JOIN Vendors v ON f.vendor_id = v.id;
   `,
 
+  getTopFoods: `
+    SELECT 
+        f.id,
+        f.name AS title,
+        f.price,
+        f.category,
+        f.description,
+        f.image_url AS image,
+        f.is_available AS isAvailable,
+        f.average_rating AS rating,
+        f.review_count AS reviewCount,
+        v.id AS vendorId,
+        v.stall_name AS vendor,
+        v.stall_location AS vendorLocation,
+        v.logo_url AS vendorLogo,
+        v.average_rating AS vendorRating,
+        v.review_count AS vendorReviewCount
+    FROM FoodItems f
+    JOIN Vendors v ON f.vendor_id = v.id
+    ORDER BY f.average_rating DESC
+    LIMIT 5;
+  `,
+
   getVendorMenu: `
     SELECT 
       f.id,

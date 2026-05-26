@@ -2,7 +2,7 @@ import React from 'react'
 import './foodCard.scss'
 import { useNavigate } from 'react-router-dom'
 
-const FoodCard = ({ item, onAddToCart, showVendor }) => {
+const FoodCard = ({ item, onAddToCart, showVendor, onHomePage = false }) => {
     const navigate = useNavigate();
 
     const handleVendorClick = () => {
@@ -23,7 +23,7 @@ const FoodCard = ({ item, onAddToCart, showVendor }) => {
             <div className="details">
                 <div className="left">
                     <h2>{item.title}</h2>
-                    <p className="description">{item.description}</p>
+                    {!onHomePage && <p className="description">{item.description}</p>}
                     {showVendor && (
                         <>
                             <p className="vendor" onClick={handleVendorClick}>{item.vendor}</p>
@@ -35,18 +35,20 @@ const FoodCard = ({ item, onAddToCart, showVendor }) => {
                     <p className={`status ${item.isAvailable ? 'available' : 'not-available'}`}>
                         {item.isAvailable ? 'Available' : 'Not Available'}
                     </p>
-                    <p className="rating">⭐ {item.rating}/5 <span className='reviews'>({item.reviewCount})</span></p>
-                    <p className="see-review" onClick={handleSeeReview}>See Reviews</p>
+                    <p className="rating">⭐ {item.rating}/5 {!onHomePage && <span className='reviews'>({item.reviewCount})</span>}</p>
+                    {!onHomePage && <p className="see-review" onClick={handleSeeReview}>See Reviews</p>}
                     <p className="price">৳ {item.price}</p>
                 </div>
             </div>
-            <button
-                className={`add-btn ${item.isAvailable ? '' : 'btn-disabled'}`}
-                onClick={onAddToCart}
-                disabled={!item.isAvailable}
-            >
-                Add to Cart
-            </button>
+            {!onHomePage && (
+                <button
+                    className={`add-btn ${item.isAvailable ? '' : 'btn-disabled'}`}
+                    onClick={onAddToCart}
+                    disabled={!item.isAvailable}
+                >
+                    Add to Cart
+                </button>
+            )}
         </div>
     )
 }

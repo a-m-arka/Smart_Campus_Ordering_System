@@ -96,6 +96,12 @@ export const getAllFoodItems = async () => {
     return rows;
 };
 
+export const getTopFoodItems = async () => {
+    const query = foodQueries.getTopFoods;
+    const [rows] = await pool.query(query);
+    return rows;
+};
+
 export const getFoodItemById = async (foodId) => {
     const query = foodQueries.getFoodItemById;
     const [rows] = await pool.query(query, [foodId]);
