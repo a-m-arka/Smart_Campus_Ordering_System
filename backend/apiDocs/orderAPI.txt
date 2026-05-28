@@ -1,0 +1,32 @@
+POST /api/order/place-order
+Headers:
+  Authorization: Bearer <token>
+  Content-Type: application/json
+Body example:
+{
+  "vendorId": 12,
+  "paymentMethod": "cod",
+  "deliveryAddress": "Dorm 2, CUET Campus",
+  "items": [
+    { "id": 101, "price": 120.50, "quantity": 2 },
+    { "id": 102, "price": 80.00, "quantity": 1 }
+  ]
+}
+
+GET /api/order/get-orders/:userRole
+Headers:
+  Authorization: Bearer <token>
+Path parameter:
+  userRole: "student" or "vendor"
+
+PATCH /api/order/update-status/:orderId
+Headers:
+  Authorization: Bearer <token>
+  Content-Type: application/json
+Path parameter:
+  orderId: ID of the order to update
+Body example:
+{
+  "newStatus": "confirmed",
+  "userRole": "vendor"
+}

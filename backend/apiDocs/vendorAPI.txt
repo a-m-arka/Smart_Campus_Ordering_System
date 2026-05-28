@@ -1,0 +1,28 @@
+GET /api/vendor/get-vendor-data
+Headers:
+	Authorization: Bearer <token>
+
+PUT /api/vendor/update-vendor-info
+Headers:
+	Content-Type: application/json
+	Authorization: Bearer <token>
+Body example:
+{
+	"role": "vendor",
+	"name": "Vendor Name",
+	"email": "vendor@example.com",
+	"phone": "01334567890",
+	"stallName": "Food Cart",
+	"stallLocation": "East Campus"
+}
+
+PUT /api/vendor/update-logo
+Headers:
+	Authorization: Bearer <token>
+	Content-Type: multipart/form-data
+Form fields:
+	file: <image file>
+
+GET /api/vendor/menu
+Headers:
+	Authorization: Bearer <token>

@@ -1,0 +1,25 @@
+POST /api/food/add-food
+Headers:
+  Authorization: Bearer <token>
+  Content-Type: multipart/form-data
+Form fields:
+  title: string
+  description: string
+  price: number
+  category: string
+  isAvailable: true or false
+  file: image file
+
+PUT /api/food/edit-food/:foodId
+Headers:
+  Authorization: Bearer <token>
+  Content-Type: multipart/form-data
+Path parameter:
+  foodId: ID of the food item to update
+Form fields (all optional except the token):
+  title: string
+  description: string
+  price: number
+  category: string
+  isAvailable: true or false
+  file: image file (optional)

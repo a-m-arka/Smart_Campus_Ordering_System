@@ -1,0 +1,13 @@
+GET /api/public/food-items
+Description: List all available food items.
+
+GET /api/public/vendors
+Description: List all vendors.
+
+GET /api/public/top-foods-vendors
+Description: Fetch featured top foods and vendors.
+
+GET /api/public/vendor-menu/:vendorId
+Description: Get the menu for a specific vendor.
+Path parameter:
+  vendorId: vendor user ID

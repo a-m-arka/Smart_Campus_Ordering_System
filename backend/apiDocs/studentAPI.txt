@@ -1,0 +1,23 @@
+GET /api/student/get-student-data
+Headers:
+	Authorization: Bearer <token>
+
+PUT /api/student/update-student-info
+Headers:
+	Content-Type: application/json
+	Authorization: Bearer <token>
+Body example:
+{
+	"role": "student",
+	"name": "Jhon Updated",
+	"email": "u1234567@student.cuet.ac.bd",
+	"phone": "01334567890",
+	"address": "Dorm 2, CUET Campus"
+}
+
+PUT /api/student/update-profile-picture
+Headers:
+	Authorization: Bearer <token>
+	Content-Type: multipart/form-data
+Form fields:
+	file: <image file>

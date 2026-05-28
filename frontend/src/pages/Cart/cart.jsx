@@ -256,7 +256,7 @@ const Cart = () => {
                     <span>Cash on Delivery</span>
                   </div>
 
-                  <div className="radio-option">
+                  {/* <div className="radio-option">
                     <input
                       type="radio"
                       name={`payment-${vendorGroup.id}`}
@@ -265,7 +265,7 @@ const Cart = () => {
                       onChange={() => handlePaymentChange(vendorGroup.id, "mobile")}
                     />
                     <span>Mobile Banking</span>
-                  </div>
+                  </div> */}
 
                 </div>
 

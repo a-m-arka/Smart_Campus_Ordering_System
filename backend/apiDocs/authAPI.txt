@@ -1,4 +1,8 @@
-Register Student: /api/auth/register-user
+POST /api/auth/register-user
+Headers:
+    Content-Type: application/json
+Body examples:
+Student registration:
 {
     "role": "student",
     "name": "Jhon",
@@ -8,7 +12,7 @@ Register Student: /api/auth/register-user
     "confirmPassword": "jhon1234"
 }
 
-Register Vendor: /api/auth/register-user
+Vendor registration:
 {
     "role": "vendor",
     "name": "Jhon",
@@ -19,16 +23,23 @@ Register Vendor: /api/auth/register-user
     "stallName": "Food Cart"
 }
 
-Login Student: /api/auth/login-user
+POST /api/auth/login-user
+Headers:
+    Content-Type: application/json
+Body example:
 {
     "role": "student",
     "email": "u1234567@student.cuet.ac.bd",
     "password": "jhon1234"
 }
 
-Login Vendor: /api/auth/login-user
+PUT /api/auth/change-password
+Headers:
+    Content-Type: application/json
+    Authorization: Bearer <token>
+Body example:
 {
-    "role": "vendor",
-    "email": "jhon@gmail.com",
-    "password": "jhon1234"
+    "role": "student",
+    "currentPassword": "oldPassword123",
+    "newPassword": "newPassword456"
 }

@@ -1,0 +1,35 @@
+POST /api/review/post-review
+Headers:
+  Authorization: Bearer <token>
+  Content-Type: application/json
+Body example:
+{
+  "vendorId": 12,
+  "itemId": 101,
+  "rating": 5,
+  "feedback": "Delicious and fresh!"
+}
+
+PATCH /api/review/update-review/:reviewId
+Headers:
+  Authorization: Bearer <token>
+  Content-Type: application/json
+Path parameter:
+  reviewId: ID of the review to update
+Body example:
+{
+  "newRating": 4,
+  "newFeedback": "Great food, just a little less spicy."
+}
+
+GET /api/review/get-item-reviews/:itemId
+Path parameter:
+  itemId: ID of the food item
+
+GET /api/review/get-vendor-reviews
+Headers:
+  Authorization: Bearer <token>
+
+GET /api/review/get-student-reviews
+Headers:
+  Authorization: Bearer <token>
