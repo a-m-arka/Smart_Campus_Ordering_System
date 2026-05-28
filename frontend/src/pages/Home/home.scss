@@ -124,7 +124,7 @@
             color: $primary-color;
         }
 
-        .food-list{
+        .food-list {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
@@ -211,6 +211,65 @@
                     }
                 }
             }
+        }
+    }
+
+    .footer {
+        width: 100%;
+        margin-top: 5rem;
+        padding: 4rem 6rem;
+        background: darken($background-color, 3%);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        gap: 4rem;
+
+        .brand {
+
+            max-width: 600px;
+
+            h2 {
+                font-size: 2rem;
+                color: $primary-color;
+                margin-bottom: 1rem;
+            }
+
+            p {
+                font-size: 1rem;
+                line-height: 1.8;
+                color: rgba(255, 255, 255, 0.75);
+                margin-bottom: 1rem;
+            }
+        }
+
+        .links {
+
+            h3 {
+                font-size: 1.3rem;
+                margin-bottom: 1rem;
+                margin-right: 15rem;
+                color: $primary-color;
+            }
+
+            p {
+                margin-bottom: 0.8rem;
+                cursor: pointer;
+                transition: 0.3s ease;
+                color: rgba(255, 255, 255, 0.75);
+
+                &:hover {
+                    color: $primary-color;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .footer {
+            flex-direction: column;
+            padding: 3rem 2rem;
         }
     }
 }

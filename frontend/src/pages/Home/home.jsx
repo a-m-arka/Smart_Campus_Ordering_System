@@ -87,7 +87,7 @@ const Home = () => {
       </section>
 
       <section className="top-foods">
-        <h2>Top Foods</h2>
+        <h2>Our Top Foods</h2>
         <div className="food-list">
           {topFoods.map((food) => (
             <FoodCard key={food.id} item={food} showVendor={true} onHomePage={true} />
@@ -96,7 +96,7 @@ const Home = () => {
       </section>
 
       <section className="top-vendors">
-        <h2>Top Vendors</h2>
+        <h2>Our Top Vendors</h2>
         <div className="vendor-list">
           {topVendors.map((vendor) => (
             <div key={vendor.id} className="vendor-card" onClick={() => handleMenuClick(vendor)}>
@@ -114,7 +114,35 @@ const Home = () => {
           ))}
         </div>
       </section>
-      
+
+      <footer className="footer">
+
+        <div className="brand">
+          <h2>
+            CUET FOODS
+          </h2>
+          <p>
+            CUET Foods is a campus-based food delivery platform built to make student life easier.
+            We connect trusted local vendors with CUET students so you can enjoy fresh meals without leaving your place.
+          </p>
+
+          <p>
+            Our goal is simple — fast delivery, affordable meals, and a reliable food experience inside campus.
+            No long waits, no confusion — just food when you need it.
+          </p>
+        </div>
+
+        <div className="links">
+          <h3>Quick Links</h3>
+
+          <p onClick={() => navigate('/')}>Home</p>
+          <p onClick={() => navigate('/foods')}>Foods</p>
+          <p onClick={() => navigate('/vendors')}>Vendors</p>
+          <p onClick={() => navigate('/cart')}>Cart</p>
+          <p onClick={() => navigate('/user_order')}>Orders</p>
+        </div>
+
+      </footer>
     </div>
   )
 }
