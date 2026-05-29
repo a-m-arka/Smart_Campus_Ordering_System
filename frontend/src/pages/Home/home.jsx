@@ -10,30 +10,31 @@ import VendorIcon from '../../assets/VendorIcon.json'
 import StudentIcon from '../../assets/StudentIcon.json'
 
 
+const server = process.env.REACT_APP_SERVER;
+
 const Home = () => {
-  const server = process.env.REACT_APP_SERVER;
   const navigate = useNavigate()
   const [topFoods, setTopFoods] = useState([]);
   const [topVendors, setTopVendors] = useState([]);
 
   useEffect(() => {
+    const fetchTopFoodsAndVendors = async () => {
+      try {
+        const response = await fetch(`${server}/api/public/top-foods-vendors`);
+        const result = await response.json();
+        if (response.ok) {
+          setTopFoods(result.data.topFoods);
+          setTopVendors(result.data.topVendors);
+        } else {
+          console.error('Error fetching top foods and vendors:', result.message);
+        }
+      } catch (error) {
+        console.error('Error fetching top foods and vendors:', error);
+      }
+    };
+
     fetchTopFoodsAndVendors();
   }, []);
-
-  const fetchTopFoodsAndVendors = async () => {
-    try {
-      const response = await fetch(`${server}/api/public/top-foods-vendors`);
-      const result = await response.json();
-      if (response.ok) {
-        setTopFoods(result.data.topFoods);
-        setTopVendors(result.data.topVendors);
-      } else {
-        console.error('Error fetching top foods and vendors:', result.message);
-      }
-    } catch (error) {
-      console.error('Error fetching top foods and vendors:', error);
-    }
-  };
 
   const handleOrderNow = () => {
     navigate('/foods')

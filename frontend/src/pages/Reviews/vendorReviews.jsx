@@ -32,7 +32,7 @@ const VendorReviews = () => {
             setReviews(result.reviews);
         };
         fetchVendorReviews();
-    }, []);
+    }, [server]);
 
     return (
         <div className='vendor-review-page'>

@@ -53,7 +53,7 @@ const Foods = () => {
       }
     }
     fetchFoods()
-  }, [server])
+  }, [])
 
   const locationOptions = [...new Set(data.map(d => d.vendorLocation))]
   const categoryOptions = [...new Set(data.map(d => d.category))]

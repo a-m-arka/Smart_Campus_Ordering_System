@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import './orderCard.scss'
 import { useNavigate } from 'react-router-dom'
 import { FaPhoneAlt } from "react-icons/fa";

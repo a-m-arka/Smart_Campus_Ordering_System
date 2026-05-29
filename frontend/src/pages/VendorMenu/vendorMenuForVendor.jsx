@@ -59,6 +59,7 @@ const VendorMenuForVendor = ({ mainRef }) => {
 
   // Scroll spy for navbar active category
   useEffect(() => {
+    const observedElements = [];
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting) {
@@ -73,14 +74,14 @@ const VendorMenuForVendor = ({ mainRef }) => {
 
     groupedByCategory.forEach(group => {
       const el = categoryRefs.current[group.category]?.current;
-      if (el) observer.observe(el);
+      if (el) {
+        observer.observe(el);
+        observedElements.push(el);
+      }
     });
 
     return () => {
-      groupedByCategory.forEach(group => {
-        const el = categoryRefs.current[group.category]?.current;
-        if (el) observer.unobserve(el);
-      });
+      observedElements.forEach(el => observer.unobserve(el));
     };
   }, [groupedByCategory]);
 
@@ -134,7 +135,6 @@ const VendorMenuForVendor = ({ mainRef }) => {
 
           <div className="food-grid">
             {group.items.map(item => {
-              const globalIndex = foodItems.findIndex(fi => fi.id === item.id);
               return (
                 <div key={item.id} className="card">
                   <div className="image">

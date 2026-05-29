@@ -121,6 +121,8 @@ const UpdateInfo = ({ userRole, profileFields, initialProfile, onSave, onCancel 
                 {loading ? 'Saving...' : 'Save Changes'}
             </button>
 
+            {error && <p className="error-message">{error}</p>}
+
             {typeof onCancel === 'function' && (
                 <button type="button" onClick={onCancel} disabled={loading}>
                     Cancel

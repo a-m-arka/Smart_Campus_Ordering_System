@@ -1,4 +1,4 @@
-import React, { use, useState } from 'react'
+import React, { useState } from 'react'
 import './login.scss'
 import { Link, useNavigate } from 'react-router-dom'
 import { useGlobalContext } from '../../context/GlobalContext.js'

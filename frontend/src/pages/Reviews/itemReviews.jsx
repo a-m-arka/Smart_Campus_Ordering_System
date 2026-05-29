@@ -25,7 +25,7 @@ const ItemReviews = ({ userRole = null }) => {
             setReviews(result.reviews);
         };
         fetchItemReviews();
-    }, []);
+    }, [itemId, server]);
 
     return (
         <div className='item-review-page'>

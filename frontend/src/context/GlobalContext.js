@@ -91,6 +91,8 @@ export const GlobalProvider = ({ children }) => {
                 setUserRole,
                 userData,
                 setUserData,
+                loading,
+                error,
             }}
         >
             {children}

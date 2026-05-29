@@ -5,8 +5,10 @@ const ScrollToTop = ({ mainRef }) => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    mainRef.current.scrollTo(0, 0);
-  }, [pathname]);
+    if (mainRef?.current) {
+      mainRef.current.scrollTo(0, 0);
+    }
+  }, [pathname, mainRef]);
 
   return null;
 };

@@ -43,7 +43,7 @@ const VendorMenuForUser = ({ mainRef }) => {
         };
 
         loadVendorMenu();
-    }, []);
+    }, [vendorId]);
 
     const handlePopUpClose = () => {
         setIsAccessDenied(false)
@@ -110,6 +110,7 @@ const VendorMenuForUser = ({ mainRef }) => {
     })
 
     useEffect(() => {
+        const observedElements = [];
         const observer = new IntersectionObserver(
             entries => {
                 entries.forEach(entry => {
@@ -127,32 +128,39 @@ const VendorMenuForUser = ({ mainRef }) => {
 
         groupedByCategory.forEach(group => {
             const element = categoryRefs.current[group.category]?.current
-            if (element) observer.observe(element)
+            if (element) {
+                observer.observe(element)
+                observedElements.push(element)
+            }
         })
 
-        if (popularRef.current) observer.observe(popularRef.current)
-        if (topRatedRef.current) observer.observe(topRatedRef.current)
-        if (searchResultRef.current) observer.observe(searchResultRef.current)
+        if (popularRef.current) {
+            observer.observe(popularRef.current)
+            observedElements.push(popularRef.current)
+        }
+        if (topRatedRef.current) {
+            observer.observe(topRatedRef.current)
+            observedElements.push(topRatedRef.current)
+        }
+        if (searchResultRef.current) {
+            observer.observe(searchResultRef.current)
+            observedElements.push(searchResultRef.current)
+        }
 
         return () => {
-            groupedByCategory.forEach(group => {
-                const element = categoryRefs.current[group.category]?.current
-                if (element) observer.unobserve(element)
+            observedElements.forEach(element => {
+                observer.unobserve(element)
             })
-
-            if (popularRef.current) observer.unobserve(popularRef.current)
-            if (topRatedRef.current) observer.unobserve(topRatedRef.current)
-            if (searchResultRef.current) observer.unobserve(searchResultRef.current)
         }
     }, [groupedByCategory, query])
 
     useEffect(() => {
-        if (query !== '' && searchResultRef.current) {
+        if (query !== '' && searchResultRef.current && mainRef?.current) {
             const offset = 120
             const top = searchResultRef.current.offsetTop - offset
             mainRef.current.scrollTo({ top, behavior: 'smooth' })
         }
-    }, [query])
+    }, [query, mainRef])
 
     return (
         <div className='vendor-menu'>

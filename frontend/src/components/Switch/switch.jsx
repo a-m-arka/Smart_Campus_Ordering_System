@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch as MuiSwitch, FormControlLabel } from '@mui/material';
-import { red } from '@mui/material/colors';
 
 const Switch = ({ checked, onChange, onLabel, offLabel, labelSize }) => {
     return (
