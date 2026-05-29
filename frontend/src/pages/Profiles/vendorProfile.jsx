@@ -44,8 +44,47 @@ const VendorProfile = () => {
   const [previewImage, setPreviewImage] = useState(null);
   const [activeButton, setActiveButton] = useState(null);
 
-  const handleToggleOpen = (checked) => {
-    setIsOpen(checked);
+  const handleToggleOpen = async (checked) => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert("You must be logged in to change stall status");
+        window.location.reload();
+        return;
+      }
+
+      let newStatus;
+      if (checked) {
+        newStatus = 'open';
+      }
+      else {
+        newStatus = 'close';
+      }
+
+      const response = await fetch(`${server}/api/vendor/toggle-stall-status/${vendorData.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ newStatus })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message || "Failed to toggle stall status");
+        return;
+      }
+
+      setIsOpen(checked);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to toggle stall status");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleLogoChange = (e) => {
@@ -233,43 +272,6 @@ const VendorProfile = () => {
         />
       )}
 
-      {/* <div className="right">
-        <div className="dashboard">
-          <div className="food_items">
-            <p className="heading">Top Rated Food Items</p>
-            <div className="cards">
-              {foodItems.map(item => (
-                <div className="card" key={item.id}>
-                  <img src={item.image} alt={item.name} />
-                  <p className='name'>{item.name}</p>
-                  <p className='price'>Price: ৳ {item.price}</p>
-                  <p className="rating">Rating: ⭐ <span>{item.rating}/5</span></p>
-                  <p className='status'>Status: <span className={item.status === 'Available' ? 'available' : 'not-available'}>{item.status}</span></p>
-                  <p className='description'>{item.description}</p>
-                </div>
-              ))}
-            </div>
-            <div className="view-button">
-              <button>View All</button>
-            </div>
-          </div>
-
-          <div className="order-history">
-            <p className="heading">Recent Orders</p>
-            <div className="cards">
-              {orders.map(order => (
-                <div className="card" key={order.id}>
-                  <p className='order-id'>Order ID: {order.id}</p>
-                  <p className='item'>Item: {order.item}</p>
-                  <p className='customer'>Customer: {order.customer}</p>
-                  <p className='quantity'>Quantity: {order.quantity}</p>
-                  <p className='price'>Price: ৳ {order.price}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div> */}
     </div>
   )
 }

@@ -23,7 +23,7 @@ export const updateVendorInfo = async (id, role, newInfo) => {
             return { success: false, message: "Vendor not found" };
         }
         const result = await userUtils.updateUserInfo(id, role, newInfo);
-        if(result.success){
+        if (result.success) {
             return { success: true };
         }
         return { success: false, message: "Failed to update vendor info" };
@@ -39,16 +39,17 @@ export const updateVendorLogo = async (id, fileBuffer, fileName) => {
         if (!vendor) {
             return { success: false, message: "Vendor not found" };
         }
+
         const currentImageId = vendor.logo_public_id;
-        if(currentImageId){
+        if (currentImageId) {
             const deleteResult = await imageUtils.deleteImage(currentImageId);
-            if(!deleteResult.success){
+            if (!deleteResult.success) {
                 return { success: false, message: "Error deleting old logo", error: deleteResult.error };
             }
         }
         const uploadedImage = await imageUtils.uploadImage(fileBuffer, fileName);
-        if(!uploadedImage.success){
-            return {success: false, message: "Error uploading new logo", error: uploadedImage.error};
+        if (!uploadedImage.success) {
+            return { success: false, message: "Error uploading new logo", error: uploadedImage.error };
         }
         const result = await userUtils.updateUserImage(id, 'vendor', uploadedImage.result.secure_url, uploadedImage.result.public_id);
         return result;
@@ -58,10 +59,28 @@ export const updateVendorLogo = async (id, fileBuffer, fileName) => {
     }
 };
 
+export const toogleStallStatus = async (id, newStatus) => {
+    try {
+        const vendor = await userUtils.findUserById(id, 'vendor');
+        if (!vendor) {
+            return { success: false, message: "Vendor not found" };
+        }
+
+        const result = await userUtils.toogleStallStatus(id, newStatus);
+        if (result.success) {
+            return { success: true };
+        }
+        return { success: false, message: "Failed to toggle stall status" };
+    } catch (error) {
+        console.error("Error toggling stall status in vendorService:", error);
+        return { success: false, message: "Failed to toggle stall status" };
+    }
+};
+
 export const getVendorMenu = async (vendorId) => {
     try {
         const vendorMenu = await foodUtils.getVendorMenu(vendorId);
-        if(!vendorMenu){
+        if (!vendorMenu) {
             return { success: false, message: "Vendor menu not found" };
         }
         return { success: true, data: vendorMenu };

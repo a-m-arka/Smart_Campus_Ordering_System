@@ -26,3 +26,14 @@ Form fields:
 GET /api/vendor/menu
 Headers:
 	Authorization: Bearer <token>
+
+PATCH /api/vendor/toggle-stall-status/:vendorId
+Headers:
+	Authorization: Bearer <token>
+	Content-Type: application/json
+Path parameter:
+	vendorId: ID of the vendor to toggle stall status
+Body (required):
+{
+	"newStatus": "open" or "close"
+}

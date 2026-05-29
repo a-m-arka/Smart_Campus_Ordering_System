@@ -7,6 +7,7 @@ const router = express.Router();
 router.get('/get-vendor-data', vendorController.getVendor);
 router.put('/update-vendor-info', vendorController.updateVendorInfo);
 router.put('/update-logo', upload.single('file'), vendorController.updateVendorLogo);
+router.patch('/toggle-stall-status/:vendorId', vendorController.toogleStallStatus);
 router.get('/menu', vendorController.getVendorMenu);
 
 export default router;

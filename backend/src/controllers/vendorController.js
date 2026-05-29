@@ -124,11 +124,49 @@ export const updateVendorLogo = async (req, res) => {
     }
 };
 
+export const toogleStallStatus = async (req, res) => {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+        return res.status(401).json({ message: 'Token not found' });
+    }
+
+    const vendorId = req.params.vendorId;
+    if (!vendorId) {
+        return res.status(400).json({ message: 'Vendor ID is required' });
+    }
+
+    const { newStatus } = req.body;
+    if (!newStatus || (newStatus !== 'open' && newStatus !== 'close')) {
+        return res.status(400).json({ message: 'New status is required and must be either "open" or "close"' });
+    }
+
+    try {
+        const decodedToken = verifyToken(token);
+
+        const validation = validateDecodedToken(decodedToken, 'vendor');
+        if (!validation.valid) {
+            return res.status(validation.statusCode).json({ message: validation.message });
+        }
+
+        const response = await vendorService.toogleStallStatus(vendorId, newStatus);
+        if (response.success) {
+            return res.status(200).json({ message: `Stall ${newStatus}ed successfully` });
+        }
+        
+        return res.status(400).json({ message: response.message });
+
+    } catch (error) {
+        console.error('Error during toggling stall status in vendorController:', error);
+        return res.status(500).json({ message: 'Failed to toggle stall status. Internal Server Error' });
+    }
+};
+
 export const getVendorMenu = async (req, res) => {
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) {
         return res.status(401).json({ message: 'Token not found' });
     }
+
     try {
         const decodedToken = verifyToken(token);
 

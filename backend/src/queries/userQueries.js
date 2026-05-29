@@ -82,6 +82,18 @@ export const vendorQueries = {
     WHERE id = ?;
   `,
 
+  openStall: `
+    UPDATE Vendors
+    SET is_open = TRUE
+    WHERE id = ?;
+  `,
+
+  closeStall: `
+    UPDATE Vendors
+    SET is_open = FALSE
+    WHERE id = ?;
+  `,
+
   changePassword: `
     UPDATE Vendors
     SET password = ?

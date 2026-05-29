@@ -119,3 +119,20 @@ export const getTopVendors = async () => {
         return { error: true };
     }
 };
+
+export const toogleStallStatus = async (id, newStatus) => {
+    try{
+        let query;
+        if(newStatus === 'open') {
+            query = vendorQueries.openStall;
+        }
+        else if(newStatus === 'close') {
+            query = vendorQueries.closeStall;
+        }
+        await pool.query(query, [id]);
+        return { success: true };
+    } catch (error) {
+        console.error("Error toggling stall status in userUtils:", error.stack);
+        return { success: false, message: "Failed to toggle stall status", error };
+    }
+};
