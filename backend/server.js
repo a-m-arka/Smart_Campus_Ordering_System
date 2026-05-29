@@ -14,12 +14,17 @@ import reviewRoutes from './src/routes/reviewRoutes.js';
 dotenv.config();
 
 const server = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 4000;
 
-server.use(cors());
+server.set('trust proxy', 1);
+
+server.use(cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true
+}));
+
 server.use(express.json());
 
-// Routes
 server.use('/api/public', publicRoutes);
 server.use('/api/auth', authRoutes);
 server.use('/api/student', studentRoutes);
@@ -28,13 +33,17 @@ server.use('/api/food', foodRoutes);
 server.use('/api/order', orderRoutes);
 server.use('/api/review', reviewRoutes);
 
-
-server.listen(port, async () => {
-    console.log(`✅ Server is running on http://localhost:${port}`);
+const startServer = async () => {
     try {
         await checkConnection();
         await createAllTables();
+
+        server.listen(port, () => {
+            console.log(`Server running on port ${port}`);
+        });
     } catch (error) {
         console.error('Failed to initialize database', error);
     }
-});
+};
+
+startServer();
