@@ -2,8 +2,7 @@
 
 A university campus food ordering platform built for CUET students.
 
-![Vercel](https://img.shields.io/badge/frontend-Vercel-black?logo=vercel)
-![Railway](https://img.shields.io/badge/backend-Railway-0B0D0E?logo=railway)
+
 ![React](https://img.shields.io/badge/frontend-React-61DAFB?logo=react)
 ![Node.js](https://img.shields.io/badge/backend-Node.js-339933?logo=node.js)
 ![MySQL](https://img.shields.io/badge/database-MySQL-4479A1?logo=mysql)
